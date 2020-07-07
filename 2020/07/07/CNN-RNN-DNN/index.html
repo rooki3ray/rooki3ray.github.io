@@ -20,28 +20,37 @@
     var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Rooki3Ray | 永远滴神">
-<meta property="og:url" content="http://rooki3ray.github.io/index.html">
+  <meta name="description" content="前言深度学习大热之后发展出各种神经网络，我虽然之前接触过相关的一些模型，但知识零零散散，感觉一头雾水。这篇文章主要涉及一些基本的神经网络模型，旨在加强对这些模型的系统认知。 1. 有监督的神经网络(Supervised Neural Networks)1.1 NN和DNN&amp;emsp;&amp;emsp;NN的基础模型是感知机(Perceptron)，因此NN也可以叫做多层感知机(Multi-layer P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基本的神经网络模型">
+<meta property="og:url" content="http://rooki3ray.github.io/2020/07/07/CNN-RNN-DNN/index.html">
 <meta property="og:site_name" content="Rooki3Ray | 永远滴神">
+<meta property="og:description" content="前言深度学习大热之后发展出各种神经网络，我虽然之前接触过相关的一些模型，但知识零零散散，感觉一头雾水。这篇文章主要涉及一些基本的神经网络模型，旨在加强对这些模型的系统认知。 1. 有监督的神经网络(Supervised Neural Networks)1.1 NN和DNN&amp;emsp;&amp;emsp;NN的基础模型是感知机(Perceptron)，因此NN也可以叫做多层感知机(Multi-layer P">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://pic2.zhimg.com/80/v2-5a3fb8e97514931eebc72394e0196e65_720w.jpg">
+<meta property="og:image" content="https://bkimg.cdn.bcebos.com/pic/ae51f3deb48f8c541f6a0cdd36292df5e1fe7f83?x-bce-process=image/resize,m_lfit,w_220,h_220,limit_1">
+<meta property="og:image" content="https://pic4.zhimg.com/80/c2eb9099048761fd25f0e90aa66d363a_720w.jpg">
+<meta property="article:published_time" content="2020-07-07T10:23:10.000Z">
+<meta property="article:modified_time" content="2020-07-07T16:18:55.638Z">
 <meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="DeepLearning">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic2.zhimg.com/80/v2-5a3fb8e97514931eebc72394e0196e65_720w.jpg">
 
-<link rel="canonical" href="http://rooki3ray.github.io/">
+<link rel="canonical" href="http://rooki3ray.github.io/2020/07/07/CNN-RNN-DNN/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>Rooki3Ray | 永远滴神</title>
+  <title>基本的神经网络模型 | Rooki3Ray | 永远滴神</title>
   
 
 
@@ -158,9 +167,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -176,10 +186,9 @@
       <meta itemprop="name" content="Rooki3Ray | 永远滴神">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/07/CNN-RNN-DNN/" class="post-title-link" itemprop="url">基本的神经网络模型</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          基本的神经网络模型
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -209,7 +218,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>深度学习大热之后发展出各种神经网络，我虽然之前接触过相关的一些模型，但知识零零散散，感觉一头雾水。这篇文章主要涉及一些基本的神经网络模型，旨在加强对这些模型的系统认知。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>深度学习大热之后发展出各种神经网络，我虽然之前接触过相关的一些模型，但知识零零散散，感觉一头雾水。这篇文章主要涉及一些基本的神经网络模型，旨在加强对这些模型的系统认知。</p>
 <h3 id="1-有监督的神经网络-Supervised-Neural-Networks"><a href="#1-有监督的神经网络-Supervised-Neural-Networks" class="headerlink" title="1. 有监督的神经网络(Supervised Neural Networks)"></a>1. 有监督的神经网络(Supervised Neural Networks)</h3><h4 id="1-1-NN和DNN"><a href="#1-1-NN和DNN" class="headerlink" title="1.1 NN和DNN"></a>1.1 NN和DNN</h4><p>&emsp;&emsp;NN的基础模型是感知机(Perceptron)，因此NN也可以叫做多层感知机(Multi-layer Perceptron，MLP)。单层感知机叫做感知机，多层感知机(MLP)≈人工神经网络(ANN)。</p>
 <p>&emsp;&emsp;<strong>网络的层数直接决定了其对现实的刻画能力</strong>——利用每层更少的神经元拟合更复杂的函数。但层数加深意味着：</p>
 <ul>
@@ -240,153 +249,43 @@
 <p>&emsp;&emsp;类似地，Bi-RNN(双向RNN)中“现在”依赖于“过去”和“未来”，可以使输出取决于上下文，常在NLP和语音分析中使用。</p>
 <p>Recursive NN和Recurrent NN结构不同，是树状而不是网状，可以用树状降低序列的长度。</p>
 <h3 id="2-无监督的预训练网络-Unsupervised-Pre-trained-Neural-Networks"><a href="#2-无监督的预训练网络-Unsupervised-Pre-trained-Neural-Networks" class="headerlink" title="2. 无监督的预训练网络(Unsupervised Pre-trained Neural Networks)"></a>2. 无监督的预训练网络(Unsupervised Pre-trained Neural Networks)</h3><h4 id="2-1-深度生成模型-Deep-Generative-Models"><a href="#2-1-深度生成模型-Deep-Generative-Models" class="headerlink" title="2.1 深度生成模型(Deep Generative Models)"></a>2.1 深度生成模型(Deep Generative Models)</h4>
-      
     </div>
 
     
     
     
+        <div class="reward-container">
+  <div>你可以打赏我哦！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
+          <div class="post-tags">
+              <a href="/tags/DeepLearning/" rel="tag"># DeepLearning</a>
+          </div>
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/07/07/HelloBlog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Rooki3Ray">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rooki3Ray | 永远滴神">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/07/HelloBlog/" class="post-title-link" itemprop="url">HelloBlog</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-07-07 13:14:07 / 修改时间：15:41:04" itemprop="dateCreated datePublished" datetime="2020-07-07T13:14:07+08:00">2020-07-07</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>&emsp;&emsp;花了三四个小时，终于搭好了Blog，起飞！</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/07/HelloBlog/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
-    </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/07/07/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Rooki3Ray">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rooki3Ray | 永远滴神">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/07/07/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-07-07 12:30:04 / 修改时间：15:41:29" itemprop="dateCreated datePublished" datetime="2020-07-07T12:30:04+08:00">2020-07-07</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/07/07/hello-world/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
         
-      
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/07/HelloBlog/" rel="prev" title="HelloBlog">
+      <i class="fa fa-chevron-left"></i> HelloBlog
+    </a></div>
+      <div class="post-nav-item"></div>
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
@@ -439,6 +338,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-有监督的神经网络-Supervised-Neural-Networks"><span class="nav-number">1.1.</span> <span class="nav-text">1. 有监督的神经网络(Supervised Neural Networks)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-NN和DNN"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 NN和DNN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-CNN"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 CNN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-循环神经网络-Recurrent-NN-和递归神经网络-Recursive-NN"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 循环神经网络(Recurrent NN)和递归神经网络(Recursive NN)</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-无监督的预训练网络-Unsupervised-Pre-trained-Neural-Networks"><span class="nav-number">1.2.</span> <span class="nav-text">2. 无监督的预训练网络(Unsupervised Pre-trained Neural Networks)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-深度生成模型-Deep-Generative-Models"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 深度生成模型(Deep Generative Models)</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
