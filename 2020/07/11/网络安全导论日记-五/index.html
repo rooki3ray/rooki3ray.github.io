@@ -20,19 +20,24 @@
     var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+  <meta name="description" content="回顾上期学习了网络安全的威胁与相关技术，涉及到：  安全威胁的原因 网络攻击的过程 常用手段 APT 社会工程学  本章涉及网络信息安全中的网络通信模型。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://rooki3ray.github.io/2020/07/07/hello-world/index.html">
+<meta property="og:title" content="网络安全导论日记(五)--网络信息安全模型">
+<meta property="og:url" content="http://rooki3ray.github.io/2020/07/11/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E4%BA%94/index.html">
 <meta property="og:site_name" content="Rooki3Ray | 永远滴神">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:description" content="回顾上期学习了网络安全的威胁与相关技术，涉及到：  安全威胁的原因 网络攻击的过程 常用手段 APT 社会工程学  本章涉及网络信息安全中的网络通信模型。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-07-07T04:30:04.223Z">
-<meta property="article:modified_time" content="2020-07-07T07:41:29.143Z">
+<meta property="og:image" content="https://imgchr.com/i/UM7RaQ">
+<meta property="og:image" content="https://imgchr.com/i/UM7D2t">
+<meta property="article:published_time" content="2020-07-10T16:16:20.000Z">
+<meta property="article:modified_time" content="2020-07-10T17:04:48.435Z">
 <meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="网安导论">
+<meta property="article:tag" content="夏令营复试资料">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://imgchr.com/i/UM7RaQ">
 
-<link rel="canonical" href="http://rooki3ray.github.io/2020/07/07/hello-world/">
+<link rel="canonical" href="http://rooki3ray.github.io/2020/07/11/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E4%BA%94/">
 
 
 <script id="page-configurations">
@@ -45,7 +50,7 @@
   };
 </script>
 
-  <title>Hello World | Rooki3Ray | 永远滴神</title>
+  <title>网络安全导论日记(五)--网络信息安全模型 | Rooki3Ray | 永远滴神</title>
   
 
 
@@ -169,7 +174,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/07/07/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/07/11/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E4%BA%94/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -182,7 +187,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          网络安全导论日记(五)--网络信息安全模型
         </h1>
 
         <div class="post-meta">
@@ -193,7 +198,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-07-07 12:30:04 / 修改时间：15:41:29" itemprop="dateCreated datePublished" datetime="2020-07-07T12:30:04+08:00">2020-07-07</time>
+              <time title="创建时间：2020-07-11 00:16:20 / 修改时间：01:04:48" itemprop="dateCreated datePublished" datetime="2020-07-11T00:16:20+08:00">2020-07-11</time>
             </span>
 
           
@@ -207,21 +212,70 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+        <h3 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h3><p>上期学习了网络安全的威胁与相关技术，涉及到：</p>
+<ul>
+<li>安全威胁的原因</li>
+<li>网络攻击的过程</li>
+<li>常用手段</li>
+<li>APT</li>
+<li>社会工程学</li>
+</ul>
+<p>本章涉及网络信息安全中的网络通信模型。</p>
 <a id="more"></a>
 
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+<!-- TOC -->
+<ul>
+<li><a href="#回顾">回顾</a></li>
+<li><a href="#关键字">关键字</a></li>
+<li><a href="#网络安全模型--网络通信">网络安全模型–网络通信</a></li>
+<li><a href="#网络安全模型-访问安全">网络安全模型-访问安全</a></li>
+<li><a href="#网络安全模型--p2dr模型">网络安全模型–P2DR模型</a></li>
+<li><a href="#网络安全评估标准">网络安全评估标准</a></li>
+</ul>
+<hr>
+<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><hr>
+<h3 id="网络安全模型–网络通信"><a href="#网络安全模型–网络通信" class="headerlink" title="网络安全模型–网络通信"></a>网络安全模型–网络通信</h3><p><img src="https://imgchr.com/i/UM7RaQ" alt=""></p>
+<ul>
+<li>为了在开放网络环境中保护信息的传输，需要提供安全机制和安全服务：<ul>
+<li>对发送的信息进行与安全相关的转换，例如消息加密和数字签名。</li>
+<li>由两个主体共享的秘密信息，而对开放网络是保密的，例如密钥。</li>
+</ul>
+</li>
+<li>为了完成安全的处理，常常需要可信的第三方。</li>
+<li>一种能被通信主体使用的协议，这种协议使用安全算法和秘密信息以便获得特定的安全服务。</li>
+</ul>
+<hr>
+<h3 id="网络安全模型-访问安全"><a href="#网络安全模型-访问安全" class="headerlink" title="网络安全模型-访问安全"></a>网络安全模型-访问安全</h3><p><img src="https://imgchr.com/i/UM7D2t" alt=""></p>
+<p>网络访问安全模型，该模型考虑了黑客攻击、病毒与蠕虫等的非授权访问。黑客攻击可以形成两类威胁：</p>
+<ul>
+<li>信息访问威胁，即非授权用户截获或修改数据；</li>
+<li>服务威胁，即服务缺陷以禁止合法用户使用。<br>病毒和蠕虫是软件攻击的两个实例，这类攻击通常是通过移动存储介质引入系统，并隐藏在有用软件中；也可通过网络接入系统。</li>
+</ul>
+<p>两个层次：</p>
+<ul>
+<li>网闸 或看门人功能，组织非授权用户访问</li>
+<li>内部安全控制（监控）：监测有害入侵者的存在</li>
+</ul>
+<hr>
+<h3 id="网络安全模型–P2DR模型"><a href="#网络安全模型–P2DR模型" class="headerlink" title="网络安全模型–P2DR模型"></a>网络安全模型–P2DR模型</h3><ul>
+<li>P2DR模型是可量化的、可由数学证明的、基于时间的的安全模型, 包含安全策略(Policy)、防护(Protection)、检测(Detection)和响应(Response);</li>
+<li>安全策略是P2DR安全模型的核心,所有的防护、检测、响应都是依据策略实施的;</li>
+<li>防护主要是预防安全事件的发生,发现存在的系统脆弱性和防止意外威胁和恶意威胁;</li>
+<li>检测是P2DR中一个非常重要的环节,是静态防护转化为动态防护的关键,动态响应和加强防护的依据,同时也是强制落实安全策略的工具;</li>
+<li>响应在安全系统中占有重要的地位,是解决安全潜在威胁最有效的方法。</li>
+</ul>
+<p>安全的目标实际上就是尽可能地增大保护时间,尽量地减少检测时间和响应时间。  </p>
+<ul>
+<li>P2DR2 ：网络安全=风险分析（A）+安全策略（P)+系统防护（P）+实时监测（D）+实时响应（R）+灾难恢复（R）</li>
+</ul>
+<hr>
+<h3 id="网络安全评估标准"><a href="#网络安全评估标准" class="headerlink" title="网络安全评估标准"></a>网络安全评估标准</h3><p>在TCSEC中，美国国防部按处理信息的等级和应采用的响应措施，将计算机安全从高到低分为：A、B、C、D四类八个级别，共27条评估准则，随着安全等级的提高，系统的可信度随之增加，风险逐渐减少。<br>四个安全等级：</p>
+<ul>
+<li>无保护级 </li>
+<li>自主保护级 </li>
+<li>强制保护级</li>
+<li>验证保护级</li>
+</ul>
 
     </div>
 
@@ -240,16 +294,23 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E5%AE%89%E5%AF%BC%E8%AE%BA/" rel="tag"># 网安导论</a>
+              <a href="/tags/%E5%A4%8F%E4%BB%A4%E8%90%A5%E5%A4%8D%E8%AF%95%E8%B5%84%E6%96%99/" rel="tag"># 夏令营复试资料</a>
+          </div>
 
         
 
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/07/07/HelloBlog/" rel="next" title="HelloBlog">
-      HelloBlog <i class="fa fa-chevron-right"></i>
+    <a href="/2020/07/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E5%9B%9B/" rel="prev" title="网络安全导论日记(四)--网络信息安全威胁与攻击技术">
+      <i class="fa fa-chevron-left"></i> 网络安全导论日记(四)--网络信息安全威胁与攻击技术
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/07/11/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E5%85%AD/" rel="next" title="网络安全导论日记(六)--密码学基础">
+      网络安全导论日记(六)--密码学基础 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -309,7 +370,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#回顾"><span class="nav-number">1.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键字"><span class="nav-number">2.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络安全模型–网络通信"><span class="nav-number">3.</span> <span class="nav-text">网络安全模型–网络通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络安全模型-访问安全"><span class="nav-number">4.</span> <span class="nav-text">网络安全模型-访问安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络安全模型–P2DR模型"><span class="nav-number">5.</span> <span class="nav-text">网络安全模型–P2DR模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络安全评估标准"><span class="nav-number">6.</span> <span class="nav-text">网络安全评估标准</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
