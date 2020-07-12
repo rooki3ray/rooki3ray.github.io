@@ -20,14 +20,18 @@
     var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="网络安全导论日记-三">
+  <meta name="description" content="回顾上次主要复习了计网基础，涉及内容：  计算机网络的定义 OSI协议的七层模型 TCP&#x2F;IP协议的四层模型 TCP和UDP DNS域名解析 TCP三次握手 子网划分和CIDR    本章主要涉及网络信息安全基础。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络安全导论日记(三)--网络信息安全基础">
 <meta property="og:url" content="http://rooki3ray.github.io/2020/07/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E4%B8%89/index.html">
 <meta property="og:site_name" content="Rooki3Ray | 永远滴神">
+<meta property="og:description" content="回顾上次主要复习了计网基础，涉及内容：  计算机网络的定义 OSI协议的七层模型 TCP&#x2F;IP协议的四层模型 TCP和UDP DNS域名解析 TCP三次握手 子网划分和CIDR    本章主要涉及网络信息安全基础。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-07-09T06:04:21.151Z">
-<meta property="article:modified_time" content="2020-07-10T17:04:58.731Z">
+<meta property="article:published_time" content="2020-07-09T06:04:21.000Z">
+<meta property="article:modified_time" content="2020-07-12T07:13:24.334Z">
 <meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="网安导论">
+<meta property="article:tag" content="夏令营复试资料">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://rooki3ray.github.io/2020/07/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E4%B8%89/">
@@ -43,7 +47,7 @@
   };
 </script>
 
-  <title>网络安全导论日记-三 | Rooki3Ray | 永远滴神</title>
+  <title>网络安全导论日记(三)--网络信息安全基础 | Rooki3Ray | 永远滴神</title>
   
 
 
@@ -180,7 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          网络安全导论日记-三
+          网络安全导论日记(三)--网络信息安全基础
         </h1>
 
         <div class="post-meta">
@@ -197,7 +201,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-11 01:04:58" itemprop="dateModified" datetime="2020-07-11T01:04:58+08:00">2020-07-11</time>
+                <time title="修改时间：2020-07-12 15:13:24" itemprop="dateModified" datetime="2020-07-12T15:13:24+08:00">2020-07-12</time>
               </span>
 
           
@@ -211,7 +215,100 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h3 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h3><p>上次主要复习了计网基础，涉及内容：</p>
+<ul>
+<li>计算机网络的定义</li>
+<li>OSI协议的七层模型</li>
+<li>TCP/IP协议的四层模型<ul>
+<li>TCP和UDP</li>
+<li>DNS域名解析</li>
+<li>TCP三次握手</li>
+<li>子网划分和CIDR</li>
+</ul>
+</li>
+</ul>
+<p>本章主要涉及网络信息安全基础。</p>
+<a id="more"></a>
+
+<ul>
+<li><a href="#回顾">回顾</a></li>
+<li><a href="#关键词">关键词</a></li>
+<li><a href="#信息安全定义">信息安全定义</a></li>
+<li><a href="#信息安全的属性基本要素">信息安全的属性/基本要素</a></li>
+<li><a href="#osi安全体系架构">OSI安全体系架构</a><ul>
+<li><a href="#安全服务">安全服务</a></li>
+<li><a href="#安全机制">安全机制</a></li>
+<li><a href="#安全威胁和攻击">安全威胁和攻击</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h3><hr>
+<h3 id="信息安全定义"><a href="#信息安全定义" class="headerlink" title="信息安全定义"></a>信息安全定义</h3><p>&emsp;&emsp;指在既定的安全密级条件下，信息系统通过预警、保护、检测、响应、恢复和反击机制，抵御意外事件或恶意行为攻击，确保信息系统避免非授权的访问、破坏或者服务中断，实现信息和资源的<strong>保密性、完整性、可用性、非否认性和可控性</strong>的能力。</p>
+<h3 id="信息安全的属性-基本要素"><a href="#信息安全的属性-基本要素" class="headerlink" title="信息安全的属性/基本要素"></a>信息安全的属性/基本要素</h3><p>CIA三要素：</p>
+<ul>
+<li><strong>机密性</strong>：指保证信息与信息系统不被非授权者截获和未经授权使用。</li>
+<li><strong>完整性</strong>：指信息是真实可信的，被传输、接收或存储的数据是完整的，其发布者不被冒充，来源不被伪造，内容不被篡改。</li>
+<li><strong>可用性</strong>：指尽管存在可能的突发事件，保证信息与信息系统服务可被授权人正常使用。</li>
+</ul>
+<p>其他关联属性：</p>
+<ul>
+<li>信息的<strong>不可否认性Non-repudiation 或抗抵赖性</strong>：指能够保证信息行为人不能否认其信息行为,无论发送方还是接收方都不能抵赖所发生过的通信</li>
+<li>信息的<strong>可控性(Controllability)</strong>：<ul>
+<li>鉴别（或验证）  Authentication,确认实体是它所声明的。适用于用户、进程、系统、信息等的信息可信度, 真实性（Authenticity)</li>
+<li>审计Accountability, 确保实体的活动可被跟踪</li>
+</ul>
+</li>
+<li>信息的<strong>可存活性(Survivability)</strong>：面对各种攻击或错误的情况下继续提供核心的服务,而且能够及时地恢复全部的服务</li>
+</ul>
+<h3 id="OSI安全体系架构"><a href="#OSI安全体系架构" class="headerlink" title="OSI安全体系架构"></a>OSI安全体系架构</h3><p>OSI安全体系结构主要包括三部分内容：</p>
+<ul>
+<li>安全服务</li>
+<li>安全机制</li>
+<li>安全攻击</li>
+</ul>
+<h4 id="安全服务"><a href="#安全服务" class="headerlink" title="安全服务"></a>安全服务</h4><p>&emsp;&emsp;安全服务：一种用来增强数据处理系统安全性和信息传递安全性的措施或服务。目的在于使用1种或多种安全机制来阻止攻击。</p>
+<p>ISO 7498-2对 OSI规定了五个方面的安全服务：</p>
+<ul>
+<li>认证服务：提供关于某个实体(人或事物)身份的保证</li>
+<li>访问控制服务：实施授权的一种方法，防止对资源的未授权使用，包括防止以未授权方式使用某一资源</li>
+<li>数据机密性：指保护信息不泄露或不暴露给那些未授权掌握这一信息的实体。</li>
+<li>数据完整性：确保数据的价值和存在性没有改变，针对对数据进行修改、增加、删除或重新排序等攻击行为所采用的安全服务。</li>
+<li>非否认(不可抵赖性)服务：是指用以阻止参与某次通信交换的一方在事后否认曾经发生过本次交换这一事实。</li>
+</ul>
+<h4 id="安全机制"><a href="#安全机制" class="headerlink" title="安全机制"></a>安全机制</h4><p>安全机制：用来检测、防范安全攻击并从中恢复系统的措施。</p>
+<p>&emsp;&emsp;安全服务与安全机制有着密切的关系。安全服务体现了安全系统的功能；而安全机制则是安全服务的实现。一个安全服务可以由多个安全机制实现；而一个安全机制也可以用于实现多个安全服务中。</p>
+<p>ISO 7498-2确定了8类安全机制，实现安全服务</p>
+<ul>
+<li>加密机制（密码机制）</li>
+<li>数字签名机制</li>
+<li>访问控制机制</li>
+<li>数据完整性机制</li>
+<li>通信业务流填充机制:提供针对流量分析的保护：填充流空余位，干扰流量分析；对抗攻击者在链路上监听数据并对其进行流量和流向分析；</li>
+<li>路由控制机制：路由改变、物理通道的选择，选择特殊的路由，保证数据安全；</li>
+<li>认证交换机制</li>
+<li>公证机制</li>
+</ul>
+<p>&emsp;&emsp;OSI安全管理活动有3类：系统安全管理、安全服务管理和安全机制管理。<br>某些普遍性安全机制可认为属于安全管理方面:</p>
+<ul>
+<li>安全标签 （security labels）：为某一资源命名或指定安全属性</li>
+<li>事件检测 （event detection）：对安全相关事件的检测</li>
+<li>审计跟踪 （security audit trail）：对系统的记录与行为进行独立的评估考查，目的是测试系统的控制是否恰当，保证与既定策略和操作的协调一致。</li>
+<li>安全恢复 （security recovery）</li>
+</ul>
+<h4 id="安全威胁和攻击"><a href="#安全威胁和攻击" class="headerlink" title="安全威胁和攻击"></a>安全威胁和攻击</h4><ul>
+<li><p>安全威胁：可能造成攻击的潜在危险</p>
+</li>
+<li><p>被动攻击是企图了解和利用系统信息但不影响系统的资源</p>
+</li>
+<li><p>被动攻击：消息内容泄露、流量攻击</p>
+</li>
+<li><p>主动攻击试图改变系统的资源和影响系统操作；主动攻击包含改写数据流的改写和错误数据流的添加</p>
+</li>
+<li><p>主动攻击:假冒、重放、改写消息、拒绝服务</p>
+</li>
+</ul>
+
     </div>
 
     
@@ -229,6 +326,10 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E5%AE%89%E5%AF%BC%E8%AE%BA/" rel="tag"># 网安导论</a>
+              <a href="/tags/%E5%A4%8F%E4%BB%A4%E8%90%A5%E5%A4%8D%E8%AF%95%E8%B5%84%E6%96%99/" rel="tag"># 夏令营复试资料</a>
+          </div>
 
         
 
@@ -236,12 +337,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/07/09/0/" rel="prev" title="网络安全导论日记(三)--网络信息安全基础">
-      <i class="fa fa-chevron-left"></i> 网络安全导论日记(三)--网络信息安全基础
+    <a href="/2020/07/08/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E4%BA%8C/" rel="prev" title="网络安全导论日记(二)--计算机网络基础">
+      <i class="fa fa-chevron-left"></i> 网络安全导论日记(二)--计算机网络基础
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/07/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E5%9B%9B/" rel="next" title="网络安全导论日记(四)--网络信息安全威胁与攻击技术">
-      网络安全导论日记(四)--网络信息安全威胁与攻击技术 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/07/09/0/" rel="next" title="网络安全导论日记(三)--网络信息安全基础">
+      网络安全导论日记(三)--网络信息安全基础 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -301,6 +402,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#回顾"><span class="nav-number">1.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键词"><span class="nav-number">2.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息安全定义"><span class="nav-number">3.</span> <span class="nav-text">信息安全定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#信息安全的属性-基本要素"><span class="nav-number">4.</span> <span class="nav-text">信息安全的属性&#x2F;基本要素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OSI安全体系架构"><span class="nav-number">5.</span> <span class="nav-text">OSI安全体系架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安全服务"><span class="nav-number">5.1.</span> <span class="nav-text">安全服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全机制"><span class="nav-number">5.2.</span> <span class="nav-text">安全机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全威胁和攻击"><span class="nav-number">5.3.</span> <span class="nav-text">安全威胁和攻击</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
