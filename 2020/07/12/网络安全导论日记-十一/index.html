@@ -20,14 +20,18 @@
     var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="回顾上次学习了电子邮件安全，涉及：  PGP 认证、加密、压缩、电子邮件兼容性、分段和重组   S&#x2F;MIME DKIM 域名与签名联系   传输层邮件安全 SSL、VPN    本章学习IP安全。">
+<meta property="og:type" content="article">
 <meta property="og:title" content="网络安全导论日记(十一)">
 <meta property="og:url" content="http://rooki3ray.github.io/2020/07/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E5%8D%81%E4%B8%80/index.html">
 <meta property="og:site_name" content="Rooki3Ray | 永远滴神">
+<meta property="og:description" content="回顾上次学习了电子邮件安全，涉及：  PGP 认证、加密、压缩、电子邮件兼容性、分段和重组   S&#x2F;MIME DKIM 域名与签名联系   传输层邮件安全 SSL、VPN    本章学习IP安全。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-07-11T16:41:45.000Z">
-<meta property="article:modified_time" content="2020-07-11T16:41:46.057Z">
+<meta property="article:modified_time" content="2020-07-12T05:21:27.689Z">
 <meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="网安导论">
+<meta property="article:tag" content="夏令营复试资料">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://rooki3ray.github.io/2020/07/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E5%8D%81%E4%B8%80/">
@@ -191,7 +195,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-07-12 00:41:45 / 修改时间：00:41:46" itemprop="dateCreated datePublished" datetime="2020-07-12T00:41:45+08:00">2020-07-12</time>
+              <time title="创建时间：2020-07-12 00:41:45 / 修改时间：13:21:27" itemprop="dateCreated datePublished" datetime="2020-07-12T00:41:45+08:00">2020-07-12</time>
             </span>
 
           
@@ -205,7 +209,123 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h3 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h3><p>上次学习了电子邮件安全，涉及：</p>
+<ul>
+<li>PGP<ul>
+<li>认证、加密、压缩、电子邮件兼容性、分段和重组</li>
+</ul>
+</li>
+<li>S/MIME</li>
+<li>DKIM<ul>
+<li>域名与签名联系</li>
+</ul>
+</li>
+<li>传输层邮件安全<ul>
+<li>SSL、VPN</li>
+</ul>
+</li>
+</ul>
+<p>本章学习IP安全。</p>
+<a id="more"></a>
+
+<!-- TOC -->
+<ul>
+<li><a href="#回顾">回顾</a></li>
+<li><a href="#ip安全背景">IP安全背景</a></li>
+<li><a href="#ipsec">IPSec</a><ul>
+<li><a href="#概述">概述</a></li>
+<li><a href="#安全功能和服务">安全功能和服务</a></li>
+<li><a href="#体系结构">体系结构</a></li>
+<li><a href="#工作模式">工作模式</a></li>
+<li><a href="#安全关联sa">安全关联SA</a></li>
+<li><a href="#ike密钥两阶段协商">IKE密钥两阶段协商</a></li>
+<li><a href="#oakley密钥确定协议和isakmp">Oakley密钥确定协议和ISAKMP</a></li>
+<li><a href="#ipsec优点">IPSec优点</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="IP安全背景"><a href="#IP安全背景" class="headerlink" title="IP安全背景"></a>IP安全背景</h3><p>Everything over IP(TCP/IP, VOIP…)，但是IP不能提供安全性。<br>IP协议本质上就是不安全的。</p>
+<ul>
+<li>窃听：明文形式</li>
+<li>篡改：修改内容和校验和</li>
+<li>IP欺骗：假冒IP包中声明的IP</li>
+<li>重放</li>
+</ul>
+<hr>
+<h3 id="IPSec"><a href="#IPSec" class="headerlink" title="IPSec"></a>IPSec</h3><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>IPSec是随着IPv6的制定而产生的，IPSec对IPV4是可选的，对IPV6是必须的，IPSec由三种机制共同保障：</p>
+<ul>
+<li>认证</li>
+<li>信息机密性</li>
+<li>密钥管理<br>IPSec实现两个基本目标：</li>
+<li>保护IP数据包安全；</li>
+<li>为抵御网络攻击提供防护措施。</li>
+</ul>
+<h4 id="安全功能和服务"><a href="#安全功能和服务" class="headerlink" title="安全功能和服务"></a>安全功能和服务</h4><ul>
+<li>访问控制</li>
+<li>无连接完整性</li>
+<li>数据源认证</li>
+<li>拒绝重放数据包</li>
+<li>保密性（加密）</li>
+<li>受限制的流量保密性</li>
+</ul>
+<h4 id="体系结构"><a href="#体系结构" class="headerlink" title="体系结构"></a>体系结构</h4><p>两大部分，三类协议构成IPSec：<br>AH(IP认证头) , ESP(IP封装安全载荷)；密钥协商及交换协议： IKE</p>
+<ul>
+<li>AH 提供认证和数据完整性，ESP实现通信保密</li>
+<li>IKE 定义了通信实体间进行身份认证、创建安全关联SA、协商加密算法以及生成共享会话密钥的方法</li>
+</ul>
+<p>两种操作模式：</p>
+<ul>
+<li>传输模式（主机与主机的直接通信）</li>
+<li>隧道模式（常用于关联到多台主机的网络访问连入设备间使用)</li>
+</ul>
+<p>安全关联SA （Security Association）：是通信对等方对某些要素的一种协定<br>两个重要数据库：安全策略数据库SPD，安全关联数据库SAD<br>使用鉴别和加密算法</p>
+<h4 id="工作模式"><a href="#工作模式" class="headerlink" title="工作模式"></a>工作模式</h4><ul>
+<li>传输模式<ul>
+<li>传输模式保护的是<strong>IP载荷</strong>。 </li>
+<li>传输模式通常应用于主机之间端对端通信，该模式要求主机支持IPSec。</li>
+</ul>
+</li>
+<li>隧道模式 <ul>
+<li>隧道模式保护的是<strong>整个IP包</strong>。</li>
+<li>遂道就就是把一个包封装在另一个新包里面，整个源数据包作为新包的载荷部分，并在前面添加一个新的IP对。被封装的数据包在隧道的两个端点之间通过公共互联网络进行路由。</li>
+<li>被封装的数据包在公共互联网络上传递时所经过的逻辑路径称为隧道。一旦到达网络终点，数据将被解包并转发到最终目的地。</li>
+<li>隧道模式应用于网关模式中，即在主机的网关（防火墙、路由器）上加载IPSec。</li>
+</ul>
+</li>
+</ul>
+<h4 id="安全关联SA"><a href="#安全关联SA" class="headerlink" title="安全关联SA"></a>安全关联SA</h4><ul>
+<li>AH和ESP两个协议都使用SA来保护通信，而IKE的主要功能就是在通信双方协商SA。当一个SA协商完成后，两个对等方都在其安全关联数据库(SAD)中存储该SA参数。</li>
+<li>SA决定了保护什么、如何保护以及谁来保护。</li>
+<li>SA是一个单向的逻辑链接，通常成对出现</li>
+<li>IPSec 需要建立两个SA，一个用于入站通信，另一个用于出站通信，两个SA构成了一个SA束（SA Bundle）。</li>
+</ul>
+<p>安全关联有哪些组合？</p>
+<ul>
+<li>实现IPsec终端系统提供所有的安全</li>
+<li>仅在安全网关之间提供安全性，主机没有实现IPsec</li>
+<li>在情况二的基础上实现端对端安全</li>
+<li>为互联网到达组织的防火墙然后获得在防火墙后面特定的工作站和服务器的访问权限的远程主机提供支持。远程主机和防火墙之间仅需要隧道模式</li>
+</ul>
+<h4 id="IKE密钥两阶段协商"><a href="#IKE密钥两阶段协商" class="headerlink" title="IKE密钥两阶段协商"></a>IKE密钥两阶段协商</h4><ul>
+<li>阶段1协商：主模式交换和野蛮模式交换<br>ISAKMP通信双方建立一个ISAKMP SA，即用于保护双方后面的协商通信的一个协定，在通信双方建立一个已经通过身份验证和安全保护的通道，商定如何<strong>保护后面的协商过程</strong>；<br>用这个ISAKMP SA为其它安全协议(如AH和ESP)建立SA的协商。</li>
+<li>阶段2协商：快速模式交换<br>利用第一阶段建立的通道,<strong>用于为其它安全协议</strong>，如像AH，ESP等协议或者是任何其它的需要密钥信息和参数协商的协议或服务建立SA,协商安全服务。<br>一个阶段1的SA可用于建立多个阶段2的SA，此SA将被相应的安全协议用于保护数据或者消息的交换</li>
+</ul>
+<p>两阶段协商作用：</p>
+<ul>
+<li>第一阶段的开销可以分摊到多个第二阶段中，这允许多个SA建立在同样的ISAKMP SA基础上</li>
+<li>第一阶段商定的安全服务可以为第二阶段提供安全特性</li>
+<li>两阶段分开，提供管理上的便利</li>
+</ul>
+<h4 id="Oakley密钥确定协议和ISAKMP"><a href="#Oakley密钥确定协议和ISAKMP" class="headerlink" title="Oakley密钥确定协议和ISAKMP"></a>Oakley密钥确定协议和ISAKMP</h4><p>Oakley密钥确定协议：它提供了额外的安全性，Oakley的通用性在于它没有规定任何特殊的格式；同时为IKE提供了一种模式。<br>ISAKMP：它为互联网密钥管理（IKE）提供了一个框架，并提供了特定的协议支持，包括格式和安全属性的协商。</p>
+<h4 id="IPSec优点"><a href="#IPSec优点" class="headerlink" title="IPSec优点"></a>IPSec优点</h4><ul>
+<li>IPSec<strong>在传输层之下</strong>，对于应用程序来说是<strong>透明</strong>的</li>
+<li>保证因特网上各分支办公点的安全连接。 </li>
+<li>保证因特网上远程访问的安全。 </li>
+<li>通过外部网或内部网建立与合作伙伴的联系。 </li>
+<li>提高了电子商务的安全性。 </li>
+</ul>
+
     </div>
 
     
@@ -223,6 +343,10 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BD%91%E5%AE%89%E5%AF%BC%E8%AE%BA/" rel="tag"># 网安导论</a>
+              <a href="/tags/%E5%A4%8F%E4%BB%A4%E8%90%A5%E5%A4%8D%E8%AF%95%E8%B5%84%E6%96%99/" rel="tag"># 夏令营复试资料</a>
+          </div>
 
         
 
@@ -234,8 +358,8 @@
       <i class="fa fa-chevron-left"></i> 网络安全导论日记(十)
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/07/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E5%8D%81%E4%BA%8C/" rel="next" title="网络安全导论日记(十二)">
-      网络安全导论日记(十二) <i class="fa fa-chevron-right"></i>
+    <a href="/2020/07/12/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E5%8D%81%E4%BA%8C/" rel="next" title="网络安全导论日记(十二)--完结">
+      网络安全导论日记(十二)--完结 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -295,6 +419,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#回顾"><span class="nav-number">1.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IP安全背景"><span class="nav-number">2.</span> <span class="nav-text">IP安全背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPSec"><span class="nav-number">3.</span> <span class="nav-text">IPSec</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概述"><span class="nav-number">3.1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全功能和服务"><span class="nav-number">3.2.</span> <span class="nav-text">安全功能和服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#体系结构"><span class="nav-number">3.3.</span> <span class="nav-text">体系结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#工作模式"><span class="nav-number">3.4.</span> <span class="nav-text">工作模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全关联SA"><span class="nav-number">3.5.</span> <span class="nav-text">安全关联SA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IKE密钥两阶段协商"><span class="nav-number">3.6.</span> <span class="nav-text">IKE密钥两阶段协商</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Oakley密钥确定协议和ISAKMP"><span class="nav-number">3.7.</span> <span class="nav-text">Oakley密钥确定协议和ISAKMP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IPSec优点"><span class="nav-number">3.8.</span> <span class="nav-text">IPSec优点</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
