@@ -246,7 +246,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-07-13 21:12:56 / 修改时间：21:47:04" itemprop="dateCreated datePublished" datetime="2020-07-13T21:12:56+08:00">2020-07-13</time>
+              <time title="创建时间：2020-07-13 21:12:56 / 修改时间：21:59:23" itemprop="dateCreated datePublished" datetime="2020-07-13T21:12:56+08:00">2020-07-13</time>
             </span>
 
           
@@ -260,83 +260,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-
-<!-- TOC -->
-<ul>
-<li><a href="#传输层">传输层</a><ul>
-<li><a href="#传输层的任务">传输层的任务</a></li>
-<li><a href="#两个主要协议">两个主要协议</a></li>
-<li><a href="#tcp">TCP</a><ul>
-<li><a href="#三次握手建立连接">三次握手建立连接</a></li>
-<li><a href="#四次挥手释放连接">四次挥手释放连接</a></li>
-</ul>
-</li>
-<li><a href="#udp">UDP</a></li>
-<li><a href="#端口号">端口号</a></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><p>面向通信部分的最高层，用户功能中的最低层，在通信子网中没有传输层。介于通信子网和资源子网之间。</p>
-<h4 id="传输层的任务"><a href="#传输层的任务" class="headerlink" title="传输层的任务"></a>传输层的任务</h4><p>提供从源端到目的端（应用进程间）<strong>可靠</strong>而有效的数据传输，屏蔽低层网络的差异</p>
-<h4 id="两个主要协议"><a href="#两个主要协议" class="headerlink" title="两个主要协议"></a>两个主要协议</h4><ul>
-<li>用户数据报协议 UDP (User Datagram Protocol)：无连接，不可靠</li>
-<li>传输控制协议 TCP (Transmission Control Protocol)：面向连接，可靠，不提供广播或多播服务</li>
-</ul>
-<p>两个对等运输实体在通信时传送的数据单位叫作运输协议数据单元 TPDU (Transport Protocol Data Unit)。</p>
-<ul>
-<li>TCP 传送的数据单位协议是 TCP 报文段(segment)</li>
-<li>UDP 传送的数据单位协议是 UDP 报文或用户数据报。</li>
-</ul>
-<h4 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h4><p>特点：</p>
-<ul>
-<li>面向连接</li>
-<li>只能一对一</li>
-<li>可靠交付</li>
-<li>全双工</li>
-<li>面向字节流</li>
-</ul>
-<h5 id="三次握手建立连接"><a href="#三次握手建立连接" class="headerlink" title="三次握手建立连接"></a>三次握手建立连接</h5><p>—SYN=1,seq=x—&gt;<br>&lt;—SYN=1,ACK=1,seq=y,ack=x+1—<br>—ACK=1,seq=x+1,ack=y+1—&gt;</p>
-<p>正常流程：<br><img src="https://s1.ax1x.com/2020/07/11/UM7cqS.png" alt=""></p>
-<p>避免的异常流程：</p>
-<ul>
-<li>重复的CR出现，主机2接受连接，但是主机1随即拒绝</li>
-<li>同时有作废的CR和ACC出现，主机1的数据应该捎带确认该ACC，但是主机1并不会这样做</li>
-</ul>
-<h5 id="四次挥手释放连接"><a href="#四次挥手释放连接" class="headerlink" title="四次挥手释放连接"></a>四次挥手释放连接</h5><p>—FIN=1,seq=u—&gt;<br>&lt;—ACK=1,seq=v,ack=u+1—<br>…数据传送…<br>&lt;—FIN=1,ACK=1,seq=w,ack=u+1—<br>—ACK=1,seq=u+1,ack=w+1—&gt;<br>左边需等待2MSL才释放：</p>
-<ul>
-<li><p>为了保证 A 发送的最后一个 ACK 报文段能够到达 B。</p>
-</li>
-<li><p>防止 “已失效的连接请求报文段”出现在本连接中。A 在发送完最后一个 ACK 报文段后，再经过时间 2MSL，就可以使本连接持续的时间内所产生的所有报文段，都从网络中消失。</p>
-</li>
-<li><p>非对称释放</p>
-</li>
-<li><p>对称释放</p>
-<ul>
-<li>正常情况</li>
-<li>最后的确认TPDU丢失，因超时释放</li>
-<li>数据的应答丢失，因超时重发重新进行三次握手，传输完释放</li>
-<li>应答和重发都丢失，因多次重发超时而释放</li>
-</ul>
-</li>
-</ul>
-<h4 id="UDP"><a href="#UDP" class="headerlink" title="UDP"></a>UDP</h4><p>UDP 只在 IP 的数据报服务之上增加了很少一点的功能，即端口的功能和差错检测的功能。</p>
-<p>特点：</p>
-<ul>
-<li>无连接</li>
-<li>尽最大努力交付，不可靠，无拥塞控制</li>
-<li>面向报文</li>
-<li>支持一/多对一/多</li>
-<li>首部开销小</li>
-</ul>
-<h4 id="端口号"><a href="#端口号" class="headerlink" title="端口号"></a>端口号</h4><p>端口号 16bit 只具有本地意义<br>TCP和UDP都使用了端口号</p>
-<ul>
-<li>传输层地址，也称为传输服务访问点（TSAP）在TCP协议中传输层地址即TCP的端口号</li>
-<li>网络层地址称为网络服务访问点NSAP（Network Service Access Point），NSAP在IP协议中即IP地址</li>
-</ul>
-<p>套接字 = IP + port</p>
-
+          <p>本章学习传输层。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E5%85%AD/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -369,7 +301,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E4%BA%94/" class="post-title-link" itemprop="url">计网复习日记(五)--网络互联</a>
+            <a href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E4%BA%94/" class="post-title-link" itemprop="url">计网复习日记(五)--网络互连</a>
         </h2>
 
         <div class="post-meta">
@@ -380,7 +312,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-07-13 17:49:03 / 修改时间：21:14:12" itemprop="dateCreated datePublished" datetime="2020-07-13T17:49:03+08:00">2020-07-13</time>
+              <time title="创建时间：2020-07-13 17:49:03 / 修改时间：21:59:09" itemprop="dateCreated datePublished" datetime="2020-07-13T17:49:03+08:00">2020-07-13</time>
             </span>
 
           
@@ -394,366 +326,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-
-<!-- TOC -->
-<ul>
-<li><a href="#网络互连">网络互连</a><ul>
-<li><a href="#网际层ip协议">网际层IP协议</a></li>
-<li><a href="#互连设备的类型">互连设备的类型</a><ul>
-<li><a href="#物理层中继系统">物理层中继系统</a></li>
-<li><a href="#数据链路层中继系统">数据链路层中继系统</a></li>
-<li><a href="#路由层中继系统">路由层中继系统</a></li>
-<li><a href="#高层中继系统">高层中继系统</a></li>
-</ul>
-</li>
-<li><a href="#互连方式">互连方式</a></li>
-<li><a href="#lan的互连">LAN的互连</a><ul>
-<li><a href="#hub">HUB</a></li>
-<li><a href="#网桥">网桥</a></li>
-<li><a href="#交换机">交换机</a><ul>
-<li><a href="#虚拟局域网vlan">虚拟局域网VLAN</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#ip地址">IP地址</a><ul>
-<li><a href="#ip分类">IP分类</a></li>
-<li><a href="#ip地址的重要特点">IP地址的重要特点</a></li>
-<li><a href="#ip地址与硬件地址">IP地址与硬件地址</a></li>
-</ul>
-</li>
-<li><a href="#arp和rarp">ARP和RARP</a></li>
-<li><a href="#ip数据报">IP数据报</a><ul>
-<li><a href="#数据报分段与重组">数据报分段与重组</a></li>
-</ul>
-</li>
-<li><a href="#ip层转发分组流程">IP层转发分组流程</a></li>
-<li><a href="#划分子网">划分子网</a><ul>
-<li><a href="#两级ip到三级ip">两级IP到三级IP</a></li>
-<li><a href="#无分类编址cidr">无分类编址CIDR</a></li>
-</ul>
-</li>
-<li><a href="#网际控制报文协议icmp">网际控制报文协议ICMP</a><ul>
-<li><a href="#icmp报文种类">ICMP报文种类</a></li>
-<li><a href="#不发送icmp差错报文的情况">不发送ICMP差错报文的情况</a></li>
-<li><a href="#icmp应用">ICMP应用</a><ul>
-<li><a href="#ping">ping</a></li>
-<li><a href="#tarcert">tarcert</a></li>
-<li><a href="#得到路径中最小的mtu">得到路径中最小的MTU</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#自治系统as">自治系统AS</a></li>
-<li><a href="#内部网关协议igp-域内路由选择">内部网关协议IGP 域内路由选择</a><ul>
-<li><a href="#路由信息协议rip">路由信息协议RIP</a></li>
-<li><a href="#ospf">OSPF</a></li>
-</ul>
-</li>
-<li><a href="#外部网关协议egp-域间路由选择">外部网关协议EGP 域间路由选择</a><ul>
-<li><a href="#bgp">BGP</a></li>
-</ul>
-</li>
-<li><a href="#网际组管理协议-igmp-和多播路由选择协议">网际组管理协议 IGMP 和多播路由选择协议</a></li>
-<li><a href="#vpn">VPN</a><ul>
-<li><a href="#隧道技术实现vpn">隧道技术实现VPN</a></li>
-<li><a href="#内联网和外联网">内联网和外联网</a></li>
-<li><a href="#远程接入vpn">远程接入VPN</a></li>
-</ul>
-</li>
-<li><a href="#网络地址转换nat">网络地址转换NAT</a><ul>
-<li><a href="#nat存在的问题">NAT存在的问题</a></li>
-</ul>
-</li>
-<li><a href="#ipv6">IPv6</a></li>
-</ul>
-</li>
-</ul>
-<h3 id="网络互连"><a href="#网络互连" class="headerlink" title="网络互连"></a>网络互连</h3><h4 id="网际层IP协议"><a href="#网际层IP协议" class="headerlink" title="网际层IP协议"></a>网际层IP协议</h4><ul>
-<li>地址解析协议 ARP(Address Resolution Protocol)</li>
-<li>逆地址解析协议 RARP(Reverse Address Resolution Protocol)</li>
-<li>网际控制报文协议 ICMP(Internet Control Message Protocol)</li>
-<li>网际组管理协议 IGMP(Internet Group Management Protocol)</li>
-</ul>
-<h4 id="互连设备的类型"><a href="#互连设备的类型" class="headerlink" title="互连设备的类型"></a>互连设备的类型</h4><p>当中继系统是转发器或网桥时，一般并不称之为网络互连，因为这仅仅是把一个网络扩大了，而这仍然是一个网络。</p>
-<h5 id="物理层中继系统"><a href="#物理层中继系统" class="headerlink" title="物理层中继系统"></a>物理层中继系统</h5><p>转发器 集线器</p>
-<ul>
-<li>物理层设备，在电缆段之间拷贝比特；</li>
-<li>对弱信号进行放大或再生，以便延长传输距离。</li>
-</ul>
-<h5 id="数据链路层中继系统"><a href="#数据链路层中继系统" class="headerlink" title="数据链路层中继系统"></a>数据链路层中继系统</h5><p>网桥、交换机</p>
-<ul>
-<li>数据链路层设备，在局域网之间存储转发帧；</li>
-<li>网桥可以改变帧格式。</li>
-</ul>
-<h5 id="路由层中继系统"><a href="#路由层中继系统" class="headerlink" title="路由层中继系统"></a>路由层中继系统</h5><p>路由器</p>
-<ul>
-<li>网络层设备，在网络之间存储转发包；</li>
-<li>必要时，做网络层协议转换。</li>
-</ul>
-<h5 id="高层中继系统"><a href="#高层中继系统" class="headerlink" title="高层中继系统"></a>高层中继系统</h5><p>网关</p>
-<h4 id="互连方式"><a href="#互连方式" class="headerlink" title="互连方式"></a>互连方式</h4><ul>
-<li><p>级联虚电路</p>
-<ul>
-<li>建立连接</li>
-<li>传输数据</li>
-<li>拆除连接</li>
-</ul>
-</li>
-<li><p>无连接互连</p>
-<ul>
-<li>每个包单独路由</li>
-<li>根据不同子网的需要做协议转换</li>
-</ul>
-</li>
-<li><p>级联虚电路的优点</p>
-<ul>
-<li>路由器预留缓冲区等资源，保证服务质量；</li>
-<li>包按序号传输；</li>
-<li>短包头。</li>
-</ul>
-</li>
-<li><p>级联虚电路的缺点</p>
-<ul>
-<li>路由器需要大量内存，存储虚电路信息；</li>
-<li>一旦发生拥塞，没有其它路由；</li>
-<li>健壮性差；</li>
-<li>如果网络中有一个不可靠的数据报子网，级连虚电路很难实现。</li>
-</ul>
-</li>
-<li><p>无连接网络互连的优点</p>
-<ul>
-<li>能够容忍拥塞，并能适应拥塞；</li>
-<li>健壮性好；</li>
-<li>可用于多种网络互连。</li>
-</ul>
-</li>
-<li><p>无连接网络互连的缺点</p>
-<ul>
-<li>长包头；</li>
-<li>包不能保证按序号到达；</li>
-<li>不能保证服务质量。</li>
-</ul>
-</li>
-</ul>
-<h4 id="LAN的互连"><a href="#LAN的互连" class="headerlink" title="LAN的互连"></a>LAN的互连</h4><h5 id="HUB"><a href="#HUB" class="headerlink" title="HUB"></a>HUB</h5><p>使用hub连接的计算机共享一个“<strong>碰撞域</strong>”</p>
-<ul>
-<li>从某一端口A将收到的帧发送到所有端口</li>
-<li>非广播帧时，地址与帧目的MAC地址相同的站响应用户A</li>
-<li>广播帧时，所有用户都响应用户A</li>
-</ul>
-<h5 id="网桥"><a href="#网桥" class="headerlink" title="网桥"></a>网桥</h5><p>一种存储转发装置</p>
-<ul>
-<li>读取网络N1上的所有帧并接收那些指向N2的帧；</li>
-<li>将接收的帧送到数据链路层，在该层上计算校验和并计算到达N2的路由；</li>
-<li>将接受的帧用N2的MAC协议转发到N2上；</li>
-</ul>
-<p>不足：</p>
-<ul>
-<li>存储转发导致时延增加 </li>
-<li>无流量控制功能，负载重时会丢失帧 </li>
-<li>不能防止广播风暴（广播消息仍会泛滥到网桥所连接的各个网段）</li>
-</ul>
-<h5 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h5><p>交换机利用“地址学习”的方法来动态建立和维护端口号/MAC地址映射表的。</p>
-<ul>
-<li>直接交换方式(只要接收并检测到目的地址字段就立即将该帧转发出去，而不管这一帧数据是否出错。)</li>
-<li>存储转发方式(交换机先完整接收数据帧进行差错检测再转发 FCS检测)</li>
-<li>改进的直接交换方式(接收数据帧的前64字节 判断字头段正确再转发)</li>
-</ul>
-<h6 id="虚拟局域网VLAN"><a href="#虚拟局域网VLAN" class="headerlink" title="虚拟局域网VLAN"></a>虚拟局域网VLAN</h6><p>建立在网络交换机基础上</p>
-<p>优点：</p>
-<ul>
-<li>建立虚拟工作组，便于进行网络的管理  </li>
-<li>增强了网络安全性</li>
-<li>抑制广播数据的泛滥</li>
-<li>减少了处理用户站点移动所带来的开销</li>
-</ul>
-<p>一个VLAN就好像是一个孤立的网段，VLAN间不能直接通信，实现VLAN间互联必须借助于<strong>路由器</strong>。</p>
-<p>MAC帧中有VLAN标记</p>
-<h4 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h4><p>IP = net id + host id</p>
-<h5 id="IP分类"><a href="#IP分类" class="headerlink" title="IP分类"></a>IP分类</h5><p>A类 8+24  0……<br>B类 16+16 10……<br>C类 24+8 110……<br>D类 多播 1110……<br>E类 保留 1111……</p>
-<p>后缀全1表示广播</p>
-<h5 id="IP地址的重要特点"><a href="#IP地址的重要特点" class="headerlink" title="IP地址的重要特点"></a>IP地址的重要特点</h5><ul>
-<li>IP分net和host的好处：<ul>
-<li>IP地址管理机构只分发网络号</li>
-<li>路由器只根据网络号进行路由</li>
-</ul>
-</li>
-<li>一个路由器至少应有两个IP</li>
-</ul>
-<h5 id="IP地址与硬件地址"><a href="#IP地址与硬件地址" class="headerlink" title="IP地址与硬件地址"></a>IP地址与硬件地址</h5><p>TCP报文 = 首部 + 应用层数据<br>IP数据报 = 首部(含IP) + TCP报文<br>MAC帧 = 首部(含MAC地址) + IP数据报</p>
-<h4 id="ARP和RARP"><a href="#ARP和RARP" class="headerlink" title="ARP和RARP"></a>ARP和RARP</h4><p>IP地址 -ARP-&gt; 物理地址</p>
-<p>物理地址 -RARP-&gt; IP地址</p>
-<p>每个主机中都设有一个ARP高速缓存，包含<strong>所在局域网</strong>上各主机和路由器的IP-MAC地址映射，对不同局域网应该找到路由器的硬件地址转发给下一网络。</p>
-<h4 id="IP数据报"><a href="#IP数据报" class="headerlink" title="IP数据报"></a>IP数据报</h4><ul>
-<li><p>标志<br>DF = 0 表示本分组允许分段<br>= 1 表示本分组必须完整到达，途中不允许分段<br>MF = 0 表示本段为本分组的最后一个段<br>= 1 表示本段后面还有更多的分段</p>
-</li>
-<li><p>段偏移（fragmentation offset）：13位<br>实际偏移量 = 段偏移值 x 8 Byte</p>
-</li>
-</ul>
-<h5 id="数据报分段与重组"><a href="#数据报分段与重组" class="headerlink" title="数据报分段与重组"></a>数据报分段与重组</h5><ul>
-<li><p>每个分段头部copy原来的头部，与分段相关的重新生成</p>
-</li>
-<li><p>必须在各分段都到达目的地之后才进行重组：（可以不同路由、不按序）<br>要么重组成功，要么全部丢弃的原则</p>
-</li>
-</ul>
-<h4 id="IP层转发分组流程"><a href="#IP层转发分组流程" class="headerlink" title="IP层转发分组流程"></a>IP层转发分组流程</h4><ul>
-<li>主机号路由</li>
-<li>特定主机路由</li>
-<li>默认路由</li>
-</ul>
-<p>(1) 从数据报的首部提取目的主机的 IP 地址 D（划分子网情况下需要先相与）, 得出目的网络地址为 N。<br>(2) 若网络 N 与此路由器直接相连，则把数据报直接交付目的主机 D；否则是间接交付，执行(3)。<br>(3) 若路由表中有目的地址为 D 的特定主机路由，则把数据报传送给路由表中所指明的下一跳路由器；否则，执行(4)。<br>(4) 若路由表中有到达网络 N 的路由，则把数据报传送给路由表指明的下一跳路由器；否则，执行(5)。<br>(5) 若路由表中有一个默认路由，则把数据报传送给路由表中所指明的默认路由器；否则，执行(6)。<br>(6) 报告转发分组出错。</p>
-<h4 id="划分子网"><a href="#划分子网" class="headerlink" title="划分子网"></a>划分子网</h4><h5 id="两级IP到三级IP"><a href="#两级IP到三级IP" class="headerlink" title="两级IP到三级IP"></a>两级IP到三级IP</h5><p>IP = net id + subnet id + host id</p>
-<p>子网划分后对外仍是一个网络</p>
-<p>子网掩码是一个网络或子网的重要属性，表示网络号+子网号的位数</p>
-<p>IP地址和子网掩码与运算得到网络地址</p>
-<h5 id="无分类编址CIDR"><a href="#无分类编址CIDR" class="headerlink" title="无分类编址CIDR"></a>无分类编址CIDR</h5><p>一个 CIDR 地址块可以表示很多地址–路由聚合/构成超网</p>
-<p>IP = 网络前缀 + host id</p>
-<ul>
-<li>提高IP地址的利用率</li>
-<li>缩短路由表</li>
-</ul>
-<p>使用CIDR时，路由表最长前缀匹配</p>
-<h4 id="网际控制报文协议ICMP"><a href="#网际控制报文协议ICMP" class="headerlink" title="网际控制报文协议ICMP"></a>网际控制报文协议ICMP</h4><p>为了提高 IP 数据报交付成功的机会，在网际层使用了网际控制报文协议 ICMP (Internet Control Message Protocol)。</p>
-<ul>
-<li>ICMP 允许主机或路由器<strong>报告差错情况</strong>和提供有关异常情况的报告。</li>
-<li>ICMP 不是高层协议，而<strong>是 IP 层的协议</strong>。</li>
-<li>ICMP 报文作为 IP 层数据报的数据，加上数据报的首部，组成 IP 数据报发送出去。</li>
-</ul>
-<h5 id="ICMP报文种类"><a href="#ICMP报文种类" class="headerlink" title="ICMP报文种类"></a>ICMP报文种类</h5><ul>
-<li>差错报告报文<ul>
-<li>终点不可达</li>
-<li>源抑制</li>
-<li>超时</li>
-<li>重定向</li>
-<li>参数问题</li>
-</ul>
-</li>
-<li>询问报文<ul>
-<li>回送请求和回答</li>
-<li>时间戳请求和回答</li>
-</ul>
-</li>
-</ul>
-<h5 id="不发送ICMP差错报文的情况"><a href="#不发送ICMP差错报文的情况" class="headerlink" title="不发送ICMP差错报文的情况"></a>不发送ICMP差错报文的情况</h5><ul>
-<li>ICMP报文出错</li>
-<li>对分片的数据报值只发送一个</li>
-<li>多播地址和特殊地址不发送</li>
-</ul>
-<h5 id="ICMP应用"><a href="#ICMP应用" class="headerlink" title="ICMP应用"></a>ICMP应用</h5><h6 id="ping"><a href="#ping" class="headerlink" title="ping"></a>ping</h6><ul>
-<li>使用了回送请求与回答报文</li>
-<li>测试两个主机连通性</li>
-</ul>
-<h6 id="tarcert"><a href="#tarcert" class="headerlink" title="tarcert"></a>tarcert</h6><ul>
-<li>使用超时报文</li>
-<li>不断增大hop直至到达</li>
-</ul>
-<h6 id="得到路径中最小的MTU"><a href="#得到路径中最小的MTU" class="headerlink" title="得到路径中最小的MTU"></a>得到路径中最小的MTU</h6><ul>
-<li>使用参数错误报文</li>
-<li>置DF=1不允许分段，不断减小报文长度</li>
-</ul>
-<h4 id="自治系统AS"><a href="#自治系统AS" class="headerlink" title="自治系统AS"></a>自治系统AS</h4><p>一个AS对其他AS表现出单一和一致的路由选择策略</p>
-<h4 id="内部网关协议IGP-域内路由选择"><a href="#内部网关协议IGP-域内路由选择" class="headerlink" title="内部网关协议IGP 域内路由选择"></a>内部网关协议IGP 域内路由选择</h4><h5 id="路由信息协议RIP"><a href="#路由信息协议RIP" class="headerlink" title="路由信息协议RIP"></a>路由信息协议RIP</h5><ul>
-<li><p>分布式的基于距离向量的路由选择协议</p>
-</li>
-<li><p>要求每一个路由器维护从他自己到每一个目的网络的距离记录，定时和相邻路由器交换路由信息</p>
-</li>
-<li><p>各路由器中信息不同</p>
-</li>
-<li><p>RIP 认为一个好的路由就是它通过的路由器的数目少，即“距离短”。</p>
-</li>
-<li><p>RIP 不能在两个网络之间同时使用多条路由。</p>
-</li>
-<li><p>RIP 允许一条路径最多只能包含 15 个路由器。<br>“距离”的最大值为16 时即相当于不可达。可见 RIP 只适用于小型互联网。</p>
-</li>
-</ul>
-<p><strong>RIP用UDP数据报传送</strong></p>
-<p>优点：</p>
-<ul>
-<li>实现简单 开销较小<br>缺点：</li>
-<li>网络出现故障时，时延较长(好消息传播得快，坏消息传播得慢)</li>
-<li>距离最大为16，网络规模受限</li>
-<li>路由表开销随网络规模增大</li>
-</ul>
-<h5 id="OSPF"><a href="#OSPF" class="headerlink" title="OSPF"></a>OSPF</h5><p>是分布式的链路状态协议</p>
-<ul>
-<li>向本自治系统中所有路由器发送信息，这里使用的方法是洪泛法。</li>
-<li>发送的信息就是与本路由器相邻的所有路由器的链路状态，但这只是路由器所知道的部分信息。<ul>
-<li>“链路状态”就是说明本路由器都和哪些路由器相邻，以及该链路的“度量”(metric)。</li>
-</ul>
-</li>
-<li>只有当链路状态发生变化时，路由器才用洪泛法向所有路由器发送此信息。</li>
-</ul>
-<p><strong>各路由器中信息一致</strong></p>
-<p>OSPF可以将AS再划分成多个区域，减少洪泛法的通信量</p>
-<p><strong>OSPF直接用IP数据报传送</strong>，数据报很短</p>
-<p>特点：</p>
-<ul>
-<li>支持CIDR和变长子网划分</li>
-<li>多路径负载均衡</li>
-<li>对不同服务计算不同路由</li>
-</ul>
-<p>五种分组：</p>
-<ul>
-<li>类型1，问候(Hello)分组。</li>
-<li>类型2，数据库描述(Database Description)分组。</li>
-<li>类型3，链路状态请求(Link State Request)分组。</li>
-<li>类型4，链路状态更新(Link State Update)分组，<br>用洪泛法对全网更新链路状态。<br>类型5，链路状态确认(Link State Acknowledgment)<br>分组。</li>
-</ul>
-<h4 id="外部网关协议EGP-域间路由选择"><a href="#外部网关协议EGP-域间路由选择" class="headerlink" title="外部网关协议EGP 域间路由选择"></a>外部网关协议EGP 域间路由选择</h4><h5 id="BGP"><a href="#BGP" class="headerlink" title="BGP"></a>BGP</h5><ul>
-<li>在AS间交换“可达性”信息</li>
-<li>边界网关协议 BGP 只能是力求寻找一条能够到达目的网络且比较好的路由（不能兜圈子），而<strong>并非要寻找一条最佳路由</strong>。</li>
-</ul>
-<p>BGP发言人通常为边界路由器，两个BGP发言人通过一个共享网络连接</p>
-<p><strong>BGP建立TCP连接以建立BGP会话</strong></p>
-<p>特点：</p>
-<ul>
-<li>支持CIDR</li>
-<li>BGP邻站只更新变化部分</li>
-</ul>
-<h4 id="网际组管理协议-IGMP-和多播路由选择协议"><a href="#网际组管理协议-IGMP-和多播路由选择协议" class="headerlink" title="网际组管理协议 IGMP 和多播路由选择协议"></a>网际组管理协议 IGMP 和多播路由选择协议</h4><p>用于IP多播：</p>
-<ul>
-<li>IGMP：使路由器知道多播组成员的信息</li>
-<li>多播路由选择协议：把多播数据报用最小代价传送给所有的组成员。这就需要使用。</li>
-</ul>
-<p>IGMP在本地使用，并不知道多播组的成员数，知识让多播路由器知道主机加入或退出<br><strong>IGMP 使用 IP 数据报</strong>，但它也向 IP 提供服务</p>
-<p>多播路由选择协议必须动态适应成员变化</p>
-<p>转发多播数据报使用的方法：</p>
-<ul>
-<li>洪泛与剪除<br>路由器转发多播数据报使用洪泛法。为了避免兜圈子，采用了叫做反向路径广播 RPB (Reverse Path Broadcasting)的策略。</li>
-<li>隧道技术(tunneling)<br>使用隧道技术在单播网络中传递多播数据报</li>
-<li>基于核心的发现技术</li>
-</ul>
-<h4 id="VPN"><a href="#VPN" class="headerlink" title="VPN"></a>VPN</h4><ul>
-<li>本地地址——仅在机构内部使用的 IP 地址，可以由本机构自行分配，而不需要向因特网的管理机构申请。</li>
-<li>全球地址——全球唯一的IP地址，必须向因特网的管理机构申请。</li>
-</ul>
-<h5 id="隧道技术实现VPN"><a href="#隧道技术实现VPN" class="headerlink" title="隧道技术实现VPN"></a>隧道技术实现VPN</h5><p><img src="https://s1.ax1x.com/2020/07/13/UYTJjH.png" alt=""></p>
-<h5 id="内联网和外联网"><a href="#内联网和外联网" class="headerlink" title="内联网和外联网"></a>内联网和外联网</h5><p>都是基于TCP/IP协议</p>
-<ul>
-<li>由部门 A 和 B 的内部网络所构成的虚拟专用网 VPN 又称为内联网(intranet)，表示部门 A和 B 都是在同一个机构的内部。</li>
-<li>一个机构和某些外部机构共同建立的虚拟专用网 VPN 又称为外联网(extranet)。</li>
-</ul>
-<h5 id="远程接入VPN"><a href="#远程接入VPN" class="headerlink" title="远程接入VPN"></a>远程接入VPN</h5><p>VPN软件在PC和主机间建立隧道</p>
-<h4 id="网络地址转换NAT"><a href="#网络地址转换NAT" class="headerlink" title="网络地址转换NAT"></a>网络地址转换NAT</h4><p>把私有IP地址转换成公开IP地址</p>
-<p>Router（Firewall）将对请求IP包和返回的应答IP包作NAT</p>
-<p>返回的包到达源端：<br>利用传输层的源端口号字段，查询NAT中的映射表进行转换</p>
-<h5 id="NAT存在的问题"><a href="#NAT存在的问题" class="headerlink" title="NAT存在的问题"></a>NAT存在的问题</h5><ul>
-<li>NAT违反了IP的体系结构<br>IP规定一个IP地址对应一个网络接口，而在NAT中，某个地址可能会对应成千上万个地址</li>
-<li>NAT将Internet的无连接服务变成了有连接服务<br>因为NAT必须包含所有经过它的连接信息</li>
-<li>NAT违反了网络分层原则<br>在第三层用了第四层协议格式中的字段</li>
-<li>如果IP包的载荷不是TCP或UDP，则NAT无法工作<br>因为在其他协议的信息中不包含源端口号</li>
-<li>在有些应用中NAT可能会出错<br>在有些应用中，发送方会将源IP地址嵌在它的消息中，接收方必须从信息中取用源IP地址，但NAT不作此类处理，因而将导致错误</li>
-</ul>
-<h4 id="IPv6"><a href="#IPv6" class="headerlink" title="IPv6"></a>IPv6</h4><ul>
-<li>更大的地址空间</li>
-<li>首部简化</li>
-<li>支持选项</li>
-<li>安全性</li>
-<li>服务质量 多媒体应用</li>
-</ul>
-
+          <p>本章学习网络互连。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E4%BA%94/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -797,7 +378,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-07-13 14:54:54 / 修改时间：17:47:12" itemprop="dateCreated datePublished" datetime="2020-07-13T14:54:54+08:00">2020-07-13</time>
+              <time title="创建时间：2020-07-13 14:54:54 / 修改时间：21:58:44" itemprop="dateCreated datePublished" datetime="2020-07-13T14:54:54+08:00">2020-07-13</time>
             </span>
 
           
@@ -811,195 +392,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-
-<!-- TOC -->
-<ul>
-<li><a href="#网络层">网络层</a><ul>
-<li><a href="#网络层解决的问题">网络层解决的问题</a></li>
-<li><a href="#向传输层提供的服务">向传输层提供的服务</a></li>
-<li><a href="#网络层的两种实现方式--数据报和虚电路">网络层的两种实现方式 —— 数据报和虚电路</a></li>
-<li><a href="#路由选择算法">路由选择算法</a><ul>
-<li><a href="#路由选择与流量控制的关系">路由选择与流量控制的关系</a></li>
-<li><a href="#路由表">路由表</a></li>
-<li><a href="#路由选择算法-1">路由选择算法</a><ul>
-<li><a href="#随机路由选择">随机路由选择</a></li>
-<li><a href="#洪泛路由选择">洪泛路由选择</a></li>
-<li><a href="#固定式路由选择静态">固定式路由选择（静态）</a></li>
-<li><a href="#动态路由选择">动态路由选择</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#网络流量控制">网络流量控制</a><ul>
-<li><a href="#网络拥塞的因素">网络拥塞的因素</a></li>
-<li><a href="#拥塞控制和流量控制的关系">拥塞控制和流量控制的关系</a></li>
-<li><a href="#流量控制的功能">流量控制的功能</a></li>
-<li><a href="#缓冲策略与流量控制">缓冲策略与流量控制</a></li>
-<li><a href="#流量整形技术">流量整形技术</a><ul>
-<li><a href="#漏桶算法">漏桶算法</a></li>
-<li><a href="#令牌漏桶算法">令牌漏桶算法</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#网络拥塞控制">网络拥塞控制</a><ul>
-<li><a href="#网络性能和网络负载的关系">网络性能和网络负载的关系</a></li>
-<li><a href="#处理拥塞的控制方法">处理拥塞的控制方法</a></li>
-<li><a href="#网络中的拥塞控制机制">网络中的拥塞控制机制</a></li>
-</ul>
-</li>
-<li><a href="#tcp的流量控制和拥塞控制">TCP的流量控制和拥塞控制</a><ul>
-<li><a href="#持续计时器">持续计时器</a></li>
-<li><a href="#慢启动和拥塞避免">慢启动和拥塞避免</a></li>
-<li><a href="#快重传和快恢复">快重传和快恢复</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h3><p>网络层为一个网络连接的两个传输层实体间交换网络服务数据单元提供功能和规程的方法，它使传输层实体看不到下面资源的使用情况。</p>
-<ul>
-<li>网络层是处理端到端传输的最低层，通信子网的最高层。</li>
-</ul>
-<h4 id="网络层解决的问题"><a href="#网络层解决的问题" class="headerlink" title="网络层解决的问题"></a>网络层解决的问题</h4><ul>
-<li>路由选择</li>
-<li>拥塞控制</li>
-</ul>
-<h4 id="向传输层提供的服务"><a href="#向传输层提供的服务" class="headerlink" title="向传输层提供的服务"></a>向传输层提供的服务</h4><ul>
-<li>面向连接的服务:将复杂的功能放在网络层(通信子网)</li>
-<li>无连接服务:将复杂的功能放在传输层</li>
-<li>通信子网提供的服务（面向连接或无连接）与通信子网结构（虚电路或数据报）没有必然联系。</li>
-</ul>
-<h4 id="网络层的两种实现方式-——-数据报和虚电路"><a href="#网络层的两种实现方式-——-数据报和虚电路" class="headerlink" title="网络层的两种实现方式 —— 数据报和虚电路"></a>网络层的两种实现方式 —— 数据报和虚电路</h4><ul>
-<li>都属于分组交换，采用存储转发机制。<br><img src="https://s1.ax1x.com/2020/07/13/UJhRcn.png" alt=""></li>
-</ul>
-<h4 id="路由选择算法"><a href="#路由选择算法" class="headerlink" title="路由选择算法"></a>路由选择算法</h4><h5 id="路由选择与流量控制的关系"><a href="#路由选择与流量控制的关系" class="headerlink" title="路由选择与流量控制的关系"></a>路由选择与流量控制的关系</h5><p>路由选择的时延反馈给流量控制，改变吞吐量</p>
-<h5 id="路由表"><a href="#路由表" class="headerlink" title="路由表"></a>路由表</h5><ul>
-<li>某节点路由表包括目的节点和下一节点</li>
-<li>虚电路中的路由表使用虚电路号<br>从所有的源节点到一个给定的目的节点的最优路由的集合形成了一个以目的节点为根的树，称为汇集树；</li>
-</ul>
-<h5 id="路由选择算法-1"><a href="#路由选择算法-1" class="headerlink" title="路由选择算法"></a>路由选择算法</h5><h6 id="随机路由选择"><a href="#随机路由选择" class="headerlink" title="随机路由选择"></a>随机路由选择</h6><p>随机选择出口转发，可能造成分组在通信子网中长期中转</p>
-<h6 id="洪泛路由选择"><a href="#洪泛路由选择" class="headerlink" title="洪泛路由选择"></a>洪泛路由选择</h6><p>基本思想:把收到的每一个包，向除了该包到来的线路外的所有输出线路发送。<br>优点：可靠性高，路径最短<br>主要问题:洪泛要产生大量重复包，浪费带宽。<br>解决措施:每个包头包含站点计数器，每经过一站计数器减1，为0时则丢弃该包；在每个节点上建立登记表，则数据包再次经过时丢弃</p>
-<h6 id="固定式路由选择（静态）"><a href="#固定式路由选择（静态）" class="headerlink" title="固定式路由选择（静态）"></a>固定式路由选择（静态）</h6><ul>
-<li>固定式单路由算法(绝对固定式路由选择)<ul>
-<li>每个节点都有一张人工计算得到的固定路由表。</li>
-<li>优点是简单、实现方便，可选择正常情况下的最佳路由。</li>
-<li>缺点是路由表不能联机修改，不能适应网络的业务量及拓扑变化。</li>
-</ul>
-</li>
-<li>固定式多路由算法（迂回式路由选择）<ul>
-<li>固定式多路由算法是任何一对节点之间有多条可选路由。</li>
-<li>缺点是路由表不能联机修改。</li>
-</ul>
-</li>
-</ul>
-<h6 id="动态路由选择"><a href="#动态路由选择" class="headerlink" title="动态路由选择"></a>动态路由选择</h6><p>自适应路由选择方法是从路径和时延两方面考虑的：</p>
-<ul>
-<li>孤立的自适应路由算法<ul>
-<li>选择路由时，仅仅孤立地依据<strong>本节点自身</strong>的当前运行状态（流量和排队）信息来决定路由，而与网络其他各节点的状态无关。</li>
-</ul>
-</li>
-<li>分布式自适应路由选择<ul>
-<li>在网络相邻节点之间，每经过一定时间<strong>相互交换一次状态信息</strong>，各节点根据相邻节点送来的状态信息来修改自己的路由表。</li>
-<li>距离矢量路由算法<ul>
-<li>每个路由器维护一张矢量表，表中列出了该节点到每个目的地已知的最佳距离和路径。</li>
-<li>相邻路由器交换信息</li>
-</ul>
-</li>
-<li>链路状态（link state）算法<ul>
-<li>与距离矢量算法不同，它是一种<strong>全局</strong>的路由选择算法</li>
-<li>每个节点将链路状态包向网络中所有其他的节点广播。链路状态包包括节点的身份和它到相邻节点的代价信息。最后的结果是<strong>所有的节点都具有同样的网络拓扑图</strong>。</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<h4 id="网络流量控制"><a href="#网络流量控制" class="headerlink" title="网络流量控制"></a>网络流量控制</h4><h5 id="网络拥塞的因素"><a href="#网络拥塞的因素" class="headerlink" title="网络拥塞的因素"></a>网络拥塞的因素</h5><ul>
-<li>缓冲器容量不够<ul>
-<li>缓冲器容量不足时，分组丢失；但缓冲器太大时，会发生超时</li>
-</ul>
-</li>
-<li>处理器速度太低</li>
-<li>链路带宽不够</li>
-</ul>
-<h5 id="拥塞控制和流量控制的关系"><a href="#拥塞控制和流量控制的关系" class="headerlink" title="拥塞控制和流量控制的关系"></a>拥塞控制和流量控制的关系</h5><ul>
-<li>拥塞控制必须使得通信子网能够传送所有待传送的数据，它是一个<strong>全局性</strong>的问题，涉及到所有主机、路由器、路由器中的存储转发处理的行为。</li>
-<li>流量控制是与某发送者和某接收者之间的<strong>点到点</strong>的业务量有关。它的任务是确保一个快速的发送者不能以比接收者能承受的速率更高的速度传输数据。</li>
-<li>简单的说，流量控制是防止网络拥塞的一种机制。</li>
-</ul>
-<h5 id="流量控制的功能"><a href="#流量控制的功能" class="headerlink" title="流量控制的功能"></a>流量控制的功能</h5><ul>
-<li>防止过载产生吞吐量降低、响应时间增长</li>
-<li>避免死锁</li>
-<li>资源合理分配</li>
-<li>速率匹配</li>
-</ul>
-<h5 id="缓冲策略与流量控制"><a href="#缓冲策略与流量控制" class="headerlink" title="缓冲策略与流量控制"></a>缓冲策略与流量控制</h5><p>为了使没有得到确认的PDU可以超时重发，需要在缓冲区中暂存</p>
-<ul>
-<li>数据链路层 点对点通信 缓冲区大小根据滑窗协议而定</li>
-<li>传输层 端到端通信 多个缓冲区动态分配和管理非常复杂</li>
-</ul>
-<h5 id="流量整形技术"><a href="#流量整形技术" class="headerlink" title="流量整形技术"></a>流量整形技术</h5><p>流量整形需要在网络的边沿实现以便控制进入网络的流量速率。<br>与之相比，TCP滑动窗口协议只是限制一次传送数据的数量，而不是传送的速率。</p>
-<h6 id="漏桶算法"><a href="#漏桶算法" class="headerlink" title="漏桶算法"></a>漏桶算法</h6><p>这种策略相当于将非平稳的分组流变成了一个平稳的分组流，从而<strong>平滑了数据分组的突发性</strong>。<br>但是没有考虑突发业务流的大小，<strong>输出不具有突发性</strong>。</p>
-<h6 id="令牌漏桶算法"><a href="#令牌漏桶算法" class="headerlink" title="令牌漏桶算法"></a>令牌漏桶算法</h6><p>在令牌漏桶算法中，漏桶中保留的不是数据分组，而是令牌。系统每隔ΔT个时间单位产生一个令牌，送入漏桶中。当漏桶满时，产生的新令牌将被丢弃。对于数据分组来说，只有获得了令牌才可以发送。当有多个分组要发送，可以根据获取的令牌数决定一次可发送的分组数，从而使漏桶的输出具有一定的突发性。</p>
-<h4 id="网络拥塞控制"><a href="#网络拥塞控制" class="headerlink" title="网络拥塞控制"></a>网络拥塞控制</h4><h5 id="网络性能和网络负载的关系"><a href="#网络性能和网络负载的关系" class="headerlink" title="网络性能和网络负载的关系"></a>网络性能和网络负载的关系</h5><ul>
-<li>当网络的负载较小时，吞吐量和负载呈线性关系；</li>
-<li>当负载达到膝点（knee point)之后，随着负载的继续增加，吞吐量的增量变化很小；</li>
-<li>当负载超过了崖点（cliff point)之后，吞吐量却急剧下降。<br>通常将膝点附近称为拥塞避免区，膝点和崖点间的区域成为拥塞恢复区，而崖点之后的区域称为拥塞崩溃区。</li>
-</ul>
-<h5 id="处理拥塞的控制方法"><a href="#处理拥塞的控制方法" class="headerlink" title="处理拥塞的控制方法"></a>处理拥塞的控制方法</h5><ul>
-<li>分组删除</li>
-<li>流量控制<ul>
-<li>只限制两点流量，多源造成的拥塞仍会出现</li>
-</ul>
-</li>
-<li>缓冲分配 能用于需电力技术中</li>
-<li>抑制分组</li>
-</ul>
-<h5 id="网络中的拥塞控制机制"><a href="#网络中的拥塞控制机制" class="headerlink" title="网络中的拥塞控制机制"></a>网络中的拥塞控制机制</h5><ul>
-<li>开环拥塞控制<ul>
-<li>预防式    </li>
-<li>优点：控制算法性能不受传输影响</li>
-<li>缺点：资源利用率低</li>
-</ul>
-</li>
-<li>闭环拥塞控制<ul>
-<li>反馈式</li>
-<li>源算法：在主机和网络边缘设备中执行。根据反馈信息调整发送速率。</li>
-<li>链路算法：在网络内部（如路由器和交换机）中执行，它的主要作用是检测网络拥塞的发生，生成拥塞反馈信息。</li>
-</ul>
-</li>
-</ul>
-<h4 id="TCP的流量控制和拥塞控制"><a href="#TCP的流量控制和拥塞控制" class="headerlink" title="TCP的流量控制和拥塞控制"></a>TCP的流量控制和拥塞控制</h4><p>利用滑动窗口机制可以很方便地在 TCP 连接上实现流量控制。</p>
-<p>可以用不同的机制来控制 TCP 报文段的发送时机:</p>
-<ul>
-<li>第一种机制是 TCP 维持一个变量，它等于<strong>最大报文段长度 MSS</strong>。只要缓存中存放的数据达到 MSS 字节时，就组装成一个 TCP 报文段发送出去。</li>
-<li>第二种机制是由发送方的<strong>应用进程指明要求发送</strong>报文段，即 TCP 支持的推送(push)操作。</li>
-<li>第三种机制是发送方的一个<strong>计时器期限到了</strong>，这时就把当前已有的缓存数据装入报文段（但长度不能超过 MSS）发送出去。</li>
-</ul>
-<h5 id="持续计时器"><a href="#持续计时器" class="headerlink" title="持续计时器"></a>持续计时器</h5><ul>
-<li>TCP 为每一个连接设有一个持续计时器。</li>
-<li>只要 TCP 连接的一方收到对方的零窗口通知，就启动持续计时器。</li>
-<li>定时发送零窗口探测报文段。</li>
-</ul>
-<h5 id="慢启动和拥塞避免"><a href="#慢启动和拥塞避免" class="headerlink" title="慢启动和拥塞避免"></a>慢启动和拥塞避免</h5><p>数据接收窗口（R-window）和拥塞控制窗口（C-window）。接收窗口的大小由接收端的缓存容量决定，拥塞窗口的大小由网络的带宽决定。发送端所能发送的数据段的数量是接收窗口和拥塞窗口<strong>二者的最小值</strong>。</p>
-<ul>
-<li>TCP拥塞控制机制分为“<strong>慢启动</strong>”和“<strong>拥塞避免</strong>”两个阶段。数据段发送端用一个门限变量（或阈值）来区分两个阶段。当发送端开始发送数据时，首先处于“慢启动”阶段。</li>
-</ul>
-<p>“慢启动”用于探测网络的带宽,使用指数增长的方式;“拥塞避免”试图避免拥塞的发生。</p>
-<ul>
-<li>在慢开始门限ssthresh前为慢开始阶段，拥塞窗口<strong>指数增长</strong>：每经过一个传输轮次，拥塞窗口 cwnd 就加倍。</li>
-<li>在门限后进入拥塞避免阶段，拥塞窗口<strong>线性增加</strong>（加法增大）</li>
-<li>发生超时则慢开始门限改为拥塞窗口的一半（<strong>乘法减小</strong>），拥塞窗口设置为1</li>
-</ul>
-<h5 id="快重传和快恢复"><a href="#快重传和快恢复" class="headerlink" title="快重传和快恢复"></a>快重传和快恢复</h5><ul>
-<li><p>快重传算法首先要求接收方每收到一个失序的报文段后就立即发出重复确认。这样做可以让发送方及早知道有报文段没有到达接收方。发送方只要一连收到<strong>三个重复确认</strong>就应当立即重传对方尚未收到的报文段。</p>
-</li>
-<li><p>当发送端收到连续三个重复的确认时，就执行“乘法减小”算法，把慢开始门限 ssthresh 减半。但接下去不执行慢开始算法。而是将拥塞窗口设置为慢开始门限 ssthresh 减半后的数值，然后开始执行拥塞避免算法（“加法增大”），使拥塞窗口缓慢地线性增大。</p>
-</li>
-</ul>
-
+          <p>本章学习网络层。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E5%9B%9B/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1032,7 +433,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E4%B8%89/" class="post-title-link" itemprop="url">计网复习日记(三)</a>
+            <a href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E4%B8%89/" class="post-title-link" itemprop="url">计网复习日记(三)--MAC</a>
         </h2>
 
         <div class="post-meta">
@@ -1043,7 +444,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-07-13 12:30:21 / 修改时间：14:54:45" itemprop="dateCreated datePublished" datetime="2020-07-13T12:30:21+08:00">2020-07-13</time>
+              <time title="创建时间：2020-07-13 12:30:21 / 修改时间：21:58:37" itemprop="dateCreated datePublished" datetime="2020-07-13T12:30:21+08:00">2020-07-13</time>
             </span>
 
           
@@ -1057,164 +458,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-
-
-<hr>
-<h3 id="介质接入控制"><a href="#介质接入控制" class="headerlink" title="介质接入控制"></a>介质接入控制</h3><h4 id="广播信道分配问题"><a href="#广播信道分配问题" class="headerlink" title="广播信道分配问题"></a>广播信道分配问题</h4><p>信道使用产生竞争时，分配信道使用权。<br>用来决定广播信道中信道分配的功能及协议属于数据链路层的子层，称作介质接入控制MAC(Medium Access Control)子层。</p>
-<h5 id="静态分配"><a href="#静态分配" class="headerlink" title="静态分配"></a>静态分配</h5><ul>
-<li>频分多路复用（FDM）</li>
-<li>时分多路复用（TDM）</li>
-<li>波分多路复用（WDM）</li>
-</ul>
-<h5 id="动态分配"><a href="#动态分配" class="headerlink" title="动态分配"></a>动态分配</h5><p>若干假设：</p>
-<ul>
-<li>数据站模型</li>
-<li>单信道假设</li>
-<li>冲突重传</li>
-<li>连续时间与时间分槽 何时发送</li>
-<li>载波侦听和无载波侦听 能否发送</li>
-</ul>
-<h4 id="动态分配技术"><a href="#动态分配技术" class="headerlink" title="动态分配技术"></a>动态分配技术</h4><h5 id="查询技术"><a href="#查询技术" class="headerlink" title="查询技术"></a>查询技术</h5><p>查询技术是常见的一种信道访问技术，该技术都需要一个中心控制站，中央控制站周期性地向各终端或工作站发送查询帧，各用户只有当被控制站查询时，才能发送信息。</p>
-<p>传统查询：</p>
-<ul>
-<li>roll-call</li>
-<li>hub<br>在轻负载的情况下，效率较低<br>在重负载的情况下，将引入较长的时延</li>
-</ul>
-<p>探查法：探查二叉树<br>（1）同时探查一组（两个或多个）站点。如果其中某个站点需发送数据，则它反馈以某种形式的信号；否则，系统就认为整个该组站点都是空闲的，直至下一次探查。<br>（2）将具有反馈信号的站点组（即其中有站点申请使用信道）分成两个子组，重复过程（1）。<br>（3）对于最终的探查（即组内只有一个站点），由控制站发送给该站点一个查询帧，使其可以发送数据。</p>
-<p>自适应查询：探查+查询</p>
-<h5 id="随机接入：ALOHA"><a href="#随机接入：ALOHA" class="headerlink" title="随机接入：ALOHA"></a>随机接入：ALOHA</h5><p>目的：解决信道的动态分配，基本思想可用于任何无协 调关系的用户争用单一共享信道使用权的系统；</p>
-<h6 id="纯ALOHA"><a href="#纯ALOHA" class="headerlink" title="纯ALOHA"></a>纯ALOHA</h6><p>基本思想：当用户想要发送数据帧时，它就可以在任何时候发送。但是，不同用户发出的数据帧就有可能发生冲突。冲突的帧将被破坏，传输不成功，使吞吐量下降。</p>
-<p>易受冲突时间2T<br>平均每个帧时产生S个新帧<br>帧发送的均值为G</p>
-<p>S = G e<sup>-2G<sup><br>S<sub>max<sub> = 1/2e = 0.184</p>
-<h6 id="时隙ALOHA"><a href="#时隙ALOHA" class="headerlink" title="时隙ALOHA"></a>时隙ALOHA</h6><ul>
-<li><p>在一个时隙内产生的新帧，将在下一个时隙开始处发送，冲突危险区为T</p>
-</li>
-<li><p>新帧的产生是随机的，但是不允许随机发送</p>
-</li>
-<li><p>在一个时隙的起点没有其它帧发送的概率为：P0 = e<sup>-G<sup><br>S = G e<sup>-G<sup><br>S<sub>max<sub> = 1/e = 0.368<br>（0.37时隙为空，0.37时隙成功，0.26时隙冲突）</p>
-</li>
-<li><p>时隙ALOHA需要全网的同步机制，增加了复杂性</p>
-</li>
-</ul>
-<h5 id="随机接入：CSMA"><a href="#随机接入：CSMA" class="headerlink" title="随机接入：CSMA"></a>随机接入：CSMA</h5><p>载波侦听多址接入，发送之前侦听信道，减少盲目性</p>
-<ul>
-<li>非持续型<ul>
-<li>信道空闲则发送，忙则延迟一随机时长再侦听</li>
-<li>限制信道利用率的进一步提高</li>
-</ul>
-</li>
-<li>p-持续型<ul>
-<li>信道空闲则以p概率发送，以1-p概率延迟一个时隙再侦听</li>
-<li>随即延迟使吞吐特性变坏，但尽快发送和主动退避使其性能优于非持续型CSMA</li>
-</ul>
-</li>
-<li>1-持续型<ul>
-<li>空闲则发送</li>
-<li>轻载性能好，重载时比持续型CSMA差，最大吞吐量只能达到0.53</li>
-</ul>
-</li>
-</ul>
-<p>0.01-持续&gt;0.1持续&gt;0.5持续&gt;1持续&gt;slotted-ALOHA&gt;pure-ALOHA</p>
-<h5 id="CSMA-CD"><a href="#CSMA-CD" class="headerlink" title="CSMA/CD"></a>CSMA/CD</h5><p>发送前进行载波侦听，发送过程中侦听是否冲突，检测到冲突后及时中断发送。</p>
-<h6 id="冲突检测："><a href="#冲突检测：" class="headerlink" title="冲突检测："></a>冲突检测：</h6><ul>
-<li>信号电平</li>
-<li>过零点检测法（过零点将偏移）</li>
-<li>自发自收</li>
-</ul>
-<h6 id="操作规程"><a href="#操作规程" class="headerlink" title="操作规程"></a>操作规程</h6><ul>
-<li>竞争发送<ul>
-<li>发送前侦听总线，空则发送，否则等待</li>
-<li>发送后侦听冲突检测，若有冲突则干预总线——继续发送异常帧，延迟等待</li>
-</ul>
-</li>
-<li>无冲突接收<ul>
-<li>检测到冲突后发送不完全帧（冲突加强）</li>
-<li>接受站点收到后，处理错误信息</li>
-</ul>
-</li>
-</ul>
-<h6 id="退避算法"><a href="#退避算法" class="headerlink" title="退避算法"></a>退避算法</h6><p>就是让发生碰撞的站在停止发送数据后，不是立即再发送数据，而是推迟（这叫做退避）一个随机时间。具体做法是：<br>（1）确定基本退避时间，一般是取为争用期2 τ 。<br>（2）定义参数k，它等于重传次数，但k不超过10，即k=Min(重传次数，10)。<br>（3）从离散整数集合[0,1,2,…,(2<sup>k</sup>-1)]中随机地取出一个数，记为r。重传输所需的时间就是r倍的基本退避时间。<br>（4）当重传达16次仍不能成功时，则丢弃该帧，并向高层报告。</p>
-<h6 id="最短帧长"><a href="#最短帧长" class="headerlink" title="最短帧长"></a>最短帧长</h6><p>如果帧的第一个比特到达电缆的远端前帧已经发完，那么即使发生冲突也无法检测，因此帧发送时间应该大于 2τ；</p>
-<ul>
-<li>10Mbps LAN，最大冲突检测时间为51.2微秒，最短帧长为64字节；</li>
-<li>网络速度提高，最短帧长应增大或者站点间的距离要减小。</li>
-</ul>
-<hr>
-<h3 id="IEEE802标准"><a href="#IEEE802标准" class="headerlink" title="IEEE802标准"></a>IEEE802标准</h3><h4 id="局域网的低三层"><a href="#局域网的低三层" class="headerlink" title="局域网的低三层"></a>局域网的低三层</h4><p>IEEE 802.1标准规定局域网的低三层。<br>（1）物理层：与OSI/RM的物理层相对应，但所采用的具体协议标准直接与传输介质有关。<br>（2）介质接入控制（MAC）层：具体管理通信实体接入信道而建立数据链路的控制过程。尽力而为的数据报服务<br>（3）逻辑链路控制（LLC）层：提供一个或多个服务访问点，以复用的形式建立多点—多点之间的数据通信连接，并包括寻址、差错控制、顺序控制和流量控制等功能。</p>
-<ul>
-<li><p>LLC层向网络层提供多个服务访问点L-SAP。对同一个LLC可以提供多个MAC选择</p>
-</li>
-<li><p>MAC层向LLC层提供一个服务访问点M-SAP</p>
-</li>
-<li><p>物理层向MAC层也只需单一的服务访问点P-SAP</p>
-</li>
-<li><p>两个站点建立逻辑链路连接，需要两种地址：</p>
-<ul>
-<li>MAC物理地址，即某站在网络中的物理地址（48位网卡地址），由MAC帧负责传送；</li>
-<li>L-SAP地址，即进程在站中的地址，由LLC帧负责传送。</li>
-</ul>
-</li>
-<li><p>LLC层与局域网形态和传输介质无关</p>
-</li>
-<li><p>MAC层与局域网形态和传输介质直接相关</p>
-</li>
-</ul>
-<h4 id="IEEE802协议"><a href="#IEEE802协议" class="headerlink" title="IEEE802协议"></a>IEEE802协议</h4><p>802.1 基本介绍和接口原语定义<br>802.2 逻辑链路控制（LLC）子层<br>802.3 采用CSMA/CD技术的局域网<br>802.4 采用令牌总线（Token Bus）技术的局域网<br>802.5 采用令牌环（Token Ring）技术的局域网</p>
-<h4 id="公用信道的分配方法"><a href="#公用信道的分配方法" class="headerlink" title="公用信道的分配方法"></a>公用信道的分配方法</h4><table>
-<thead>
-<tr>
-<th>方法/系统</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>纯ALOHA</td>
-<td>在任何时候均非同步传输</td>
-</tr>
-<tr>
-<td>时隙ALOHA</td>
-<td>在定义恰当的时隙内随机传输</td>
-</tr>
-<tr>
-<td>1－持续CSMA</td>
-<td>标准的载波侦听多路访问</td>
-</tr>
-<tr>
-<td>非持续CSMA</td>
-<td>当侦听到信道忙时随机延迟</td>
-</tr>
-<tr>
-<td>p－持续CSMA</td>
-<td>CSMA，但持续概率为p</td>
-</tr>
-<tr>
-<td>CSMA/CD</td>
-<td>CSMA，但发生冲突时终止</td>
-</tr>
-<tr>
-<td>以太网</td>
-<td>采用CSMA/CD的局域网</td>
-</tr>
-<tr>
-<td>令牌总线</td>
-<td>在一条物理总线上的逻辑环</td>
-</tr>
-<tr>
-<td>令牌环</td>
-<td>在发送数据前必须获得令牌</td>
-</tr>
-</tbody></table>
-<h4 id="无线局域网使用的CSMA-CA"><a href="#无线局域网使用的CSMA-CA" class="headerlink" title="无线局域网使用的CSMA/CA"></a>无线局域网使用的CSMA/CA</h4><p>带冲突避让的载波多路侦听CSMA/CA</p>
-<ul>
-<li><p>无线局域网很难检测信道</p>
-</li>
-<li><p>任何站在完成发送后必须等待一段很短的时间才能发送下一帧，这段时间称为帧间间隔IFS(InterFrame Space)。</p>
-</li>
-<li><p>争用：当信道从忙转为空闲时，任何站在发送数据前，都要采用二进制后退算法减少发生冲突的概率。与以太网不一样的是第i次后退是从2<sup>2+i</sup>个时隙中选取一个</p>
-</li>
-</ul>
-
+          <p>本章学习MAC子层。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E4%B8%89/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1247,7 +499,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E4%BA%8C/" class="post-title-link" itemprop="url">计网复习日记(二)</a>
+            <a href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E4%BA%8C/" class="post-title-link" itemprop="url">计网复习日记(二)--数据链路层</a>
         </h2>
 
         <div class="post-meta">
@@ -1258,7 +510,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-07-13 09:40:31 / 修改时间：12:36:46" itemprop="dateCreated datePublished" datetime="2020-07-13T09:40:31+08:00">2020-07-13</time>
+              <time title="创建时间：2020-07-13 09:40:31 / 修改时间：21:58:35" itemprop="dateCreated datePublished" datetime="2020-07-13T09:40:31+08:00">2020-07-13</time>
             </span>
 
           
@@ -1272,231 +524,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <a id="more"></a>
-
-<!-- TOC -->
-<ul>
-<li><a href="#数据传输相关概念">数据传输相关概念</a><ul>
-<li><a href="#波特率-比特率">波特率 比特率</a></li>
-<li><a href="#奈奎斯特定理">奈奎斯特定理</a></li>
-<li><a href="#香农定理">香农定理</a></li>
-<li><a href="#基带传输-宽带传输">基带传输 宽带传输</a></li>
-<li><a href="#信号编码技术">信号编码技术</a><ul>
-<li><a href="#数模调制">数模调制</a></li>
-<li><a href="#数数编码">数数编码</a></li>
-<li><a href="#模数编码">模数编码</a></li>
-<li><a href="#模模调制">模模调制</a></li>
-</ul>
-</li>
-<li><a href="#信道复用">信道复用</a></li>
-<li><a href="#数据交换技术">数据交换技术</a><ul>
-<li><a href="#电路交换">电路交换</a></li>
-<li><a href="#报文交换">报文交换</a></li>
-<li><a href="#分组交换">分组交换</a><ul>
-<li><a href="#数据报无连接方式">数据报（无连接方式）</a></li>
-<li><a href="#虚电路方式面向连接方式">虚电路方式（面向连接方式）</a></li>
-</ul>
-</li>
-<li><a href="#快速分组交换">快速分组交换</a></li>
-<li><a href="#分组最佳长度">分组最佳长度</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#数据链路层">数据链路层</a><ul>
-<li><a href="#需要数据链路层的理由">需要数据链路层的理由</a></li>
-<li><a href="#主要功能">主要功能</a></li>
-<li><a href="#frame的构成">frame的构成</a></li>
-<li><a href="#差错控制">差错控制</a></li>
-<li><a href="#流量控制">流量控制</a><ul>
-<li><a href="#滑动窗口式流量控制">滑动窗口式流量控制</a></li>
-</ul>
-</li>
-<li><a href="#差错检测和纠正">差错检测和纠正</a><ul>
-<li><a href="#前向纠错fec">前向纠错FEC</a><ul>
-<li><a href="#汉明定理">汉明定理</a></li>
-<li><a href="#循环冗余码crc">循环冗余码CRC</a></li>
-</ul>
-</li>
-<li><a href="#反馈重发arq">反馈重发ARQ</a><ul>
-<li><a href="#等待式arq">等待式ARQ</a></li>
-<li><a href="#回退n帧arq">回退N帧ARQ</a></li>
-<li><a href="#选择性重发arq">选择性重发ARQ</a></li>
-</ul>
-</li>
-<li><a href="#纠检混合的差错控制方式">纠检混合的差错控制方式</a></li>
-</ul>
-</li>
-<li><a href="#点对点协议-ppp">点对点协议 PPP</a></li>
-<li><a href="#高级数据链路控制-hdlc">高级数据链路控制 HDLC</a></li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="数据传输相关概念"><a href="#数据传输相关概念" class="headerlink" title="数据传输相关概念"></a>数据传输相关概念</h3><h4 id="波特率-比特率"><a href="#波特率-比特率" class="headerlink" title="波特率 比特率"></a>波特率 比特率</h4><ul>
-<li>波特率：每秒信号变化次数，码元速率</li>
-<li>比特率：每秒传输的位数</li>
-</ul>
-<p>信号分为V级，比特率=log2V*波特率</p>
-<h4 id="奈奎斯特定理"><a href="#奈奎斯特定理" class="headerlink" title="奈奎斯特定理"></a>奈奎斯特定理</h4><p>在假定的理想条件（无噪声）下，为了避免码间串扰，码元的传输速率的上限值。<br>在无噪声信道中，当带宽为W Hz时，<br>码元传输速率的上限值 = 2W Baud</p>
-<h4 id="香农定理"><a href="#香农定理" class="headerlink" title="香农定理"></a>香农定理</h4><p>带宽受限且有高斯白噪声干扰的信道的极限、无差错的信息传输速率。<br>在噪声信道中，当带宽为W Hz，信噪比为S/N，则：<br>最大数据传输速率(b/s) = Wlog2(1+S/N)</p>
-<h4 id="基带传输-宽带传输"><a href="#基带传输-宽带传输" class="headerlink" title="基带传输 宽带传输"></a>基带传输 宽带传输</h4><ul>
-<li>基带传输：信号源产生的原始电信号称为基带信号，即将数字数据0、1直接用两种不同的电压表示，然后送到线路上去传输。</li>
-<li>宽带传输：将基带信号进行调制后形成模拟信号，然后采用频分复用技术实现宽带传输。</li>
-</ul>
-<h4 id="信号编码技术"><a href="#信号编码技术" class="headerlink" title="信号编码技术"></a>信号编码技术</h4><h5 id="数模调制"><a href="#数模调制" class="headerlink" title="数模调制"></a>数模调制</h5><p>调幅ASK(Amplitude Shift Keying)<br>调频FSK(Frequency Shift Keying)<br>调相PSK(Phase Shift Keying)<br>正交调相QPSK(Quadrature Phase Shift Keying)</p>
-<h5 id="数数编码"><a href="#数数编码" class="headerlink" title="数数编码"></a>数数编码</h5><ul>
-<li>不归零编码：不能携带时钟信号，无法表示无数据传输。一个时钟周期表示1bit，一次采样得到1bit，效率最高</li>
-<li>曼切斯特编码：低-高跳变为1。能携带时钟信号，且可表示没有数据传输。一个时钟周期表示1bit，2次采样得到1bit</li>
-<li>差分曼切斯特编码：位中间跳变，位间也跳变，表示下一个bit为0。抗干扰性更强。<br>4B/5B编码：用5bit来表示4bit。至少有两个1，即保证在传输中信号码元至少发生两次跳变，以便接收端提取出时钟信号。</li>
-</ul>
-<h5 id="模数编码"><a href="#模数编码" class="headerlink" title="模数编码"></a>模数编码</h5><p>脉冲编码调制PCM技术</p>
-<h5 id="模模调制"><a href="#模模调制" class="headerlink" title="模模调制"></a>模模调制</h5><ul>
-<li>调幅AM (Amplitude Modulation)：载波的振幅随模拟数据的数值变化。</li>
-<li>调频FM (Frequency Modulation)：载波的频率随模拟数据的数值变化。</li>
-<li>调相PM (Phase Modulation)：载波的初始相位随模拟数据的数值变化。</li>
-</ul>
-<h4 id="信道复用"><a href="#信道复用" class="headerlink" title="信道复用"></a>信道复用</h4><ul>
-<li>频分复用FDM(Frequency Division Multiplexing)</li>
-<li>时分复用TDM(Time Division Multiplexing)</li>
-<li>统计时分复用STDM(Statistic TDM)</li>
-<li>波分复用 WDM(Wavelength Division Multiplexing)</li>
-<li>码分复用 CDM(Code Division Multiplexing)</li>
-<li>正交频分复用OFDM(Orthogonal Frequency Division Multiplexing)</li>
-</ul>
-<h4 id="数据交换技术"><a href="#数据交换技术" class="headerlink" title="数据交换技术"></a>数据交换技术</h4><h5 id="电路交换"><a href="#电路交换" class="headerlink" title="电路交换"></a>电路交换</h5><p>指交换系统为通信的双方寻找并建立一条全程物理通路，以供双方传输信息，直到信息交换结束。</p>
-<ul>
-<li>空分交换 多级矩阵</li>
-<li>时分交换</li>
-</ul>
-<p>优点</p>
-<ul>
-<li>数据传输时延小</li>
-<li>对用户透明</li>
-<li>吞吐量高<br>缺点：</li>
-<li>必须有一个<strong>呼叫建立</strong>的过程（时延较大）</li>
-<li>专供通信的双方使用，占用固定的带宽，<strong>信道带宽利用率低</strong></li>
-<li>存在呼叫损失现象</li>
-<li>难以实施差错控制措施</li>
-<li>难以适应计算机和各种终端传输速率不一致等情况<br>——不适合具有突发性的计算机数据传输</li>
-</ul>
-<h5 id="报文交换"><a href="#报文交换" class="headerlink" title="报文交换"></a>报文交换</h5><p>数据的传输不需建立连接，数据的传输是一站一站往下送，所以数据中必须包含目的地址，并采用存储-转发（store-forward）机制</p>
-<ul>
-<li><p>在数据传输前，不必建立端到端的连接</p>
-</li>
-<li><p>只要下一个节点空闲，即可传输</p>
-</li>
-<li><p>线路的<strong>利用率较高</strong></p>
-</li>
-<li><p>数据中必须包含<strong>地址域</strong></p>
-</li>
-<li><p>在数据传输过程中，除了信号传播的延时之外，还有<strong>存储和转发的延时</strong>，而且延时不可估计 </p>
-</li>
-<li><p>每个中间站点都必须有<strong>足够大的缓存</strong>，但由于报文大小不定，所以缓存通常设置在硬盘中</p>
-</li>
-<li><p>报文交换的端到端时延</p>
-<ul>
-<li>传输时延</li>
-<li>传播时延</li>
-<li>存储-转发时延</li>
-<li>排队等待时间</li>
-<li>存入中间节点的处理时间</li>
-<li>从存储器送到输出链路的处理时间</li>
-</ul>
-</li>
-</ul>
-<h5 id="分组交换"><a href="#分组交换" class="headerlink" title="分组交换"></a>分组交换</h5><p>与报文交换相似，只是将报文分为若干个定长的分组，每个分组为一个子报文。<br>管道化 pipelining</p>
-<ul>
-<li>每个分组中必须包含目的地址，并采用<strong>存储-转发机制</strong>。</li>
-<li>收发顺序可能不同，需要<strong>重组</strong></li>
-</ul>
-<h6 id="数据报（无连接方式）"><a href="#数据报（无连接方式）" class="headerlink" title="数据报（无连接方式）"></a>数据报（无连接方式）</h6><p>每个分组独立处理，独自选择在网络中传输的路由。</p>
-<h6 id="虚电路方式（面向连接方式）"><a href="#虚电路方式（面向连接方式）" class="headerlink" title="虚电路方式（面向连接方式）"></a>虚电路方式（面向连接方式）</h6><p>首先要建立传输路径，所有分组均在这个连接上进行传送，帧顺序和路径都是确定的。</p>
-<ul>
-<li>分组中没有目的地址，只有虚电路号</li>
-</ul>
-<h5 id="快速分组交换"><a href="#快速分组交换" class="headerlink" title="快速分组交换"></a>快速分组交换</h5><p>尽量简化底层对数据单元的操作，由端到端的高层协议保证——光纤<br>大大缩短分组长度——异步传输模式ATM</p>
-<h5 id="分组最佳长度"><a href="#分组最佳长度" class="headerlink" title="分组最佳长度"></a>分组最佳长度</h5><p>设报文的总长度为M(bit)，令nh(bit)为附加到每个分组的开销，用Kmax表示包括附加开销在内的最大分组长度。</p>
-<ul>
-<li>以分组方式发送一个报文所必须传送的总比特数为<br>N = M + [M/(Kmax-nh)]nh</li>
-<li>传送一个报文所需要的总时间T为第一个分组通过前面（j－1）条链路的时间加上整个报文通过最后一条链路的时间<br>T = ((j-1)Kmax + N)/R</li>
-<li>运用求极值的常规方法，将上式对Kmax求导，并令导数等于零，于是得到分组最佳长度为<br>K = nh + 根号(E[M]*nh/(j-1))</li>
-</ul>
-<hr>
-<h3 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h3><h4 id="需要数据链路层的理由"><a href="#需要数据链路层的理由" class="headerlink" title="需要数据链路层的理由"></a>需要数据链路层的理由</h4><p>传输数据的信道是不可靠的（即不能保证所传的数据不产生差错），并且还需要对数据的发送端进行流量控制</p>
-<p>要解决的问题</p>
-<ul>
-<li>如何在有差错的线路上，进行无差错传输。</li>
-</ul>
-<p>数据链路层协议定义了<strong>一条链路的两个结点间</strong>交换的数据单元格式，以及结点发送和接收数据单元的动作。</p>
-<h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a>主要功能</h4><ul>
-<li>对网络层提供服务接口，对网络层实体提供数据链路连接的建立、维持和释放</li>
-<li>将bit流组装成帧frame</li>
-<li>控制帧在物理链路上的传输 帧的同步、传输差错、速率匹配</li>
-</ul>
-<p>向网络层提供：</p>
-<ul>
-<li>无应答无连接服务</li>
-<li>应答式无连接服务</li>
-<li>面向连接的服务</li>
-</ul>
-<h4 id="frame的构成"><a href="#frame的构成" class="headerlink" title="frame的构成"></a>frame的构成</h4><ul>
-<li>字符计数法</li>
-<li>带字符填充的起始字符和终结字符法<ul>
-<li>DLE STX</li>
-<li>DLE ETX</li>
-<li>DLE DLE</li>
-</ul>
-</li>
-<li>带位填充的起始/终结标志法</li>
-</ul>
-<h4 id="差错控制"><a href="#差错控制" class="headerlink" title="差错控制"></a>差错控制</h4><ul>
-<li>反馈确认</li>
-<li>超时机制</li>
-<li>顺序编号</li>
-</ul>
-<h4 id="流量控制"><a href="#流量控制" class="headerlink" title="流量控制"></a>流量控制</h4><ul>
-<li>协调发送速度与接受速度匹配</li>
-<li>连续性ARQ中，必须对已发送出去但未被确认的数据帧的数目加以限制（浪费资源、附加的帧序号开销大）</li>
-</ul>
-<h5 id="滑动窗口式流量控制"><a href="#滑动窗口式流量控制" class="headerlink" title="滑动窗口式流量控制"></a>滑动窗口式流量控制</h5><ul>
-<li><p>发送窗口：任何时刻发送端都保持着一组序号，对应于在还没有收到对方确认的条件下最多允许发送的帧。<br>发送窗口的上界表示要<strong>还能发送的帧的最大序号</strong>，下界表示<strong>等待确认的帧的最小编号</strong>。发送窗口大小 = 上界 - 下界，大小可变；<br>发送端每发送一个帧，序号取下界值加1；每接收到一个正确响应帧，上界加1；</p>
-</li>
-<li><p>接收窗口：对应于一组允许（或期望）接收的帧。<br>接收端有一个接收窗口，大小固定，但不一定与发送窗口相同。接收窗口的上界表示<strong>允许接收的序号最大的帧</strong>，下界表示<strong>希望接收的序号最小帧</strong>；<br>接收窗口容纳允许接收的信息帧，落在窗口外的帧均被丢弃。序号等于下界的帧被正确接收，并产生一个响应帧，上界、下界都加1。接收窗口大小不变</p>
-</li>
-</ul>
-<h4 id="差错检测和纠正"><a href="#差错检测和纠正" class="headerlink" title="差错检测和纠正"></a>差错检测和纠正</h4><h5 id="前向纠错FEC"><a href="#前向纠错FEC" class="headerlink" title="前向纠错FEC"></a>前向纠错FEC</h5><p>接收端检测到接收信息有错后，通过一定的运算，确定差错的具体位置，并自动加以纠正。</p>
-<h6 id="汉明定理"><a href="#汉明定理" class="headerlink" title="汉明定理"></a>汉明定理</h6><p>用d表示码组的最小汉明距离</p>
-<ul>
-<li>当码组用于检测错误时，设可检测e个位的错误，则<br>d &gt;= e + 1</li>
-<li>若码组用于纠错，设可纠错t个位的错误，则<br>d &gt;= 2t+1</li>
-<li>如果码组用于纠正t个错，同时检测e个错，则<br>d &gt;= 2t+e+1</li>
-</ul>
-<h6 id="循环冗余码CRC"><a href="#循环冗余码CRC" class="headerlink" title="循环冗余码CRC"></a>循环冗余码CRC</h6><p>校验和（checksum）加在帧尾，使带校验和的帧的多项式能被G(x)除尽；收方接收时，用G(x)去除它，若有余数，则传输出错。<br>生成多项式</p>
-<h5 id="反馈重发ARQ"><a href="#反馈重发ARQ" class="headerlink" title="反馈重发ARQ"></a>反馈重发ARQ</h5><p>接收端检测到接收信息有错后，通过反馈信号要求发送端重发原信息，直到接收端肯定确认为止，从而达到纠正差错的目的。</p>
-<ul>
-<li>肯定确认ACK</li>
-<li>否定确认NAK</li>
-<li>超时重发 规定时间内未收到ACK/NAK</li>
-</ul>
-<h6 id="等待式ARQ"><a href="#等待式ARQ" class="headerlink" title="等待式ARQ"></a>等待式ARQ</h6><p>等待式ARQ方法为了获得通信的可靠性而牺牲了传输效率，过于浪费信道的有效带宽。</p>
-<p>Ws = Wr = 1</p>
-<h6 id="回退N帧ARQ"><a href="#回退N帧ARQ" class="headerlink" title="回退N帧ARQ"></a>回退N帧ARQ</h6><p>发送端连续发送一系列信息帧，不等前帧确认便发下一帧。因此，连续重发请求方案把等待时间利用起来，传输效率大大提高。然而在实现上相应地需要更大的缓冲存储空间。</p>
-<p>回退N帧ARQ会回退到错误帧开始重发</p>
-<p>1 &lt; Ws &lt;= 2**n - 1 , Wr = 1</p>
-<h6 id="选择性重发ARQ"><a href="#选择性重发ARQ" class="headerlink" title="选择性重发ARQ"></a>选择性重发ARQ</h6><p>选择性重发ARQ只重发错误帧</p>
-<p>Ws &lt;= 2**n - 1 , Ws + Wr &lt;= 2**n<br>Ws &gt;= Wr</p>
-<h5 id="纠检混合的差错控制方式"><a href="#纠检混合的差错控制方式" class="headerlink" title="纠检混合的差错控制方式"></a>纠检混合的差错控制方式</h5><p>接收端对少量的接收差错自动纠正，而超过纠正能力的差错则通过反馈重发的方法加以纠正。</p>
-<h4 id="点对点协议-PPP"><a href="#点对点协议-PPP" class="headerlink" title="点对点协议 PPP"></a>点对点协议 PPP</h4><p>面向字符的协议</p>
-<p>a)初始状态<br>b)建立连接：建立成功到c)，否则到a)<br>c)选项协商：协商成功到d)，否则到g)<br>d)身份认证：认证成功到e)，否则到g)<br>e)配置网络：网络配置完后到f)<br>f)数据传输：数据传输完后到g)<br>g)释放链路：回到a)</p>
-<p>PPP协议不提供纠错、流量控制、序号、多点线路</p>
-<h4 id="高级数据链路控制-HDLC"><a href="#高级数据链路控制-HDLC" class="headerlink" title="高级数据链路控制 HDLC"></a>高级数据链路控制 HDLC</h4><p>面向bit的同步通信协议</p>
-<ul>
-<li>初始化</li>
-<li>数据传输</li>
-<li>断开连接</li>
-</ul>
-
+          <p>本章学习数据传输基础和数据链路层基础。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E4%BA%8C/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
