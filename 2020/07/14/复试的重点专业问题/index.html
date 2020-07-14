@@ -20,24 +20,20 @@
     var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="回顾上期学习了网络安全的威胁与相关技术，涉及到：  安全威胁的原因 网络攻击的过程 常用手段 APT 社会工程学  本章涉及网络信息安全中的网络通信模型。">
+  <meta name="description" content="防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？ 防火墙是建立在内外网络边界上的过滤封锁机制，是一种用于保护本地系统或者网络不受基于网络的安全威胁的有效方法。 包过滤 使用特定的规则对IP包进行过滤 网络层 状态检测 实现TCP连接的跟踪功能 应用层网关 代理服务器代替链接并充当服务的网关 应用层 电路层网关 在两个主机首次建立TCP连接时创立一个电子屏障（充当中介，建立两个TCP连接）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="网络安全导论日记(五)--网络信息安全模型">
-<meta property="og:url" content="http://rooki3ray.github.io/2020/07/11/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E4%BA%94/index.html">
+<meta property="og:title" content="复试的重点专业问题">
+<meta property="og:url" content="http://rooki3ray.github.io/2020/07/14/%E5%A4%8D%E8%AF%95%E7%9A%84%E9%87%8D%E7%82%B9%E4%B8%93%E4%B8%9A%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Rooki3Ray | 永远滴神">
-<meta property="og:description" content="回顾上期学习了网络安全的威胁与相关技术，涉及到：  安全威胁的原因 网络攻击的过程 常用手段 APT 社会工程学  本章涉及网络信息安全中的网络通信模型。">
+<meta property="og:description" content="防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？ 防火墙是建立在内外网络边界上的过滤封锁机制，是一种用于保护本地系统或者网络不受基于网络的安全威胁的有效方法。 包过滤 使用特定的规则对IP包进行过滤 网络层 状态检测 实现TCP连接的跟踪功能 应用层网关 代理服务器代替链接并充当服务的网关 应用层 电路层网关 在两个主机首次建立TCP连接时创立一个电子屏障（充当中介，建立两个TCP连接）">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://s1.ax1x.com/2020/07/11/UM7RaQ.png">
-<meta property="og:image" content="https://s1.ax1x.com/2020/07/11/UM7D2t.png">
-<meta property="article:published_time" content="2020-07-10T16:16:20.000Z">
-<meta property="article:modified_time" content="2020-07-12T07:10:52.911Z">
+<meta property="article:published_time" content="2020-07-14T00:48:30.000Z">
+<meta property="article:modified_time" content="2020-07-14T07:25:34.022Z">
 <meta property="article:author" content="Rooki3Ray">
-<meta property="article:tag" content="网安导论">
 <meta property="article:tag" content="夏令营复试资料">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s1.ax1x.com/2020/07/11/UM7RaQ.png">
 
-<link rel="canonical" href="http://rooki3ray.github.io/2020/07/11/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E4%BA%94/">
+<link rel="canonical" href="http://rooki3ray.github.io/2020/07/14/%E5%A4%8D%E8%AF%95%E7%9A%84%E9%87%8D%E7%82%B9%E4%B8%93%E4%B8%9A%E9%97%AE%E9%A2%98/">
 
 
 <script id="page-configurations">
@@ -50,7 +46,7 @@
   };
 </script>
 
-  <title>网络安全导论日记(五)--网络信息安全模型 | Rooki3Ray | 永远滴神</title>
+  <title>复试的重点专业问题 | Rooki3Ray | 永远滴神</title>
   
 
 
@@ -174,7 +170,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/07/11/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E4%BA%94/">
+    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/07/14/%E5%A4%8D%E8%AF%95%E7%9A%84%E9%87%8D%E7%82%B9%E4%B8%93%E4%B8%9A%E9%97%AE%E9%A2%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -187,7 +183,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          网络安全导论日记(五)--网络信息安全模型
+          复试的重点专业问题
         </h1>
 
         <div class="post-meta">
@@ -196,16 +192,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-07-11 00:16:20" itemprop="dateCreated datePublished" datetime="2020-07-11T00:16:20+08:00">2020-07-11</time>
+              <time title="创建时间：2020-07-14 08:48:30 / 修改时间：15:25:34" itemprop="dateCreated datePublished" datetime="2020-07-14T08:48:30+08:00">2020-07-14</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-12 15:10:52" itemprop="dateModified" datetime="2020-07-12T15:10:52+08:00">2020-07-12</time>
-              </span>
 
           
 
@@ -218,69 +208,129 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h3><p>上期学习了网络安全的威胁与相关技术，涉及到：</p>
-<ul>
-<li>安全威胁的原因</li>
-<li>网络攻击的过程</li>
-<li>常用手段</li>
-<li>APT</li>
-<li>社会工程学</li>
+        <h3 id="防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？"><a href="#防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？" class="headerlink" title="防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？"></a>防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？</h3><ul>
+<li>防火墙是建立在<strong>内外网络边界</strong>上的过滤封锁机制，是一种用于保护本地系统或者网络不受基于网络的安全威胁的有效方法。</li>
+<li>包过滤 使用特定的规则对IP包进行过滤 网络层</li>
+<li>状态检测 实现TCP连接的跟踪功能</li>
+<li>应用层网关 代理服务器代替链接并充当服务的网关 应用层</li>
+<li>电路层网关 在两个主机首次建立TCP连接时创立一个电子屏障（充当中介，建立两个TCP连接） 会话层</li>
 </ul>
-<p>本章涉及网络信息安全中的网络通信模型。</p>
-<a id="more"></a>
-
-<!-- TOC -->
+<h3 id="VPN原理-IPSec和SSL协议簇比较"><a href="#VPN原理-IPSec和SSL协议簇比较" class="headerlink" title="VPN原理 IPSec和SSL协议簇比较"></a>VPN原理 IPSec和SSL协议簇比较</h3><p>IPSec VPN</p>
+<p>基于网络层，对上层应用透明</p>
 <ul>
-<li><a href="#回顾">回顾</a></li>
-<li><a href="#关键字">关键字</a></li>
-<li><a href="#网络安全模型--网络通信">网络安全模型–网络通信</a></li>
-<li><a href="#网络安全模型-访问安全">网络安全模型-访问安全</a></li>
-<li><a href="#网络安全模型--p2dr模型">网络安全模型–P2DR模型</a></li>
-<li><a href="#网络安全评估标准">网络安全评估标准</a></li>
+<li>通过相应的隧道技术</li>
+<li>支持端对端（LAN to LAN）的加密，无法保护特定数据在通道内的传输安全 通过点到应用的保护，对每一个应用都可以设定安全策略</li>
+<li>需要安装、配置和调试客户端软件</li>
 </ul>
-<hr>
-<h3 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h3><hr>
-<h3 id="网络安全模型–网络通信"><a href="#网络安全模型–网络通信" class="headerlink" title="网络安全模型–网络通信"></a>网络安全模型–网络通信</h3><p><img src="https://s1.ax1x.com/2020/07/11/UM7RaQ.png" alt=""></p>
+<p>SSL VPN</p>
 <ul>
-<li>为了在开放网络环境中保护信息的传输，需要提供安全机制和安全服务：<ul>
-<li>对发送的信息进行与安全相关的转换，例如消息加密和数字签名。</li>
-<li>由两个主体共享的秘密信息，而对开放网络是保密的，例如密钥。</li>
+<li>基于安全套接层，技术实力强的厂商可以提供对应用的全面支持</li>
+<li>无需手动安装任何VPN客户端软件</li>
+<li>对某些操作系统和软件存在兼容性问题 兼容性好，支持各种操作系统和终端（如PDA、SmartPhone等）</li>
+</ul>
+<p>IPSec VPN技术是被设计用于连接和保护在信任网络中的数据流，因此更适合为不同的网络提供通信安全保障，而SSL VPN则更适合应用于远程分散移动用户的安全接入。</p>
+<h3 id="缓冲区溢出"><a href="#缓冲区溢出" class="headerlink" title="缓冲区溢出"></a>缓冲区溢出</h3><p>缓冲区溢出攻击又称堆栈溢出：简单地说就是程序对接受的输入数据没有进行有效检测导致的错误，后果可能造成程序崩溃或者是执行攻击者的命令。缓冲区溢出漏洞在系统软件和应用软件中是大量存在的。</p>
+<p>利用缓冲区溢出攻击可以导致：系统宕机、系统重启动、程序运行失败、获得非授权指令得到系统特权等</p>
+<p>在某些情况下，如果用户输入的数据长度超过应用程序给定的缓冲区，就会覆盖其他数据区。这就称“缓冲区溢出”。</p>
+<h3 id="入侵检测技术目的、类型-系统组成、原理"><a href="#入侵检测技术目的、类型-系统组成、原理" class="headerlink" title="入侵检测技术目的、类型 系统组成、原理"></a>入侵检测技术目的、类型 系统组成、原理</h3><p>利用审计跟踪数据监视入侵活动的思想。</p>
+<ul>
+<li>信息搜集</li>
+<li>信息分析 <ul>
+<li>统计分析 实时</li>
+<li>模式匹配 实时</li>
+<li>完整性分析 事后</li>
 </ul>
 </li>
-<li>为了完成安全的处理，常常需要可信的第三方。</li>
-<li>一种能被通信主体使用的协议，这种协议使用安全算法和秘密信息以便获得特定的安全服务。</li>
+<li>入侵检测<ul>
+<li>基于行为</li>
+<li>基于规则</li>
 </ul>
-<hr>
-<h3 id="网络安全模型-访问安全"><a href="#网络安全模型-访问安全" class="headerlink" title="网络安全模型-访问安全"></a>网络安全模型-访问安全</h3><p><img src="https://s1.ax1x.com/2020/07/11/UM7D2t.png" alt=""></p>
-<p>网络访问安全模型，该模型考虑了黑客攻击、病毒与蠕虫等的非授权访问。黑客攻击可以形成两类威胁：</p>
+</li>
+<li>信息响应<ul>
+<li>主动响应</li>
+<li>被动响应</li>
+</ul>
+</li>
+<li>审计记录</li>
+</ul>
+<h3 id="对称密码与非对称密码"><a href="#对称密码与非对称密码" class="headerlink" title="对称密码与非对称密码"></a>对称密码与非对称密码</h3><ul>
+<li>对称加密的优点<ul>
+<li>速度快,处理量大，适用于对应用数据的直接加密。</li>
+<li>加密密钥长度相对较短,如40比特—256比特。</li>
+<li>除了加密，还可构造各种加密体制，如产生伪随机数等。</li>
+</ul>
+</li>
+<li>对称加密的缺点<ul>
+<li>密钥在双方都要一致、保密，传递较难。</li>
+<li>大型网络中密钥量大，难以管理，一般需要KDC。</li>
+<li>密钥需要经常更换。</li>
+</ul>
+</li>
+</ul>
 <ul>
-<li>信息访问威胁，即非授权用户截获或修改数据；</li>
-<li>服务威胁，即服务缺陷以禁止合法用户使用。<br>病毒和蠕虫是软件攻击的两个实例，这类攻击通常是通过移动存储介质引入系统，并隐藏在有用软件中；也可通过网络接入系统。</li>
+<li>公钥加密的优点<ul>
+<li>只有私钥保密，公钥公开,密钥保存安全。</li>
+<li>网络上密钥管理不需在线，可以离线。</li>
+<li>密钥生命周期相对较长。</li>
+<li>许多公钥方案可以产生数字签名机制。</li>
 </ul>
-<p>两个层次：</p>
+</li>
+<li>公钥加密的缺点<ul>
+<li>速度慢，处理量少，适用于密钥交换。</li>
+<li>密钥长度相对较长。</li>
+</ul>
+</li>
+</ul>
+<p>A用B的公钥加密密钥后再用自己的私钥加密，B拿到后用A的公钥解密再用自己的私钥解密得到密钥</p>
+<h3 id="PE文件格式-壳保护原理"><a href="#PE文件格式-壳保护原理" class="headerlink" title="PE文件格式 壳保护原理"></a>PE文件格式 壳保护原理</h3><ul>
+<li>MZ头</li>
+<li>DOS stub 桩程序</li>
+<li>PE头</li>
+<li>section table 节表</li>
+<li>多个section</li>
+</ul>
+<p>外壳代码将加壳的可执行文件解压缩或解密到内存中，此时内存中才会有原始代码，磁盘上仍是加密的代码。</p>
+<p>压缩壳<br>加密壳</p>
+<h3 id="黑客攻击过程"><a href="#黑客攻击过程" class="headerlink" title="黑客攻击过程"></a>黑客攻击过程</h3><ul>
+<li>预攻击 踩点 扫描 手机信息</li>
+<li>攻击 入侵 获取权限 提权</li>
+<li>后攻击 清除痕迹 安插后门</li>
+</ul>
+<h3 id="数据库系统可能存在的威胁和防护措施"><a href="#数据库系统可能存在的威胁和防护措施" class="headerlink" title="数据库系统可能存在的威胁和防护措施"></a>数据库系统可能存在的威胁和防护措施</h3><ul>
+<li><p>数据篡改</p>
+</li>
+<li><p>数据损坏</p>
+</li>
+<li><p>数据窃取</p>
+</li>
+<li><p>SQL注入</p>
+</li>
+<li><p>权限滥用</p>
+</li>
+<li><p>审计记录不足</p>
+</li>
+<li><p>拒绝服务</p>
+</li>
+<li><p>备份数据暴露</p>
+</li>
+<li><p>身份验证不足</p>
+</li>
+<li><p>通信协议</p>
+</li>
+</ul>
+<p>完整性</p>
 <ul>
-<li>网闸 或看门人功能，组织非授权用户访问</li>
-<li>内部安全控制（监控）：监测有害入侵者的存在</li>
+<li>字段有效性检查</li>
+<li>访问控制</li>
+<li>修改日志</li>
+<li>两阶段修改技术</li>
 </ul>
-<hr>
-<h3 id="网络安全模型–P2DR模型"><a href="#网络安全模型–P2DR模型" class="headerlink" title="网络安全模型–P2DR模型"></a>网络安全模型–P2DR模型</h3><ul>
-<li>P2DR模型是可量化的、可由数学证明的、基于时间的的安全模型, 包含安全策略(Policy)、防护(Protection)、检测(Detection)和响应(Response);</li>
-<li>安全策略是P2DR安全模型的核心,所有的防护、检测、响应都是依据策略实施的;</li>
-<li>防护主要是预防安全事件的发生,发现存在的系统脆弱性和防止意外威胁和恶意威胁;</li>
-<li>检测是P2DR中一个非常重要的环节,是静态防护转化为动态防护的关键,动态响应和加强防护的依据,同时也是强制落实安全策略的工具;</li>
-<li>响应在安全系统中占有重要的地位,是解决安全潜在威胁最有效的方法。</li>
-</ul>
-<p>安全的目标实际上就是尽可能地增大保护时间,尽量地减少检测时间和响应时间。  </p>
+<p>机密性</p>
 <ul>
-<li>P2DR2 ：网络安全=风险分析（A）+安全策略（P)+系统防护（P）+实时监测（D）+实时响应（R）+灾难恢复（R）</li>
-</ul>
-<hr>
-<h3 id="网络安全评估标准"><a href="#网络安全评估标准" class="headerlink" title="网络安全评估标准"></a>网络安全评估标准</h3><p>在TCSEC中，美国国防部按处理信息的等级和应采用的响应措施，将计算机安全从高到低分为：A、B、C、D四类八个级别，共27条评估准则，随着安全等级的提高，系统的可信度随之增加，风险逐渐减少。<br>四个安全等级：</p>
-<ul>
-<li>无保护级 </li>
-<li>自主保护级 </li>
-<li>强制保护级</li>
-<li>验证保护级</li>
+<li>主体身份识别</li>
+<li>访问操作的鉴别和控制</li>
+<li>数据信息加密</li>
+<li>审计和跟踪</li>
 </ul>
 
     </div>
@@ -301,7 +351,6 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%BD%91%E5%AE%89%E5%AF%BC%E8%AE%BA/" rel="tag"># 网安导论</a>
               <a href="/tags/%E5%A4%8F%E4%BB%A4%E8%90%A5%E5%A4%8D%E8%AF%95%E8%B5%84%E6%96%99/" rel="tag"># 夏令营复试资料</a>
           </div>
 
@@ -311,13 +360,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/07/09/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E5%9B%9B/" rel="prev" title="网络安全导论日记(四)--网络信息安全威胁与攻击技术">
-      <i class="fa fa-chevron-left"></i> 网络安全导论日记(四)--网络信息安全威胁与攻击技术
+    <a href="/2020/07/13/%E8%AE%A1%E7%BD%91%E5%A4%8D%E4%B9%A0%E6%97%A5%E8%AE%B0-%E4%B8%83/" rel="prev" title="计网复习日记(七)--应用层">
+      <i class="fa fa-chevron-left"></i> 计网复习日记(七)--应用层
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/07/11/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E5%AF%BC%E8%AE%BA%E6%97%A5%E8%AE%B0-%E5%85%AD/" rel="next" title="网络安全导论日记(六)--密码学基础">
-      网络安全导论日记(六)--密码学基础 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -376,7 +422,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#回顾"><span class="nav-number">1.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键字"><span class="nav-number">2.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络安全模型–网络通信"><span class="nav-number">3.</span> <span class="nav-text">网络安全模型–网络通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络安全模型-访问安全"><span class="nav-number">4.</span> <span class="nav-text">网络安全模型-访问安全</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络安全模型–P2DR模型"><span class="nav-number">5.</span> <span class="nav-text">网络安全模型–P2DR模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网络安全评估标准"><span class="nav-number">6.</span> <span class="nav-text">网络安全评估标准</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？"><span class="nav-number">1.</span> <span class="nav-text">防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VPN原理-IPSec和SSL协议簇比较"><span class="nav-number">2.</span> <span class="nav-text">VPN原理 IPSec和SSL协议簇比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓冲区溢出"><span class="nav-number">3.</span> <span class="nav-text">缓冲区溢出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#入侵检测技术目的、类型-系统组成、原理"><span class="nav-number">4.</span> <span class="nav-text">入侵检测技术目的、类型 系统组成、原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对称密码与非对称密码"><span class="nav-number">5.</span> <span class="nav-text">对称密码与非对称密码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PE文件格式-壳保护原理"><span class="nav-number">6.</span> <span class="nav-text">PE文件格式 壳保护原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#黑客攻击过程"><span class="nav-number">7.</span> <span class="nav-text">黑客攻击过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据库系统可能存在的威胁和防护措施"><span class="nav-number">8.</span> <span class="nav-text">数据库系统可能存在的威胁和防护措施</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
