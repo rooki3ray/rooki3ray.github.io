@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？ 防火墙是建立在内外网络边界上的过滤封锁机制，是一种用于保护本地系统或者网络不受基于网络的安全威胁的有效方法。 包过滤 使用特定的规则对IP包进行过滤 网络层 状态检测 实现TCP连接的跟踪功能 应用层网关 代理服务器代替链接并充当服务的网关 应用层 电路层网关 在两个主机首次建立TCP连接时创立一个电子屏障（充当中介，建立两个TCP连接）">
+  <meta name="description" content="几个专业问题的总结。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="复试的重点专业问题">
 <meta property="og:url" content="http://rooki3ray.github.io/2020/07/14/%E5%A4%8D%E8%AF%95%E7%9A%84%E9%87%8D%E7%82%B9%E4%B8%93%E4%B8%9A%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Rooki3Ray | 永远滴神">
-<meta property="og:description" content="防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？ 防火墙是建立在内外网络边界上的过滤封锁机制，是一种用于保护本地系统或者网络不受基于网络的安全威胁的有效方法。 包过滤 使用特定的规则对IP包进行过滤 网络层 状态检测 实现TCP连接的跟踪功能 应用层网关 代理服务器代替链接并充当服务的网关 应用层 电路层网关 在两个主机首次建立TCP连接时创立一个电子屏障（充当中介，建立两个TCP连接）">
+<meta property="og:description" content="几个专业问题的总结。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-07-14T00:48:30.000Z">
-<meta property="article:modified_time" content="2020-07-15T04:46:34.286Z">
+<meta property="article:modified_time" content="2020-08-23T16:51:01.627Z">
 <meta property="article:author" content="Rooki3Ray">
 <meta property="article:tag" content="夏令营复试资料">
 <meta name="twitter:card" content="summary">
@@ -200,7 +200,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-15 12:46:34" itemprop="dateModified" datetime="2020-07-15T12:46:34+08:00">2020-07-15</time>
+                <time title="修改时间：2020-08-24 00:51:01" itemprop="dateModified" datetime="2020-08-24T00:51:01+08:00">2020-08-24</time>
               </span>
 
           
@@ -214,7 +214,21 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？"><a href="#防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？" class="headerlink" title="防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？"></a>防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？</h3><ul>
+        <p>几个专业问题的总结。</p>
+<a id="more"></a>
+
+<!-- TOC -->
+<ul>
+<li><a href="#防火墙主要作用分为哪几种类型各自的特点和可抵御的攻击">防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？</a></li>
+<li><a href="#vpn原理-ipsec和ssl协议簇比较">VPN原理 IPSec和SSL协议簇比较</a></li>
+<li><a href="#缓冲区溢出">缓冲区溢出</a></li>
+<li><a href="#入侵检测技术目的类型-系统组成原理">入侵检测技术目的、类型 系统组成、原理</a></li>
+<li><a href="#对称密码与非对称密码">对称密码与非对称密码</a></li>
+<li><a href="#pe文件格式-壳保护原理">PE文件格式 壳保护原理</a></li>
+<li><a href="#黑客攻击过程">黑客攻击过程</a></li>
+<li><a href="#数据库系统可能存在的威胁和防护措施">数据库系统可能存在的威胁和防护措施</a></li>
+</ul>
+<h3 id="防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？"><a href="#防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？" class="headerlink" title="防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？"></a>防火墙主要作用？分为哪几种类型，各自的特点和可抵御的攻击？</h3><ul>
 <li>防火墙是建立在<strong>内外网络边界</strong>上的过滤封锁机制，是一种用于保护本地系统或者网络不受基于网络的安全威胁的有效方法。</li>
 <li>包过滤 使用特定的规则对IP包进行过滤 网络层</li>
 <li>状态检测 实现TCP连接的跟踪功能</li>
