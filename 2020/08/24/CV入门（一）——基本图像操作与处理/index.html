@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="开始学习《Python计算机视觉》，夯实基础。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CV入门(一)--基本图像操作与处理">
+<meta property="og:url" content="http://rooki3ray.github.io/2020/08/24/CV%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%83%8F%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%A4%84%E7%90%86/index.html">
+<meta property="og:site_name" content="Rooki3Ray | Cyber Security">
+<meta property="og:description" content="开始学习《Python计算机视觉》，夯实基础。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2020/08/24/dsNaEq.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/08/24/dsN4PK.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/08/24/dsJRVP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/08/24/dsUvwR.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/08/24/dsaq4P.png">
+<meta property="article:published_time" content="2020-08-24T09:01:11.000Z">
+<meta property="article:modified_time" content="2020-08-24T15:41:49.145Z">
+<meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="CV">
+<meta property="article:tag" content="Python计算机视觉">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/08/24/dsNaEq.png">
+
+<link rel="canonical" href="http://rooki3ray.github.io/2020/08/24/CV%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%83%8F%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%A4%84%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CV入门(一)--基本图像操作与处理 | Rooki3Ray | Cyber Security</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c5dcd17d515f19e2d355facf9d8e773a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rooki3Ray | Cyber Security</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/08/24/CV%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E5%9F%BA%E6%9C%AC%E5%9B%BE%E5%83%8F%E6%93%8D%E4%BD%9C%E4%B8%8E%E5%A4%84%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rooki3Ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rooki3Ray | Cyber Security">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CV入门(一)--基本图像操作与处理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-08-24 17:01:11 / 修改时间：23:41:49" itemprop="dateCreated datePublished" datetime="2020-08-24T17:01:11+08:00">2020-08-24</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>开始学习《Python计算机视觉》，夯实基础。</p>
+<a id="more"></a>
+
+<p>本章学习操作和处理图像的基础知识，将通过大量示例介绍处理图像所需的Python工具包，并学习用于读取图像、图像转换和缩放、计算导数、画图和保存结果等的基本工具。本章的内容将贯穿本书的剩余章节。</p>
+<h2 id="PIL：-Python图像处理类库"><a href="#PIL：-Python图像处理类库" class="headerlink" title="PIL： Python图像处理类库"></a>PIL： Python图像处理类库</h2><p>PIL（Python Imaging Library）提供了通用的图像处理功能，比如图像缩放、裁剪、旋转、颜色转换等。</p>
+<h3 id="读取图像"><a href="#读取图像" class="headerlink" title="读取图像"></a>读取图像</h3><p>使用PIL中最重要的Image模块，读取图像并返回PIL图像对象。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">pil_im = Image.open(<span class="string">'empire.jpg'</span>)   <span class="comment"># 读取图像</span></span><br><span class="line">pil_im_conv = pil_im.convert(<span class="string">'L'</span>)   <span class="comment"># 转换为灰度图像</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="创建缩略图"><a href="#创建缩略图" class="headerlink" title="创建缩略图"></a>创建缩略图</h3><p>使用PIL图像对象的thumbnail()方法，该方法接收一个元组参数，指定缩略图的大小。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pil_im.thumbnail((<span class="number">128</span>,<span class="number">128</span>))</span><br></pre></td></tr></table></figure>
+
+<h3 id="复制和粘贴图像区域"><a href="#复制和粘贴图像区域" class="headerlink" title="复制和粘贴图像区域"></a>复制和粘贴图像区域</h3><p>用crop()方法可以从一幅图像中裁剪指定区域，该区域由元组参数指定，格式为（左，上，右，下）。使用paste()方法可以将图像粘贴。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">box = (<span class="number">100</span>,<span class="number">100</span>,<span class="number">400</span>,<span class="number">400</span>)</span><br><span class="line">region = pil_im.crop(box)</span><br><span class="line">region = region.transpose(Image.ROTATE_180)</span><br><span class="line">pil_im.paste(region,box)</span><br></pre></td></tr></table></figure>
+
+<p>效果如下所示（害怕）：<br><img src="https://s1.ax1x.com/2020/08/24/dsNaEq.png" alt="dsNaEq.png"><br><img src="https://s1.ax1x.com/2020/08/24/dsN4PK.png" alt="dsN4PK.png"></p>
+<h3 id="调整尺寸和旋转"><a href="#调整尺寸和旋转" class="headerlink" title="调整尺寸和旋转"></a>调整尺寸和旋转</h3><p>调整尺寸可以直接使用resize()方法，参数同样是元组。<br>旋转图像可以使用逆时针方式表示旋转角度，调用rotate()方法</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">out1 = pil_im.resize((<span class="number">128</span>,<span class="number">128</span>))</span><br><span class="line">out2 = pil_im.rotate(<span class="number">45</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="转换图像格式"><a href="#转换图像格式" class="headerlink" title="转换图像格式"></a>转换图像格式</h3><p>通过Image的save方法，可以直接将图像保存为其他格式。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">for</span> infile <span class="keyword">in</span> filelist:</span><br><span class="line">    outfile = os.path.splitext(infile)[<span class="number">0</span>] + <span class="string">".png"</span></span><br><span class="line"><span class="keyword">if</span> infile != outfile:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        Image.open(infile).save(outfile)</span><br><span class="line">    <span class="keyword">except</span> IOError:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"cannot convert"</span>, infile</span><br></pre></td></tr></table></figure>
+
+<h2 id="Matplotlib"><a href="#Matplotlib" class="headerlink" title="Matplotlib"></a>Matplotlib</h2><p>处理数学运算、绘制图表，在图像上绘制点、直线和曲线时，尝试用Matplotlib库。</p>
+<h3 id="绘制图像、点和线"><a href="#绘制图像、点和线" class="headerlink" title="绘制图像、点和线"></a>绘制图像、点和线</h3><p>在CV中，常用来绘制<strong>兴趣点、对应点以及检测出的物体</strong>。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> *</span><br><span class="line"><span class="comment"># 读取图像到数组中</span></span><br><span class="line">im = array(Image.open(<span class="string">'1.jpg'</span>))</span><br><span class="line"><span class="comment"># 绘制图像</span></span><br><span class="line">imshow(im)</span><br><span class="line"><span class="comment"># 一些点的横纵坐标</span></span><br><span class="line">x = [<span class="number">100</span>,<span class="number">400</span>,<span class="number">200</span>,<span class="number">200</span>]</span><br><span class="line">y = [<span class="number">200</span>,<span class="number">500</span>,<span class="number">200</span>,<span class="number">500</span>]</span><br><span class="line"><span class="comment"># 使用红色星状标记绘制点</span></span><br><span class="line">plot(x,y,<span class="string">'r*'</span>)</span><br><span class="line"><span class="comment"># 绘制连接前两个点的线</span></span><br><span class="line">plot(x[:<span class="number">2</span>],y[:<span class="number">2</span>])</span><br><span class="line"><span class="comment"># 添加标题，显示绘制的图像</span></span><br><span class="line">title(<span class="string">'Plotting: "1.jpg"'</span>)</span><br><span class="line"><span class="comment"># 不显示坐标轴</span></span><br><span class="line"><span class="comment"># axis('off') </span></span><br><span class="line">show()</span><br></pre></td></tr></table></figure>
+
+<p>该例子的绘制结果如下 所示。show() 命令首先打开图形用户界面（GUI），然后新建一个图像窗口。该图形用户界面会循环阻断脚本，然后暂停，直到最后一个图像窗口关闭。在每个脚本里，只能调用一次show() 命令，而且通常是在脚本的结尾调用。</p>
+<p><img src="https://s1.ax1x.com/2020/08/24/dsJRVP.png" alt=""></p>
+<p>PyLab库绘图时的基本颜色格式命令如下<br>| 命令格式 | 颜色 |<br>| ——– | —- |<br>| ‘b’      | 蓝色 |<br>| ‘g’      | 绿色 |<br>| ‘r’      | 红色 |<br>| ‘c’      | 青色 |<br>| ‘m’      | 品红 |<br>| ‘y’      | 黄色 |<br>| ‘k’      | 黑色 |<br>| ‘w’      | 白色 |</p>
+<p>PyLab库绘图时的基本线型格式命令如下<br>| 命令格式 | 颜色 |<br>| ——– | —- |<br>| ‘-‘      | 实线 |<br>| ‘–’     | 虚线 |<br>| ‘:’      | 点线 |</p>
+<p>PyLab库绘图时的基本绘制标记格式命令如下<br>| 命令格式 | 颜色   |<br>| ——– | —— |<br>| ‘.’      | 点     |<br>| ‘o’      | 圆圈   |<br>| ‘s’      | 正方形 |<br>| ‘*’      | 星形   |<br>| ‘+’      | 加号   |<br>| ‘x’      | 叉号   |</p>
+<h3 id="图像轮廓和直方图"><a href="#图像轮廓和直方图" class="headerlink" title="图像轮廓和直方图"></a>图像轮廓和直方图</h3><p>绘制图像的轮廓（或者其他<br>二维函数的等轮廓线）在工作中非常有用。因为绘制轮廓需要对每个坐标[x, y] 的像素值施加同一个阈值，所以首先需要将图像灰度化。使用contour()即可绘制轮廓。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> *</span><br><span class="line"><span class="comment"># 读取灰度图像到数组中</span></span><br><span class="line">im = array(Image.open(<span class="string">'./image/1.jpg'</span>).convert(<span class="string">'L'</span>))</span><br><span class="line"><span class="comment"># 新建一个图像</span></span><br><span class="line">figure()</span><br><span class="line"><span class="comment"># 不使用颜色信息</span></span><br><span class="line">gray()</span><br><span class="line"><span class="comment"># 在原点的左上角显示轮廓图像</span></span><br><span class="line">contour(im, origin=<span class="string">'image'</span>)</span><br><span class="line">axis(<span class="string">'equal'</span>)</span><br><span class="line">axis(<span class="string">'off'</span>)</span><br></pre></td></tr></table></figure>
+<p>图像的直方图用来表征该图像<strong>像素值的分布情况</strong>。用一定数目的小区间（bin）来指定表征像素值的范围，每个小区间会得到落入该小区间表示范围的像素数目。该（灰度）图像的直方图可以使用hist() 函数绘制，其第一个参数必须是一维数组输入，因此需要用flatten()方法按行优先战平，第二个参数指定了小区间的数目。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">figure()</span><br><span class="line">hist(im.flatten(),<span class="number">128</span>)</span><br><span class="line">show()</span><br></pre></td></tr></table></figure>
+
+<p>图像轮廓和直方图的效果如下所示（害怕*2）：<br><img src="https://s1.ax1x.com/2020/08/24/dsUvwR.png" alt="dsUvwR.png"><br><img src="https://s1.ax1x.com/2020/08/24/dsaq4P.png" alt="dsaq4P.png"></p>
+<h3 id="交互式标注"><a href="#交互式标注" class="headerlink" title="交互式标注"></a>交互式标注</h3><p>有时候需要用户交互来标记某些点或者标注训练数据，使用ginput()函数就可以实现交互式标注。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> pylab <span class="keyword">import</span> *</span><br><span class="line">im = array(Image.open(<span class="string">'./image/1.jpg'</span>))</span><br><span class="line">imshow(im)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'Please click 3 points'</span>)</span><br><span class="line">x = ginput(<span class="number">3</span>)</span><br><span class="line"><span class="keyword">print</span> (<span class="string">'you clicked:'</span>,x)</span><br><span class="line">show()</span><br></pre></td></tr></table></figure>
+
+<p>首先绘制一幅图像，然后等待用户在绘图窗口的图像区域点击三次。程序将这些点击的坐标[x, y] 自动保存在列表中。</p>
+<h2 id="NumPy"><a href="#NumPy" class="headerlink" title="NumPy"></a>NumPy</h2><p>NumPy是著名的Python科学计算工具包。NumPy 中的数组对象几乎贯穿用于本书的所有例子中，数组对象可以帮助实现数组中重要的操作，比如矩阵乘积、转置、解方程系统、向量乘积和归一化，这为图像变形、对变化进行建模、图像分类、图像聚类等提供了基础。</p>
+<h3 id="图像数组表示"><a href="#图像数组表示" class="headerlink" title="图像数组表示"></a>图像数组表示</h3><p>先前的例子中已经调用过array()方法将图像转换成NumPy的数组对象。NumPy的数组对象是多维的，可以用来表示向量、矩阵和图像。</p>
+<p>对于图像数据，运行以下实例</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">im = array(Image.open(<span class="string">'./image/1.jpg'</span>))</span><br><span class="line"><span class="keyword">print</span> (im.shape, im.dtype)</span><br><span class="line">im = array(Image.open(<span class="string">'./image/1.jpg'</span>).convert(<span class="string">'L'</span>),<span class="string">'f'</span>)</span><br><span class="line"><span class="keyword">print</span> (im.shape, im.dtype)</span><br></pre></td></tr></table></figure>
+
+<p>输出为</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(763, 720, 3) uint8</span><br><span class="line">(763, 720) float32</span><br></pre></td></tr></table></figure>
+
+<p>其中每行的第一个元组表示图像数组的大小（行、列、颜色通道），紧接着的字符串表示数组元素的数据类型。因为图像通常被编码成无符号八位整数（uint8），所以在第一种情况下，载入图像并将其转换到数组中，数组的数据类型为“uint8”。</p>
+<p>在第二种情况下，对图像进行灰度化处理，并且在创建数组时使用额外的参数“f”；该参数将数据类型转换为浮点型。注意，由于灰度图像没有颜色信息，所以在形状元组中，它只有两个数值。</p>
+<p>数组中的元素可以使用下标访问，如果仅用一个下标，则该下标为行下标。位于坐标i、j，以及颜色通道k 的像素值可以像下面这样访问：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">value = im[i,j,k]</span><br></pre></td></tr></table></figure>
+
+<p>同样也可以数组切片方式访问，例如：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">im[i,:] = im[j,:] <span class="comment"># 将第j 行的数值赋值给第i 行</span></span><br><span class="line">im[:,i] = <span class="number">100</span> <span class="comment"># 将第i 列的所有数值设为100</span></span><br><span class="line">im[:<span class="number">100</span>,:<span class="number">50</span>].sum() <span class="comment"># 计算前100 行、前50 列所有数值的和</span></span><br><span class="line">im[<span class="number">50</span>:<span class="number">100</span>,<span class="number">50</span>:<span class="number">100</span>] <span class="comment"># 50~100 行，50~100 列（不包括第100 行和第100 列）</span></span><br><span class="line">im[i].mean() <span class="comment"># 第i 行所有数值的平均值</span></span><br><span class="line">im[:,<span class="number">-1</span>] <span class="comment"># 最后一列</span></span><br><span class="line">im[<span class="number">-2</span>,:] (<span class="keyword">or</span> im[<span class="number">-2</span>]) <span class="comment"># 倒数第二行</span></span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>你可以打赏我哦！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CV/" rel="tag"># CV</a>
+              <a href="/tags/Python%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" rel="tag"># Python计算机视觉</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/23/CV%E5%85%A5%E9%97%A8%EF%BC%88%E9%9B%B6%EF%BC%89%E2%80%94%E2%80%94%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8Cdetectron2%E5%AE%89%E8%A3%85/" rel="prev" title="CV入门（零）——环境配置和detectron2安装">
+      <i class="fa fa-chevron-left"></i> CV入门（零）——环境配置和detectron2安装
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PIL：-Python图像处理类库"><span class="nav-number">1.</span> <span class="nav-text">PIL： Python图像处理类库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读取图像"><span class="nav-number">1.1.</span> <span class="nav-text">读取图像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建缩略图"><span class="nav-number">1.2.</span> <span class="nav-text">创建缩略图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复制和粘贴图像区域"><span class="nav-number">1.3.</span> <span class="nav-text">复制和粘贴图像区域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调整尺寸和旋转"><span class="nav-number">1.4.</span> <span class="nav-text">调整尺寸和旋转</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转换图像格式"><span class="nav-number">1.5.</span> <span class="nav-text">转换图像格式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Matplotlib"><span class="nav-number">2.</span> <span class="nav-text">Matplotlib</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#绘制图像、点和线"><span class="nav-number">2.1.</span> <span class="nav-text">绘制图像、点和线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图像轮廓和直方图"><span class="nav-number">2.2.</span> <span class="nav-text">图像轮廓和直方图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交互式标注"><span class="nav-number">2.3.</span> <span class="nav-text">交互式标注</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NumPy"><span class="nav-number">3.</span> <span class="nav-text">NumPy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图像数组表示"><span class="nav-number">3.1.</span> <span class="nav-text">图像数组表示</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rooki3Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rooki3Ray</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rooki3ray" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2922859032@qq.com" title="E-Mail → mailto:2922859032@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5355766445" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5355766445" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2922859032" title="QQ → 2922859032"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/rooki3ray" title="https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank">GitHub</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rooki3Ray</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
