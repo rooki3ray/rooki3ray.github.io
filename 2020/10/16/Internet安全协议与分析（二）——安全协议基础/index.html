@@ -28,7 +28,7 @@
 <meta property="og:description" content="安全协议概述">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-10-16T07:07:43.000Z">
-<meta property="article:modified_time" content="2020-10-17T06:29:39.538Z">
+<meta property="article:modified_time" content="2020-10-17T06:35:39.607Z">
 <meta property="article:author" content="Rooki3Ray">
 <meta property="article:tag" content="Internet安全协议与分析安全">
 <meta name="twitter:card" content="summary">
@@ -200,7 +200,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-17 14:29:39" itemprop="dateModified" datetime="2020-10-17T14:29:39+08:00">2020-10-17</time>
+                <time title="修改时间：2020-10-17 14:35:39" itemprop="dateModified" datetime="2020-10-17T14:35:39+08:00">2020-10-17</time>
               </span>
 
           <br>
@@ -209,14 +209,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.5k</span>
+              <span>1.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
+              <span>1 分钟</span>
             </span>
 
         </div>
@@ -322,8 +322,8 @@
 <h4 id="安全协议缺陷分类"><a href="#安全协议缺陷分类" class="headerlink" title="安全协议缺陷分类"></a>安全协议缺陷分类</h4><ul>
 <li>基本协议缺陷：设计时很少考虑攻击者</li>
 <li>口令/密钥猜测缺陷<ul>
-<li>可检测的口令在线猜测攻击：不成功的登录能被检测并被认证服务器记录</li>
-<li>不可检测的口令在线猜测攻击：攻击者从认证服务器的响应中逐渐推导出正确的口令</li>
+<li>可检测的口令在线猜测攻击：不成功的登录能被检测并记录</li>
+<li>不可检测的口令在线猜测攻击：攻击者从响应中逐渐推导出正确的口令</li>
 <li>可离线的口令猜测攻击：攻击者使用认证协议消息附件，猜测口令并离线验证</li>
 <li>改进措施：只响应新鲜的请求；只响应可验证的真实性。</li>
 </ul>
@@ -345,34 +345,6 @@
 </li>
 <li><p>时戳机制——当消息上地时戳与本地时间差值在一定范围内才有效</p>
 <p>问题：需要全局时钟，但仍难以同步</p>
-</li>
-</ul>
-<h4 id="安全协议及攻击实例"><a href="#安全协议及攻击实例" class="headerlink" title="安全协议及攻击实例"></a>安全协议及攻击实例</h4><ul>
-<li>$A,B,…$: 表示参与协议的主体。</li>
-<li>$K_{ij}$ 主体 $i, j$ 共享的会话密钥。</li>
-<li>$K <em>i$：主体 $i$ 的公钥， $K</em>{i^{-1}}$：主体 $i$ 的私钥</li>
-<li>$R_i$：主体 $i$ 生成的随机数 $R_A$,  $N_i$ ：主体 $i$ 生成的序列号 $N_A$</li>
-<li>$T_i$ ：主体 $i$ 生成的时戳 $T_A$ 。</li>
-<li>$[m1 | m2]$：表示消息的级联。</li>
-<li>$E(k:m)$： 表示用密钥 $K$ 对消息 $m$ 加密。</li>
-<li>$Text1,Text2,…$： 为消息常量。</li>
-<li>$f_{K_{ab}}(X)$ ：表示用 $K_{ab}$ 加密的 Hash 函数。</li>
-<li>$Z$：表示攻击者。</li>
-</ul>
-<h5 id="无可信第三方参与的对称密钥协议"><a href="#无可信第三方参与的对称密钥协议" class="headerlink" title="无可信第三方参与的对称密钥协议"></a>无可信第三方参与的对称密钥协议</h5><ul>
-<li><p>ISO one-pass 单方对称密钥认证协议<br>$$A-&gt;B: Text_2, E(K_{ab}:[T_a|N_a],B,Text_1)$$</p>
-</li>
-<li><p>ISO two-pass 单方对称密钥认证协议<br>$$B-&gt;A: R_b, Text_1 \<br>A-&gt;B: Text_3, E(K_{ab}:R_b, B, Text_2)$$</p>
-</li>
-<li><p>ISO two-pass 双方对称密钥认证协议<br>$$A -&gt; B: Text_2, E(K_{ab}: [T_a | N_a], B, Text_1) \<br>B -&gt; A: Text_4, E(K_{ab}: [T_b | N_b],A, Text_3)$$</p>
-</li>
-<li><p>ISO three-pass 双方对称密钥认证协议<br>$$B -&gt;A: R_b, Text_1 \<br>A -&gt; B: Text_3, E(K_{ab}: R_a, R_b, B, Text_2) \<br>B -&gt; A: Text_5, E(K_{ab}:R_b,R_a,Text_4)$$</p>
-</li>
-<li><p>使用单向函数<br>$$B -&gt; A: B,R_b \<br>A -&gt; B: A,E(K_{ab}:f(R_b), R_a,A,K) \<br>B -&gt; A: B,E(K:f(R_a))$$<br>使用单向函数验证消息的正确性</p>
-</li>
-<li><p>RFC协议</p>
-<p>$$A -&gt; B: A, E(K_{ab}: N_a) \<br>B -&gt; A: E(K_{ab}: N_{a+1}, N_b) \<br>A -&gt; B: E(K_{ab}:N_{b+1}) \<br>B -&gt; A: E(K_{ab}: K’_{ab}, N’_b)$$</p>
-<p>第四步易被第二步重放替代</p>
 </li>
 </ul>
 
@@ -465,7 +437,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全协议"><span class="nav-number">1.</span> <span class="nav-text">安全协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议常见类型"><span class="nav-number">1.1.</span> <span class="nav-text">安全协议常见类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议系统模型"><span class="nav-number">1.2.</span> <span class="nav-text">安全协议系统模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议的性质及实现"><span class="nav-number">1.3.</span> <span class="nav-text">安全协议的性质及实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#协议设计准则"><span class="nav-number">1.4.</span> <span class="nav-text">协议设计准则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议缺陷分类"><span class="nav-number">1.5.</span> <span class="nav-text">安全协议缺陷分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息重放攻击及对策"><span class="nav-number">1.6.</span> <span class="nav-text">消息重放攻击及对策</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议及攻击实例"><span class="nav-number">1.7.</span> <span class="nav-text">安全协议及攻击实例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#无可信第三方参与的对称密钥协议"><span class="nav-number">1.7.1.</span> <span class="nav-text">无可信第三方参与的对称密钥协议</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全协议"><span class="nav-number">1.</span> <span class="nav-text">安全协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议常见类型"><span class="nav-number">1.1.</span> <span class="nav-text">安全协议常见类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议系统模型"><span class="nav-number">1.2.</span> <span class="nav-text">安全协议系统模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议的性质及实现"><span class="nav-number">1.3.</span> <span class="nav-text">安全协议的性质及实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#协议设计准则"><span class="nav-number">1.4.</span> <span class="nav-text">协议设计准则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议缺陷分类"><span class="nav-number">1.5.</span> <span class="nav-text">安全协议缺陷分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息重放攻击及对策"><span class="nav-number">1.6.</span> <span class="nav-text">消息重放攻击及对策</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -549,13 +521,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">71k</span>
+    <span title="站点总字数">70k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:05</span>
+    <span title="站点阅读时长">1:04</span>
 </div>
 
 
