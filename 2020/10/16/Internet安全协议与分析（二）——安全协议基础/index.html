@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="安全协议概述">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Internet安全协议与分析（二）——安全协议概述">
+<meta property="og:url" content="http://rooki3ray.github.io/2020/10/16/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="Rooki3Ray | Cyber Security">
+<meta property="og:description" content="安全协议概述">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-16T07:07:43.000Z">
+<meta property="article:modified_time" content="2020-10-17T06:29:39.538Z">
+<meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="Internet安全协议与分析安全">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://rooki3ray.github.io/2020/10/16/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Internet安全协议与分析（二）——安全协议概述 | Rooki3Ray | Cyber Security</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c5dcd17d515f19e2d355facf9d8e773a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rooki3Ray | Cyber Security</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/10/16/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rooki3Ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rooki3Ray | Cyber Security">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Internet安全协议与分析（二）——安全协议概述
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-16 15:07:43" itemprop="dateCreated datePublished" datetime="2020-10-16T15:07:43+08:00">2020-10-16</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-17 14:29:39" itemprop="dateModified" datetime="2020-10-17T14:29:39+08:00">2020-10-17</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>安全协议概述</p>
+<a id="more"></a>
+
+<p>[TOC]</p>
+<h3 id="安全协议"><a href="#安全协议" class="headerlink" title="安全协议"></a>安全协议</h3><ul>
+<li>协议：两个或以上的参与者采取一系列步骤已完成某项特定的任务</li>
+<li>安全协议：密码体制基础上的一种高互通协议</li>
+</ul>
+<h4 id="安全协议常见类型"><a href="#安全协议常见类型" class="headerlink" title="安全协议常见类型"></a>安全协议常见类型</h4><ul>
+<li>密钥交换协议：用于完成会话密钥的建立</li>
+<li>认证协议：实体、身份、数据源、消息。用来防止篡改、假冒、否认等攻击</li>
+<li>认证和密钥交换协议：互联网密钥交换协议IKE、分布认证安全服务DASS、Kerberos认证协议等</li>
+<li>电子商务协议：协议双方存在利益矛盾，需要保证公平。电子商务SET协议</li>
+</ul>
+<h4 id="安全协议系统模型"><a href="#安全协议系统模型" class="headerlink" title="安全协议系统模型"></a>安全协议系统模型</h4><ul>
+<li>环境定义<ul>
+<li>系统环境：消息的发送和接收者、攻击者（恶意网络环境）、管理消息发送和接收的规则</li>
+<li>恶意网络环境：攻击者</li>
+<li>攻击者操作：截取、重放、篡改、级联、分离、加密、解密</li>
+<li>被动攻击者：知晓信息</li>
+<li>主动攻击者：操纵信息</li>
+</ul>
+</li>
+<li>攻击行为<ul>
+<li>转发消息到特定接收者处</li>
+<li>延迟消息的送达</li>
+<li>篡改后转发</li>
+<li>合并消息</li>
+<li>改变部分或全部消息的去处</li>
+<li>重放消息</li>
+</ul>
+</li>
+</ul>
+<h4 id="安全协议的性质及实现"><a href="#安全协议的性质及实现" class="headerlink" title="安全协议的性质及实现"></a>安全协议的性质及实现</h4><p>目的通过协议消息的传递来达成通信主体身份的<strong>识别与认证</strong>，并在此基础上为下一步的秘密通信分配所使用的<strong>会话密钥</strong></p>
+<ul>
+<li><p>认证性实现</p>
+<p>通过共享秘密实现：可以对抗假冒攻击，确保身份</p>
+<ul>
+<li>声称者用仅他和验证者知道的密钥封装消息</li>
+<li>声称者用私钥签名，验证者用公钥验证签名</li>
+<li>声称者通过可信第三方证明自己</li>
+</ul>
+</li>
+<li><p>秘密性实现</p>
+<ul>
+<li>目的：保护协议消息不泄露；攻击者无法根据消息格式提炼消息</li>
+<li>实现方法：对消息明文加密</li>
+</ul>
+</li>
+<li><p>完整性实现</p>
+<ul>
+<li>目的：保护协议消息不被非法篡改、删除和替代</li>
+<li>实现方法：封装和签名</li>
+</ul>
+</li>
+<li><p>不可否认性实现</p>
+<ul>
+<li>目的：通过通信主体提供对方参与协议交换的证据来保证合法利益不受侵害</li>
+<li>实现方法：签名消息</li>
+<li>协议特点：证据的正确性，交易的公平性。 次要：适时中止性、可追究性</li>
+</ul>
+</li>
+</ul>
+<h4 id="协议设计准则"><a href="#协议设计准则" class="headerlink" title="协议设计准则"></a>协议设计准则</h4><ul>
+<li><p>消息独立完整性原则：一条消息的解释应完全由该条消息的内容决定，不必借助上下文推断</p>
+<ul>
+<li><p>常用的协议消息描述格式：</p>
+<p>&lt;序列号&gt;发送者标识-&gt;接收者标识：消息</p>
+<p>&lt;2&gt;A-&gt;B：m   m应包含A、B的标识，否则易造成攻击</p>
+</li>
+</ul>
+</li>
+<li><p>消息前提准确原则：与消息的执行相关的先决前提条件应当明确指出，且正确性和合理性能够验证，由此判断消息是否应当被接收，即<strong>每条消息所基于的假设是否能够成立</strong>。</p>
+</li>
+<li><p>主体身份标识原则：主体标识重要时应在消息中明确附上主体名称</p>
+<ul>
+<li>显式：明文主体名字</li>
+<li>隐式：加密或签名</li>
+</ul>
+</li>
+<li><p>加密目的原则：加密可实现多种安全目的（秘密性、完整性、认证性），使用加密算法前确定目的</p>
+</li>
+<li><p>签名原则：主体对加密消息签名并不表明主题知道加密消息的内容，如果主体先签名再加密，则表明主体知道消息内容。同时使用加密和签名时，应<strong>先签名后加密</strong>。</p>
+</li>
+<li><p>随机数的使用原则：使用随机数的目的是提供消息的新鲜性。关键问题是随机数的真正随机性。</p>
+</li>
+<li><p>时戳的使用原则：考虑各机器的时钟与当地标准时间的差异，时戳的使用主要依赖于时钟同步。</p>
+</li>
+<li><p>编码原则：明确指出具体的编码格式</p>
+</li>
+</ul>
+<h4 id="安全协议缺陷分类"><a href="#安全协议缺陷分类" class="headerlink" title="安全协议缺陷分类"></a>安全协议缺陷分类</h4><ul>
+<li>基本协议缺陷：设计时很少考虑攻击者</li>
+<li>口令/密钥猜测缺陷<ul>
+<li>可检测的口令在线猜测攻击：不成功的登录能被检测并被认证服务器记录</li>
+<li>不可检测的口令在线猜测攻击：攻击者从认证服务器的响应中逐渐推导出正确的口令</li>
+<li>可离线的口令猜测攻击：攻击者使用认证协议消息附件，猜测口令并离线验证</li>
+<li>改进措施：只响应新鲜的请求；只响应可验证的真实性。</li>
+</ul>
+</li>
+<li>陈旧消息缺陷：消息的新鲜性——消息重放攻击</li>
+<li>并行会话缺陷：攻击者通过交换一定的协议消息获得重要的消息</li>
+<li>内部协议缺陷：协议参与者中至少有一方不能完成所有必须的动作</li>
+<li>密码系统缺陷：密码算法的安全强度问题</li>
+</ul>
+<h4 id="消息重放攻击及对策"><a href="#消息重放攻击及对策" class="headerlink" title="消息重放攻击及对策"></a>消息重放攻击及对策</h4><p>攻击利用其消息再生能力生成诚实用户所期望的消息格式并重放，分为本协议的轮内攻击和轮外攻击。</p>
+<p>消息去向：发送方——反射攻击；第三方——第三方攻击；接收方但被延迟——直接攻击</p>
+<p>对策：</p>
+<ul>
+<li><p>序列号机制——接收方通过比较消息中的序列号以判断消息是新产生的还是重放的</p>
+<p>问题：开销增大，小型系统适用</p>
+</li>
+<li><p><strong>挑战-应答机制</strong>——消息的时间变量参数由接收方在该消息传递前明确地向消息发送方说明</p>
+<p>问题：系统开销增加</p>
+</li>
+<li><p>时戳机制——当消息上地时戳与本地时间差值在一定范围内才有效</p>
+<p>问题：需要全局时钟，但仍难以同步</p>
+</li>
+</ul>
+<h4 id="安全协议及攻击实例"><a href="#安全协议及攻击实例" class="headerlink" title="安全协议及攻击实例"></a>安全协议及攻击实例</h4><ul>
+<li>$A,B,…$: 表示参与协议的主体。</li>
+<li>$K_{ij}$ 主体 $i, j$ 共享的会话密钥。</li>
+<li>$K <em>i$：主体 $i$ 的公钥， $K</em>{i^{-1}}$：主体 $i$ 的私钥</li>
+<li>$R_i$：主体 $i$ 生成的随机数 $R_A$,  $N_i$ ：主体 $i$ 生成的序列号 $N_A$</li>
+<li>$T_i$ ：主体 $i$ 生成的时戳 $T_A$ 。</li>
+<li>$[m1 | m2]$：表示消息的级联。</li>
+<li>$E(k:m)$： 表示用密钥 $K$ 对消息 $m$ 加密。</li>
+<li>$Text1,Text2,…$： 为消息常量。</li>
+<li>$f_{K_{ab}}(X)$ ：表示用 $K_{ab}$ 加密的 Hash 函数。</li>
+<li>$Z$：表示攻击者。</li>
+</ul>
+<h5 id="无可信第三方参与的对称密钥协议"><a href="#无可信第三方参与的对称密钥协议" class="headerlink" title="无可信第三方参与的对称密钥协议"></a>无可信第三方参与的对称密钥协议</h5><ul>
+<li><p>ISO one-pass 单方对称密钥认证协议<br>$$A-&gt;B: Text_2, E(K_{ab}:[T_a|N_a],B,Text_1)$$</p>
+</li>
+<li><p>ISO two-pass 单方对称密钥认证协议<br>$$B-&gt;A: R_b, Text_1 \<br>A-&gt;B: Text_3, E(K_{ab}:R_b, B, Text_2)$$</p>
+</li>
+<li><p>ISO two-pass 双方对称密钥认证协议<br>$$A -&gt; B: Text_2, E(K_{ab}: [T_a | N_a], B, Text_1) \<br>B -&gt; A: Text_4, E(K_{ab}: [T_b | N_b],A, Text_3)$$</p>
+</li>
+<li><p>ISO three-pass 双方对称密钥认证协议<br>$$B -&gt;A: R_b, Text_1 \<br>A -&gt; B: Text_3, E(K_{ab}: R_a, R_b, B, Text_2) \<br>B -&gt; A: Text_5, E(K_{ab}:R_b,R_a,Text_4)$$</p>
+</li>
+<li><p>使用单向函数<br>$$B -&gt; A: B,R_b \<br>A -&gt; B: A,E(K_{ab}:f(R_b), R_a,A,K) \<br>B -&gt; A: B,E(K:f(R_a))$$<br>使用单向函数验证消息的正确性</p>
+</li>
+<li><p>RFC协议</p>
+<p>$$A -&gt; B: A, E(K_{ab}: N_a) \<br>B -&gt; A: E(K_{ab}: N_{a+1}, N_b) \<br>A -&gt; B: E(K_{ab}:N_{b+1}) \<br>B -&gt; A: E(K_{ab}: K’_{ab}, N’_b)$$</p>
+<p>第四步易被第二步重放替代</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>你可以打赏我哦！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%E5%AE%89%E5%85%A8/" rel="tag"># Internet安全协议与分析安全</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/12/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%80%EF%BC%89%E2%80%94%E2%80%94%E6%97%A0%E7%BA%BF%E9%80%9A%E4%BF%A1%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8/" rel="prev" title="Internet安全协议与分析（一）———无线通信系统安全">
+      <i class="fa fa-chevron-left"></i> Internet安全协议与分析（一）———无线通信系统安全
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全协议"><span class="nav-number">1.</span> <span class="nav-text">安全协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议常见类型"><span class="nav-number">1.1.</span> <span class="nav-text">安全协议常见类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议系统模型"><span class="nav-number">1.2.</span> <span class="nav-text">安全协议系统模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议的性质及实现"><span class="nav-number">1.3.</span> <span class="nav-text">安全协议的性质及实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#协议设计准则"><span class="nav-number">1.4.</span> <span class="nav-text">协议设计准则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议缺陷分类"><span class="nav-number">1.5.</span> <span class="nav-text">安全协议缺陷分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息重放攻击及对策"><span class="nav-number">1.6.</span> <span class="nav-text">消息重放攻击及对策</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议及攻击实例"><span class="nav-number">1.7.</span> <span class="nav-text">安全协议及攻击实例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#无可信第三方参与的对称密钥协议"><span class="nav-number">1.7.1.</span> <span class="nav-text">无可信第三方参与的对称密钥协议</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rooki3Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rooki3Ray</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rooki3ray" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2922859032@qq.com" title="E-Mail → mailto:2922859032@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5355766445" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5355766445" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2922859032" title="QQ → 2922859032"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/rooki3ray" title="https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank">GitHub</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rooki3Ray</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">71k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:05</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
