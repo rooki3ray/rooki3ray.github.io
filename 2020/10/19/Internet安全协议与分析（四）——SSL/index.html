@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="SSL利用数据加密、身份验证和消息完整性验证机制，为HTTP提供安全连接 SSL位于应用层和传输层之间，能够为基于TCP等可靠连接的应用层协议提供安全性保证 SSL安全机制 传输数据的机密性：对称密钥算法 身份验证机制：基于证书利用数字签名对server和client（可选）进行身份验证 消息完整性验证：MAC算法  SSL分层结构上层协议SSL握手协议SSL的核心协议部分，协商通信过程中使用的加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Internet安全协议与分析（四）——SSL">
+<meta property="og:url" content="http://rooki3ray.github.io/2020/10/19/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94SSL/index.html">
+<meta property="og:site_name" content="Rooki3Ray | Cyber Security">
+<meta property="og:description" content="SSL利用数据加密、身份验证和消息完整性验证机制，为HTTP提供安全连接 SSL位于应用层和传输层之间，能够为基于TCP等可靠连接的应用层协议提供安全性保证 SSL安全机制 传输数据的机密性：对称密钥算法 身份验证机制：基于证书利用数字签名对server和client（可选）进行身份验证 消息完整性验证：MAC算法  SSL分层结构上层协议SSL握手协议SSL的核心协议部分，协商通信过程中使用的加">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCAnBT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCEkVO.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCZr8J.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCZs29.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCZDC4.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCkZwD.png">
+<meta property="article:published_time" content="2020-10-19T11:50:02.000Z">
+<meta property="article:modified_time" content="2020-10-21T08:36:56.881Z">
+<meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="Internet安全协议与分析">
+<meta property="article:tag" content="SSL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/10/21/BCAnBT.png">
+
+<link rel="canonical" href="http://rooki3ray.github.io/2020/10/19/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94SSL/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Internet安全协议与分析（四）——SSL | Rooki3Ray | Cyber Security</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c5dcd17d515f19e2d355facf9d8e773a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rooki3Ray | Cyber Security</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/10/19/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94SSL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rooki3Ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rooki3Ray | Cyber Security">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Internet安全协议与分析（四）——SSL
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-19 19:50:02" itemprop="dateCreated datePublished" datetime="2020-10-19T19:50:02+08:00">2020-10-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-21 16:36:56" itemprop="dateModified" datetime="2020-10-21T16:36:56+08:00">2020-10-21</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="SSL"><a href="#SSL" class="headerlink" title="SSL"></a>SSL</h2><p>利用数据加密、身份验证和消息完整性验证机制，为HTTP提供安全连接</p>
+<p>SSL位于<strong>应用层和传输层之间</strong>，能够为基于TCP等可靠连接的应用层协议提供安全性保证</p>
+<h3 id="SSL安全机制"><a href="#SSL安全机制" class="headerlink" title="SSL安全机制"></a>SSL安全机制</h3><ul>
+<li>传输数据的机密性：对称密钥算法</li>
+<li>身份验证机制：基于证书利用数字签名对server和client（可选）进行身份验证</li>
+<li>消息完整性验证：MAC算法</li>
+</ul>
+<h3 id="SSL分层结构"><a href="#SSL分层结构" class="headerlink" title="SSL分层结构"></a>SSL分层结构</h3><h4 id="上层协议"><a href="#上层协议" class="headerlink" title="上层协议"></a>上层协议</h4><h5 id="SSL握手协议"><a href="#SSL握手协议" class="headerlink" title="SSL握手协议"></a>SSL握手协议</h5><p>SSL的<strong>核心协议部分</strong>，协商通信过程中使用的加密套件（加密算法、密钥交换算法、MAC算法等）、在S/C之间安全交换密钥、实现S和C的身份验证。</p>
+<p><a href="https://imgchr.com/i/BCAnBT" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCAnBT.png" alt="BCAnBT.png"></a></p>
+<h6 id="阶段1：建立安全能力"><a href="#阶段1：建立安全能力" class="headerlink" title="阶段1：建立安全能力"></a>阶段1：建立安全能力</h6><p>启动逻辑连接，建立这个连接的安全能力。</p>
+<p><a href="https://imgchr.com/i/BCEkVO" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCEkVO.png" alt="BCEkVO.png"></a></p>
+<p>client hello消息包括：</p>
+<ul>
+<li>支持的协议版本</li>
+<li>一个客户端生成的随机数，用于生成对话密钥</li>
+<li>支持的加密算法</li>
+<li>支持的压缩方法</li>
+</ul>
+<p>server hello消息对client hello中的信息进行确认：</p>
+<ul>
+<li>确认使用的协议版本</li>
+<li>一个服务器生成的随机数，用于生成对话密钥</li>
+<li>确认加密方法</li>
+<li>服务器证书</li>
+</ul>
+<h6 id="阶段2：服务器鉴别与密钥交换"><a href="#阶段2：服务器鉴别与密钥交换" class="headerlink" title="阶段2：服务器鉴别与密钥交换"></a>阶段2：服务器鉴别与密钥交换</h6><p><a href="https://imgchr.com/i/BCZr8J" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCZr8J.png" alt="BCZr8J.png"></a></p>
+<ul>
+<li>certificate：服务器发送自己的证数</li>
+<li>server_key_exchange：可选，包含被签名的两个随机数和服务器参数</li>
+<li>certificate_request：非匿名server可以请求客户端证书</li>
+</ul>
+<h6 id="阶段3：客户机鉴别与密钥交换"><a href="#阶段3：客户机鉴别与密钥交换" class="headerlink" title="阶段3：客户机鉴别与密钥交换"></a>阶段3：客户机鉴别与密钥交换</h6><p><a href="https://imgchr.com/i/BCZs29" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCZs29.png" alt="BCZs29.png"></a></p>
+<ul>
+<li>客户根据服务器证书判断是否可以接受参数</li>
+<li>如果服务器请求证书就首先发送certificate消息/no_certificate警告，然后发送client_key_exchange</li>
+<li>certificate_verify包含对之前所有握手消息的MAC的签名</li>
+</ul>
+<h6 id="阶段4：完成"><a href="#阶段4：完成" class="headerlink" title="阶段4：完成"></a>阶段4：完成</h6><p><a href="https://imgchr.com/i/BCZDC4" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCZDC4.png" alt="BCZDC4.png"></a></p>
+<p>建立起一个安全的连接</p>
+<ul>
+<li>客户发送change_cipher_spec消息（是一个独立的协议，用于告知服务端客户端已经切换到协商好的CipherSuite的状态），并把协商得到的CipherSuite拷贝到当前连接</li>
+<li>客户用新的算法、密钥参数发送finished消息</li>
+<li>服务器同样发送，握手完成</li>
+</ul>
+<h5 id="SSLpassword变化协议"><a href="#SSLpassword变化协议" class="headerlink" title="SSLpassword变化协议"></a>SSLpassword变化协议</h5><p>C和S通过该协议通知对端：随后的报文都将使用新协商的加密套件和密钥进行保护和传输。</p>
+<h5 id="SSL警告协议"><a href="#SSL警告协议" class="headerlink" title="SSL警告协议"></a>SSL警告协议</h5><p>向对端报告告警信息，包含告警的严重级别和描写叙述。</p>
+<ul>
+<li>致命消息：立即终止当前连接</li>
+<li>警告消息</li>
+</ul>
+<h4 id="下层协议"><a href="#下层协议" class="headerlink" title="下层协议"></a>下层协议</h4><h5 id="SSL记录协议"><a href="#SSL记录协议" class="headerlink" title="SSL记录协议"></a>SSL记录协议</h5><p>负责对上层数据（上层协议和应用层协议报文）进行分块、计算并加入MAC值、加密，然后传送给对端</p>
+<ul>
+<li>机密性：协助双方产生共有的密钥对数据加密</li>
+<li>消息完整性：产生另一把密钥计算出消息认证码</li>
+</ul>
+<p>操作流程</p>
+<ul>
+<li>分片</li>
+<li>压缩</li>
+<li>计算MAC</li>
+<li>加密</li>
+<li>附加SSL头</li>
+</ul>
+<h3 id="SSL基本过程"><a href="#SSL基本过程" class="headerlink" title="SSL基本过程"></a>SSL基本过程</h3><ul>
+<li>建立一个会话<ul>
+<li>协商算法</li>
+<li>分享秘密</li>
+<li>身份认证</li>
+</ul>
+</li>
+<li>传送应用数据<ul>
+<li>确保机密性和完整性</li>
+</ul>
+</li>
+</ul>
+<h4 id="SSL连接"><a href="#SSL连接" class="headerlink" title="SSL连接"></a>SSL连接</h4><ul>
+<li>是一个提供一种合适类型服务的传输</li>
+<li>点对点的关系</li>
+<li>连接是暂时的，每个连接和一个会话关联</li>
+</ul>
+<h4 id="SSL会话"><a href="#SSL会话" class="headerlink" title="SSL会话"></a>SSL会话</h4><ul>
+<li>一个SSL会话是在C和S之间的一个关联。会话由Handshake Protocol创建。定义了一组<strong>可供多个连接共享的密码安全参数</strong>。</li>
+<li>会话用以<strong>避免</strong>每一个连接提供新的安全参数所需的<strong>协商代价</strong>。</li>
+</ul>
+<p><a href="https://imgchr.com/i/BCkZwD" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCkZwD.png" alt="BCkZwD.png"></a></p>
+<h4 id="SSL协议的加密和认证算法"><a href="#SSL协议的加密和认证算法" class="headerlink" title="SSL协议的加密和认证算法"></a>SSL协议的加密和认证算法</h4><p>认证算法采用X.509电子证书标准，使用RSA算法进行数字签名实现</p>
+<h4 id="SSL安全性分析"><a href="#SSL安全性分析" class="headerlink" title="SSL安全性分析"></a>SSL安全性分析</h4><ul>
+<li>鉴别机制：公钥技术和数字证书</li>
+<li>加密机制：混合密码体制，使用非对称密码体制协商处会话密钥，并选择对称加密算法</li>
+<li>完整性机制：定义了共享的、可用来生成MAC的密钥</li>
+<li>抗重放攻击：使用序列号作为数据包负载防重放。整个SSL握手中都有一个唯一的随机数标记这个SSL握手。</li>
+</ul>
+<h4 id="SSL脆弱性分析"><a href="#SSL脆弱性分析" class="headerlink" title="SSL脆弱性分析"></a>SSL脆弱性分析</h4><ul>
+<li>客户端假冒：SSL并不默认要求进行客户鉴别（防止由于安全协议导致网络性能大幅下降）</li>
+<li>无法提供基于UDP应用的安全保护</li>
+<li>不能对抗通信流量分析：数据包的IP头和TCP头仍然暴露，只保护应用数据</li>
+<li>进程中主密钥泄露：主密钥将会存留在SSL进程存储空间中</li>
+</ul>
+<h4 id="WTLS"><a href="#WTLS" class="headerlink" title="WTLS"></a>WTLS</h4><p>保证传输层安全，在TLS基础上，根据无线环境增加了一些新特性</p>
+<p>TO DO</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>你可以打赏我哦！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag"># Internet安全协议与分析</a>
+              <a href="/tags/SSL/" rel="tag"># SSL</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/19/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94IPSec/" rel="prev" title="Internet安全协议与分析（三）——IPSec">
+      <i class="fa fa-chevron-left"></i> Internet安全协议与分析（三）——IPSec
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/19/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%BA%94%EF%BC%89%E2%80%94%E2%80%94SET/" rel="next" title="Internet安全协议与分析（五）——SET">
+      Internet安全协议与分析（五）——SET <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL"><span class="nav-number">1.</span> <span class="nav-text">SSL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL安全机制"><span class="nav-number">1.1.</span> <span class="nav-text">SSL安全机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL分层结构"><span class="nav-number">1.2.</span> <span class="nav-text">SSL分层结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#上层协议"><span class="nav-number">1.2.1.</span> <span class="nav-text">上层协议</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#SSL握手协议"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">SSL握手协议</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#阶段1：建立安全能力"><span class="nav-number">1.2.1.1.1.</span> <span class="nav-text">阶段1：建立安全能力</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#阶段2：服务器鉴别与密钥交换"><span class="nav-number">1.2.1.1.2.</span> <span class="nav-text">阶段2：服务器鉴别与密钥交换</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#阶段3：客户机鉴别与密钥交换"><span class="nav-number">1.2.1.1.3.</span> <span class="nav-text">阶段3：客户机鉴别与密钥交换</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#阶段4：完成"><span class="nav-number">1.2.1.1.4.</span> <span class="nav-text">阶段4：完成</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SSLpassword变化协议"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">SSLpassword变化协议</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SSL警告协议"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">SSL警告协议</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下层协议"><span class="nav-number">1.2.2.</span> <span class="nav-text">下层协议</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#SSL记录协议"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">SSL记录协议</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL基本过程"><span class="nav-number">1.3.</span> <span class="nav-text">SSL基本过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL连接"><span class="nav-number">1.3.1.</span> <span class="nav-text">SSL连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL会话"><span class="nav-number">1.3.2.</span> <span class="nav-text">SSL会话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL协议的加密和认证算法"><span class="nav-number">1.3.3.</span> <span class="nav-text">SSL协议的加密和认证算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL安全性分析"><span class="nav-number">1.3.4.</span> <span class="nav-text">SSL安全性分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL脆弱性分析"><span class="nav-number">1.3.5.</span> <span class="nav-text">SSL脆弱性分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WTLS"><span class="nav-number">1.3.6.</span> <span class="nav-text">WTLS</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rooki3Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rooki3Ray</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rooki3ray" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2922859032@qq.com" title="E-Mail → mailto:2922859032@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5355766445" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5355766445" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2922859032" title="QQ → 2922859032"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/rooki3ray" title="https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank">GitHub</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rooki3Ray</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">74k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:07</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

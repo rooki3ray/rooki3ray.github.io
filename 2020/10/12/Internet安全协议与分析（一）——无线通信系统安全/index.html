@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://s1.ax1x.com/2020/10/16/0H3Fwd.png">
 <meta property="og:image" content="https://s1.ax1x.com/2020/10/16/0H3lwj.png">
 <meta property="article:published_time" content="2020-10-12T12:03:20.000Z">
-<meta property="article:modified_time" content="2020-10-16T06:58:41.411Z">
+<meta property="article:modified_time" content="2020-10-17T06:37:24.873Z">
 <meta property="article:author" content="Rooki3Ray">
 <meta property="article:tag" content="Internet安全协议与分析">
 <meta property="article:tag" content="无线通信安全">
@@ -206,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-16 14:58:41" itemprop="dateModified" datetime="2020-10-16T14:58:41+08:00">2020-10-16</time>
+                <time title="修改时间：2020-10-17 14:37:24" itemprop="dateModified" datetime="2020-10-17T14:37:24+08:00">2020-10-17</time>
               </span>
 
           <br>
@@ -356,7 +356,7 @@
 </ul>
 <h5 id="GSM系统的鉴权过程"><a href="#GSM系统的鉴权过程" class="headerlink" title="GSM系统的鉴权过程"></a>GSM系统的鉴权过程</h5><p><img src="https://s1.ax1x.com/2020/10/13/0fdQYV.png" alt="0fdQYV.png"></p>
 <ul>
-<li>GSM网络侧VLR收到业务请求，从中<strong>提取TMSI或IMSI</strong>，并查看是否保存有认证向量三元组triplet（RAND，XRES，Kc），有则可以<strong>直接给MS发送RAND</strong>作为挑战信息，否则继续。</li>
+<li>GSM网络侧从业务请求<strong>提取TMSI或IMSI</strong>，并查看是否保存有认证向量三元组triplet（RAND，XRES，Kc），有则可以<strong>直接给MS发送RAND</strong>作为挑战信息，否则继续。</li>
 <li>VLR<strong>向鉴权中心AuC发送认证数据请求</strong>，其中包含用户的IMSI。</li>
 <li>认证中心<strong>根据用户的IMSI找到用户的密钥Ki</strong>，然后利用<strong>自己产生的随机数RAND</strong>，利用A3算法，产生预期响应<strong>XRES</strong>，利用A8算法产生用于加密的密钥Kc，即产生认证向量三元组：triplet（RAND，XRES，Kc），发送到MSC/VLR；</li>
 <li>MSC/VLR将其中的RAND发送给MS，MS中的SIM卡<strong>根据收到的RAND和存储在卡中的Ki</strong>，利用A3和A8算法分别计算出用于认证的响应<strong>RES</strong>和用于加密的密钥（Kc），并将RES回送到MSC/VLR中；</li>
@@ -722,14 +722,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -790,13 +790,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">70k</span>
+    <span title="站点总字数">74k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:04</span>
+    <span title="站点阅读时长">1:07</span>
 </div>
 
 
