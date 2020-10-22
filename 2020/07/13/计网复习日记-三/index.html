@@ -229,10 +229,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>本章学习MAC子层。</p>
-<a id="more"></a>
-
-
+        <p>本章学习MAC子层。<br><a id="more"></a></p>
 <hr>
 <h3 id="介质接入控制"><a href="#介质接入控制" class="headerlink" title="介质接入控制"></a>介质接入控制</h3><h4 id="广播信道分配问题"><a href="#广播信道分配问题" class="headerlink" title="广播信道分配问题"></a>广播信道分配问题</h4><p>信道使用产生竞争时，分配信道使用权。<br>用来决定广播信道中信道分配的功能及协议属于数据链路层的子层，称作介质接入控制MAC(Medium Access Control)子层。</p>
 <h5 id="静态分配"><a href="#静态分配" class="headerlink" title="静态分配"></a>静态分配</h5><ul>
@@ -261,10 +258,8 @@
 <p>易受冲突时间2T<br>平均每个帧时产生S个新帧<br>帧发送的均值为G</p>
 <p>S = G e<sup>-2G<sup><br>S<sub>max<sub> = 1/2e = 0.184</p>
 <h6 id="时隙ALOHA"><a href="#时隙ALOHA" class="headerlink" title="时隙ALOHA"></a>时隙ALOHA</h6><ul>
-<li><p>在一个时隙内产生的新帧，将在下一个时隙开始处发送，冲突危险区为T</p>
-</li>
-<li><p>新帧的产生是随机的，但是不允许随机发送</p>
-</li>
+<li>在一个时隙内产生的新帧，将在下一个时隙开始处发送，冲突危险区为T</li>
+<li>新帧的产生是随机的，但是不允许随机发送</li>
 <li><p>在一个时隙的起点没有其它帧发送的概率为：P0 = e<sup>-G<sup><br>S = G e<sup>-G<sup><br>S<sub>max<sub> = 1/e = 0.368<br>（0.37时隙为空，0.37时隙成功，0.26时隙冲突）</p>
 </li>
 <li><p>时隙ALOHA需要全网的同步机制，增加了复杂性</p>
@@ -316,12 +311,9 @@
 <hr>
 <h3 id="IEEE802标准"><a href="#IEEE802标准" class="headerlink" title="IEEE802标准"></a>IEEE802标准</h3><h4 id="局域网的低三层"><a href="#局域网的低三层" class="headerlink" title="局域网的低三层"></a>局域网的低三层</h4><p>IEEE 802.1标准规定局域网的低三层。<br>（1）物理层：与OSI/RM的物理层相对应，但所采用的具体协议标准直接与传输介质有关。<br>（2）介质接入控制（MAC）层：具体管理通信实体接入信道而建立数据链路的控制过程。尽力而为的数据报服务<br>（3）逻辑链路控制（LLC）层：提供一个或多个服务访问点，以复用的形式建立多点—多点之间的数据通信连接，并包括寻址、差错控制、顺序控制和流量控制等功能。</p>
 <ul>
-<li><p>LLC层向网络层提供多个服务访问点L-SAP。对同一个LLC可以提供多个MAC选择</p>
-</li>
-<li><p>MAC层向LLC层提供一个服务访问点M-SAP</p>
-</li>
-<li><p>物理层向MAC层也只需单一的服务访问点P-SAP</p>
-</li>
+<li>LLC层向网络层提供多个服务访问点L-SAP。对同一个LLC可以提供多个MAC选择</li>
+<li>MAC层向LLC层提供一个服务访问点M-SAP</li>
+<li>物理层向MAC层也只需单一的服务访问点P-SAP</li>
 <li><p>两个站点建立逻辑链路连接，需要两种地址：</p>
 <ul>
 <li>MAC物理地址，即某站在网络中的物理地址（48位网卡地址），由MAC帧负责传送；</li>
@@ -330,18 +322,19 @@
 </li>
 <li><p>LLC层与局域网形态和传输介质无关</p>
 </li>
-<li><p>MAC层与局域网形态和传输介质直接相关</p>
-</li>
+<li>MAC层与局域网形态和传输介质直接相关</li>
 </ul>
 <h4 id="IEEE802协议"><a href="#IEEE802协议" class="headerlink" title="IEEE802协议"></a>IEEE802协议</h4><p>802.1 基本介绍和接口原语定义<br>802.2 逻辑链路控制（LLC）子层<br>802.3 采用CSMA/CD技术的局域网<br>802.4 采用令牌总线（Token Bus）技术的局域网<br>802.5 采用令牌环（Token Ring）技术的局域网</p>
-<h4 id="公用信道的分配方法"><a href="#公用信道的分配方法" class="headerlink" title="公用信道的分配方法"></a>公用信道的分配方法</h4><table>
+<h4 id="公用信道的分配方法"><a href="#公用信道的分配方法" class="headerlink" title="公用信道的分配方法"></a>公用信道的分配方法</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>方法/系统</th>
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>纯ALOHA</td>
 <td>在任何时候均非同步传输</td>
 </tr>
@@ -377,7 +370,9 @@
 <td>令牌环</td>
 <td>在发送数据前必须获得令牌</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="无线局域网使用的CSMA-CA"><a href="#无线局域网使用的CSMA-CA" class="headerlink" title="无线局域网使用的CSMA/CA"></a>无线局域网使用的CSMA/CA</h4><p>带冲突避让的载波多路侦听CSMA/CA</p>
 <ul>
 <li><p>无线局域网很难检测信道</p>
@@ -497,7 +492,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -571,7 +566,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:07</span>
+    <span title="站点阅读时长">1:08</span>
 </div>
 
 

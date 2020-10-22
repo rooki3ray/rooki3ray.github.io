@@ -240,7 +240,6 @@
       
         <p>介绍IPSec协议。</p>
 <a id="more"></a>
-
 <h2 id="IP安全问题"><a href="#IP安全问题" class="headerlink" title="IP安全问题"></a>IP安全问题</h2><p>IP协议从本质上来说是不安全的，修改IP包重新计算校验和很容易。</p>
 <p>IPv4没有安全选项，缺乏通信双方真实<strong>身份验证</strong>、<strong>数据完整性和机密性保护</strong>……</p>
 <h2 id="IPSec"><a href="#IPSec" class="headerlink" title="IPSec"></a>IPSec</h2><p>IPSec随着IPv6产生，有三种机制共同保障：<strong>认证、信息机密性和密钥管理</strong></p>
@@ -248,7 +247,7 @@
 <h3 id="IPSec体系结构"><a href="#IPSec体系结构" class="headerlink" title="IPSec体系结构"></a>IPSec体系结构</h3><p><a href="https://imgchr.com/i/BSUWod" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/20/BSUWod.png" alt="BSUWod.png"></a></p>
 <h4 id="安全联盟SA"><a href="#安全联盟SA" class="headerlink" title="安全联盟SA"></a>安全联盟SA</h4><p>SA是两个通信实体间建立的一个简单单向协定，由安全参数索引SPI和目标地址组成，单个IPSec连接至少需要两个SA。</p>
 <h4 id="安全策略库SPD"><a href="#安全策略库SPD" class="headerlink" title="安全策略库SPD"></a>安全策略库SPD</h4><p>用于提供安全策略配置，其中的动作指定某些数据流必须绕过IPSec的处理、某些丢弃、其余的必须经过IPSec模块的处理。</p>
-<p>含有规则列表：&lt;TrafficSelector, action&gt;</p>
+<p>含有规则列表：<TrafficSelector, action></p>
 <ul>
 <li>Traffic Selectors: IP addresses and/or ports, protocol;</li>
 <li>Actions: Discard; Bypass IPsec; Apply IPsec</li>
@@ -410,7 +409,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -484,7 +483,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:07</span>
+    <span title="站点阅读时长">1:08</span>
 </div>
 
 

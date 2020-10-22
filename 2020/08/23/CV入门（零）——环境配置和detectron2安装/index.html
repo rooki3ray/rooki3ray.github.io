@@ -233,7 +233,6 @@
       
         <p>CV入门——在Windows 10家庭中文版上安装detectron2.</p>
 <a id="more"></a>
-
 <!-- TOC -->
 <ul>
 <li><a href="#环境依赖">环境依赖</a></li>
@@ -255,45 +254,28 @@
 </ul>
 <h3 id="安装-torch与torchvision"><a href="#安装-torch与torchvision" class="headerlink" title="安装 torch与torchvision"></a>安装 torch与torchvision</h3><p>可以直接到<a href="https://download.pytorch.org/whl/torch_stable.html" target="_blank" rel="noopener">Pytorch的whl仓库</a>下载torch和torchvison的whl文件，然后执行以下命令进行安装。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install filename.whl</span><br></pre></td></tr></table></figure>
-
 <p>需要注意的是，下载torch和torchvison的whl文件时应<strong>有相同的cu并且与Python版本一致</strong>。</p>
 <p>测试是否安装完成。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c <span class="string">"import torch; print(torch.__version__)"</span></span><br></pre></td></tr></table></figure>
-
 <p>也可以直接在<a href="https://pytorch.org/" target="_blank" rel="noopener">pytorch官网</a>，选择操作系统、安装工具、语言以及CUDA版本，然后直接执行官网给出的命令。</p>
 <h3 id="安装-fvcore和pycocotools"><a href="#安装-fvcore和pycocotools" class="headerlink" title="安装 fvcore和pycocotools"></a>安装 fvcore和pycocotools</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install git+https://github.com/facebookresearch/fvcore</span><br><span class="line"></span><br><span class="line">pip install git+https://github.com/cocodataset/cocoapi.git<span class="comment">#subdirectory=PythonAPI</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="安装-Visual-Studio"><a href="#安装-Visual-Studio" class="headerlink" title="安装 Visual Studio"></a>安装 Visual Studio</h3><p>在微软的<a href="https://visualstudio.microsoft.com/zh-hans/vs/" target="_blank" rel="noopener">官网</a>上下载Visual Studio Installer，安装时添加<strong>工作负载-&gt;使用C++的桌面开发</strong>即可。</p>
 <p>将以下路径添加到系统变量中（根据安装位置自行修改）。</p>
 <blockquote>
 <p>C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\bin\Hostx86\x86</p>
 </blockquote>
-<p>测试cl是否正常。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; cl</span><br><span class="line">用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.27.29111 版</span><br><span class="line">版权所有(C) Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">用法: cl [ 选项... ] 文件名... [ /link 链接选项... ]</span><br></pre></td></tr></table></figure>
-
+<p>测试cl是否正常。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt; cl</span><br><span class="line">用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.27.29111 版</span><br><span class="line">版权所有(C) Microsoft Corporation。保留所有权利。</span><br><span class="line"></span><br><span class="line">用法: cl [ 选项... ] 文件名... [ /link 链接选项... ]</span><br></pre></td></tr></table></figure></p>
 <h3 id="安装-detectron2"><a href="#安装-detectron2" class="headerlink" title="安装 detectron2"></a>安装 detectron2</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/facebookresearch/detectron2.git</span><br></pre></td></tr></table></figure>
-
-<p>在setup.py中找到以下内容将其注释掉即可。</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># "pycocotools&gt;=2.0.1",</span></span><br></pre></td></tr></table></figure>
-
-
+<p>在setup.py中找到以下内容将其注释掉即可。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># "pycocotools&gt;=2.0.1",</span></span><br></pre></td></tr></table></figure></p>
 <p>随便下载一张图片，进行实例测试，（模型下载如果没有梯子会很慢）<br><img src="https://s1.ax1x.com/2020/08/24/dBBnyQ.jpg" alt=""></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python demo/demo.py --config-file configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml   --input input1.jpg   --output ./out.jpg --opts MODEL.WEIGHTS detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl</span><br></pre></td></tr></table></figure>
-
 <p>输入的out.jpg如下所示，bingo！<br><img src="https://s1.ax1x.com/2020/08/24/dBB3F0.jpg" alt=""></p>
 <p>如果代码报错，那么大概率是torch和torchvision的版本问题，应该重新检查是否<strong>版本对应</strong>。</p>
-<h3 id="ninja错误"><a href="#ninja错误" class="headerlink" title="ninja错误"></a>ninja错误</h3><p>如果出现以下错误</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">subprocess.CalledProcessError: Command <span class="string">'['</span>ninja<span class="string">', '</span>-v<span class="string">']'</span> returned non-zero <span class="built_in">exit</span> status 1.</span><br></pre></td></tr></table></figure>
-
-<p>在以下路径中做如下修改即可。</p>
-<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 路径：&#123;Your Path&#125;\Lib\site-packages\torch\utils\cpp_extension.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># command = ['ninja', '-v'] # 修改前</span></span><br><span class="line">command = [<span class="string">'ninja'</span>, <span class="string">'--v'</span>]  <span class="comment"># 修改后</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="cl编码错误"><a href="#cl编码错误" class="headerlink" title="cl编码错误"></a>cl编码错误</h3><p>如果出现以下错误</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error checking compiler version <span class="keyword">for</span> cl</span><br></pre></td></tr></table></figure>
-
+<h3 id="ninja错误"><a href="#ninja错误" class="headerlink" title="ninja错误"></a>ninja错误</h3><p>如果出现以下错误<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">subprocess.CalledProcessError: Command <span class="string">'['</span>ninja<span class="string">', '</span>-v<span class="string">']'</span> returned non-zero <span class="built_in">exit</span> status 1.</span><br></pre></td></tr></table></figure></p>
+<p>在以下路径中做如下修改即可。<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 路径：&#123;Your Path&#125;\Lib\site-packages\torch\utils\cpp_extension.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># command = ['ninja', '-v'] # 修改前</span></span><br><span class="line">command = [<span class="string">'ninja'</span>, <span class="string">'--v'</span>]  <span class="comment"># 修改后</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="cl编码错误"><a href="#cl编码错误" class="headerlink" title="cl编码错误"></a>cl编码错误</h3><p>如果出现以下错误<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error checking compiler version <span class="keyword">for</span> cl</span><br></pre></td></tr></table></figure></p>
 <p>在以下路径中做如下修改即可。</p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 路径：&#123;Your Path&#125;\Lib\site-packages\torch\utils\cpp_extension.py</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> sys.platform.startswith(<span class="string">'linux'</span>):</span><br><span class="line">            minimum_required_version = MINIMUM_GCC_VERSION</span><br><span class="line">            version = subprocess.check_output([compiler, <span class="string">'-dumpfullversion'</span>, <span class="string">'-dumpversion'</span>])</span><br><span class="line">            version = version.decode().strip().split(<span class="string">'.'</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            minimum_required_version = MINIMUM_MSVC_VERSION</span><br><span class="line">            compiler_info = subprocess.check_output(compiler, stderr=subprocess.STDOUT)</span><br><span class="line">            <span class="comment"># match = re.search(r'(\d+)\.(\d+)\.(\d+)', compiler_info.decode().strip())     # 修改前</span></span><br><span class="line">            match = re.search(<span class="string">r'(\d+)\.(\d+)\.(\d+)'</span>, compiler_info.decode(<span class="string">' gbk'</span>).strip()) <span class="comment"># 修改后</span></span><br><span class="line">            version = (<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>) <span class="keyword">if</span> match <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">else</span> match.groups() </span><br><span class="line">    <span class="keyword">except</span> Exception:</span><br><span class="line">        _, error, _ = sys.exc_info()</span><br><span class="line">        warnings.warn(<span class="string">'Error checking compiler version for &#123;&#125;: &#123;&#125;'</span>.format(compiler, error))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br></pre></td></tr></table></figure>
-
 <h3 id="cl连接错误"><a href="#cl连接错误" class="headerlink" title="cl连接错误"></a>cl连接错误</h3><p>如果出现以下错误，</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">detectron2 failed with <span class="built_in">exit</span> status 1181</span><br></pre></td></tr></table></figure>
 <p>那么应该是cl中link.exe无法正确生成obj文件所致，本机解决方法暂时未知；但可以通过打包别人已安装好的detectron2中的以下路径覆盖到本地解决。</p>
@@ -406,7 +388,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -480,7 +462,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:07</span>
+    <span title="站点阅读时长">1:08</span>
 </div>
 
 

@@ -29,8 +29,14 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BC4jJA.png">
 <meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BC5rYd.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Biyp40.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BiyigU.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BiyVb9.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BiyeER.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Bicim4.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Bi2tOS.png">
 <meta property="article:published_time" content="2020-10-19T11:52:07.000Z">
-<meta property="article:modified_time" content="2020-10-21T08:55:12.157Z">
+<meta property="article:modified_time" content="2020-10-22T04:46:46.450Z">
 <meta property="article:author" content="Rooki3Ray">
 <meta property="article:tag" content="Internet安全协议与分析">
 <meta property="article:tag" content="SET">
@@ -204,7 +210,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-21 16:55:12" itemprop="dateModified" datetime="2020-10-21T16:55:12+08:00">2020-10-21</time>
+                <time title="修改时间：2020-10-22 12:46:46" itemprop="dateModified" datetime="2020-10-22T12:46:46+08:00">2020-10-22</time>
               </span>
 
           <br>
@@ -213,7 +219,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>74</span>
+              <span>861</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -234,7 +240,6 @@
       
         <p>介绍SET协议。</p>
 <a id="more"></a>
-
 <h2 id="电子交易主要模式"><a href="#电子交易主要模式" class="headerlink" title="电子交易主要模式"></a>电子交易主要模式</h2><h3 id="支付系统无安全措施模式"><a href="#支付系统无安全措施模式" class="headerlink" title="支付系统无安全措施模式"></a>支付系统无安全措施模式</h3><p><a href="https://imgchr.com/i/BC4jJA" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BC4jJA.png" alt="BC4jJA.png"></a></p>
 <ul>
 <li>风险由商家承担</li>
@@ -242,6 +247,87 @@
 <li>信用卡信息的传递无安全保障</li>
 </ul>
 <h3 id="通过第三方经纪人支付的模型"><a href="#通过第三方经纪人支付的模型" class="headerlink" title="通过第三方经纪人支付的模型"></a>通过第三方经纪人支付的模型</h3><p><a href="https://imgchr.com/i/BC5rYd" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BC5rYd.png" alt="BC5rYd.png"></a></p>
+<ul>
+<li>用户账户的开设不通过网络</li>
+<li>信用卡信息不在开放网络上传送</li>
+<li>通过电子邮件确认用户身份</li>
+<li>商家自由度大、风险小</li>
+<li>支付是通过双方都信任的第三方完成的</li>
+</ul>
+<h3 id="数字现金支付模型"><a href="#数字现金支付模型" class="headerlink" title="数字现金支付模型"></a>数字现金支付模型</h3><p><a href="https://imgchr.com/i/Biyp40" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Biyp40.png" alt="Biyp40.png"></a></p>
+<ul>
+<li>银行和商家之间应该有协议和授权关系</li>
+<li>用户、商家和数字现金的发行都需要使用数字现金软件</li>
+<li>适用于小额交易</li>
+<li>身份验证由数字现金完成</li>
+<li>数字现金的发行负责用户和商家之间的实际资金转移</li>
+<li>数字现金和普通现金一样，可以存取转让</li>
+</ul>
+<h3 id="简单加密支付模型"><a href="#简单加密支付模型" class="headerlink" title="简单加密支付模型"></a>简单加密支付模型</h3><p><a href="https://imgchr.com/i/BiyigU" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BiyigU.png" alt="BiyigU.png"></a></p>
+<ul>
+<li>信用卡等关键信息需要加密</li>
+<li>使用对称和非对称加密技术</li>
+<li>可能要启用身份认证系统</li>
+<li>以数字签名确认信息的真实性</li>
+<li>需要业务服务器和服务软件的支持</li>
+</ul>
+<h3 id="安全电子交易SET支付模式"><a href="#安全电子交易SET支付模式" class="headerlink" title="安全电子交易SET支付模式"></a>安全电子交易SET支付模式</h3><p><a href="https://imgchr.com/i/BiyVb9" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BiyVb9.png" alt="BiyVb9.png"></a></p>
+<p>SET协议的目标</p>
+<ul>
+<li>信息在互联网上安全传输，不能被窃听或篡改</li>
+<li>用户资料要妥善保护，商家只能看到订货信息，看不到用户的账户信息</li>
+<li>持卡人和商家相互认证，确定对方身份</li>
+<li>软件遵循相同的协议和消息格式，具有兼容性和互操作性</li>
+</ul>
+<h2 id="SET（Secure-Electronic-Transaction-）"><a href="#SET（Secure-Electronic-Transaction-）" class="headerlink" title="SET（Secure Electronic Transaction ）"></a>SET（Secure Electronic Transaction ）</h2><h3 id="SET的动机和范围"><a href="#SET的动机和范围" class="headerlink" title="SET的动机和范围"></a>SET的动机和范围</h3><ul>
+<li>Internet的不安全性</li>
+<li>SET仅仅关心支付问题</li>
+</ul>
+<h3 id="交易中的主体"><a href="#交易中的主体" class="headerlink" title="交易中的主体"></a>交易中的主体</h3><p><a href="https://imgchr.com/i/BiyeER" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BiyeER.png" alt="BiyeER.png"></a></p>
+<h3 id="主体证书"><a href="#主体证书" class="headerlink" title="主体证书"></a>主体证书</h3><ul>
+<li>协议各方持有名字和密钥对</li>
+<li>身份使用X.509v3证书和密钥关联</li>
+</ul>
+<p><a href="https://imgchr.com/i/Bicim4" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Bicim4.png" alt="Bicim4.png"></a></p>
+<h3 id="SET安全架构需求"><a href="#SET安全架构需求" class="headerlink" title="SET安全架构需求"></a>SET安全架构需求</h3><ul>
+<li>支付订单信息的机密性</li>
+<li>传输数据的完整性</li>
+<li>卡持有者身份的合法性认证</li>
+<li>商家的身份认证</li>
+<li>保证参与方的利益</li>
+<li>独立于传输安全</li>
+<li>软件架构沟通性</li>
+</ul>
+<h3 id="SET电子支付流程"><a href="#SET电子支付流程" class="headerlink" title="SET电子支付流程"></a>SET电子支付流程</h3><ul>
+<li>客户在发卡行开户</li>
+<li>客户持有银行签发的X.509v3证书</li>
+<li>商家持有两个同类品牌的X.509v3证书（签名+密钥交换）</li>
+<li>客户向商家发订单</li>
+<li>商家发送证书拷贝向客户出示自己身份</li>
+</ul>
+<h3 id="SET双重数字签名"><a href="#SET双重数字签名" class="headerlink" title="SET双重数字签名"></a>SET双重数字签名</h3><ul>
+<li><p>将两个消息连接在一起，这两个消息面向的对象不同</p>
+<ul>
+<li>Order Information（OI）：客户给商家</li>
+<li>Payment Information（PI）：客户给银行</li>
+</ul>
+</li>
+<li><p>按需分发消息：</p>
+<ul>
+<li>商家不需要卡信息</li>
+<li>银行需要订单信息</li>
+<li>保护客户隐私</li>
+</ul>
+</li>
+<li><p>具体操作</p>
+<ul>
+<li>将PI和OI分别初次Hash</li>
+<li>连接成 [H(PI)||H(OI)] 再hash</li>
+<li>客户私钥加密产生双重签名 </li>
+</ul>
+</li>
+</ul>
+<p><a href="https://imgchr.com/i/Bi2tOS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Bi2tOS.png" alt="Bi2tOS.png"></a></p>
 
     </div>
 
@@ -274,7 +360,10 @@
     <a href="/2020/10/19/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E5%9B%9B%EF%BC%89%E2%80%94%E2%80%94SSL/" rel="prev" title="Internet安全协议与分析（四）——SSL">
       <i class="fa fa-chevron-left"></i> Internet安全协议与分析（四）——SSL
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/21/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94PGP/" rel="next" title="InInternet安全协议与分析（五—）liu—PGP">
+      InInternet安全协议与分析（五—）liu—PGP <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -333,7 +422,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#电子交易主要模式"><span class="nav-number">1.</span> <span class="nav-text">电子交易主要模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支付系统无安全措施模式"><span class="nav-number">1.1.</span> <span class="nav-text">支付系统无安全措施模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过第三方经纪人支付的模型"><span class="nav-number">1.2.</span> <span class="nav-text">通过第三方经纪人支付的模型</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#电子交易主要模式"><span class="nav-number">1.</span> <span class="nav-text">电子交易主要模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支付系统无安全措施模式"><span class="nav-number">1.1.</span> <span class="nav-text">支付系统无安全措施模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过第三方经纪人支付的模型"><span class="nav-number">1.2.</span> <span class="nav-text">通过第三方经纪人支付的模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字现金支付模型"><span class="nav-number">1.3.</span> <span class="nav-text">数字现金支付模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单加密支付模型"><span class="nav-number">1.4.</span> <span class="nav-text">简单加密支付模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全电子交易SET支付模式"><span class="nav-number">1.5.</span> <span class="nav-text">安全电子交易SET支付模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SET（Secure-Electronic-Transaction-）"><span class="nav-number">2.</span> <span class="nav-text">SET（Secure Electronic Transaction ）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SET的动机和范围"><span class="nav-number">2.1.</span> <span class="nav-text">SET的动机和范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交易中的主体"><span class="nav-number">2.2.</span> <span class="nav-text">交易中的主体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主体证书"><span class="nav-number">2.3.</span> <span class="nav-text">主体证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET安全架构需求"><span class="nav-number">2.4.</span> <span class="nav-text">SET安全架构需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET电子支付流程"><span class="nav-number">2.5.</span> <span class="nav-text">SET电子支付流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET双重数字签名"><span class="nav-number">2.6.</span> <span class="nav-text">SET双重数字签名</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -349,7 +438,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -423,7 +512,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:07</span>
+    <span title="站点阅读时长">1:08</span>
 </div>
 
 

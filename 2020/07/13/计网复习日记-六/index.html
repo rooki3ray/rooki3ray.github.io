@@ -231,9 +231,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>本章学习传输层。</p>
-<a id="more"></a>
-
+        <p>本章学习传输层。<br><a id="more"></a></p>
 <!-- TOC -->
 <ul>
 <li><a href="#传输层">传输层</a><ul>
@@ -269,23 +267,21 @@
 <li>全双工</li>
 <li>面向字节流</li>
 </ul>
-<h5 id="三次握手建立连接"><a href="#三次握手建立连接" class="headerlink" title="三次握手建立连接"></a>三次握手建立连接</h5><p>—SYN=1,seq=x—&gt;<br>&lt;—SYN=1,ACK=1,seq=y,ack=x+1—<br>—ACK=1,seq=x+1,ack=y+1—&gt;</p>
+<h5 id="三次握手建立连接"><a href="#三次握手建立连接" class="headerlink" title="三次握手建立连接"></a>三次握手建立连接</h5><p>—-SYN=1,seq=x—-&gt;<br>&lt;—-SYN=1,ACK=1,seq=y,ack=x+1—-<br>—-ACK=1,seq=x+1,ack=y+1—-&gt;</p>
 <p>正常流程：<br><img src="https://s1.ax1x.com/2020/07/11/UM7cqS.png" alt=""></p>
 <p>避免的异常流程：</p>
 <ul>
 <li>重复的CR出现，主机2接受连接，但是主机1随即拒绝</li>
 <li>同时有作废的CR和ACC出现，主机1的数据应该捎带确认该ACC，但是主机1并不会这样做</li>
 </ul>
-<h5 id="四次挥手释放连接"><a href="#四次挥手释放连接" class="headerlink" title="四次挥手释放连接"></a>四次挥手释放连接</h5><p>—FIN=1,seq=u—&gt;<br>&lt;—ACK=1,seq=v,ack=u+1—<br>…数据传送…<br>&lt;—FIN=1,ACK=1,seq=w,ack=u+1—<br>—ACK=1,seq=u+1,ack=w+1—&gt;<br>左边需等待2MSL才释放：</p>
+<h5 id="四次挥手释放连接"><a href="#四次挥手释放连接" class="headerlink" title="四次挥手释放连接"></a>四次挥手释放连接</h5><p>—-FIN=1,seq=u—-&gt;<br>&lt;—-ACK=1,seq=v,ack=u+1—-<br>…数据传送…<br>&lt;—-FIN=1,ACK=1,seq=w,ack=u+1—-<br>—-ACK=1,seq=u+1,ack=w+1—-&gt;<br>左边需等待2MSL才释放：</p>
 <ul>
-<li><p>为了保证 A 发送的最后一个 ACK 报文段能够到达 B。</p>
-</li>
+<li>为了保证 A 发送的最后一个 ACK 报文段能够到达 B。</li>
 <li><p>防止 “已失效的连接请求报文段”出现在本连接中。A 在发送完最后一个 ACK 报文段后，再经过时间 2MSL，就可以使本连接持续的时间内所产生的所有报文段，都从网络中消失。</p>
 </li>
 <li><p>非对称释放</p>
 </li>
-<li><p>对称释放</p>
-<ul>
+<li>对称释放<ul>
 <li>正常情况</li>
 <li>最后的确认TPDU丢失，因超时释放</li>
 <li>数据的应答丢失，因超时重发重新进行三次握手，传输完释放</li>
@@ -418,7 +414,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -492,7 +488,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:07</span>
+    <span title="站点阅读时长">1:08</span>
 </div>
 
 

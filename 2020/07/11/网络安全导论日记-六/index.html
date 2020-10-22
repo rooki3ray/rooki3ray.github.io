@@ -241,7 +241,6 @@
 </ul>
 <p>本章主要涉及密码学。</p>
 <a id="more"></a>
-
 <!-- TOC -->
 <ul>
 <li><a href="#回顾">回顾</a></li>
@@ -278,8 +277,8 @@
 <li><a href="#完整性校验消息认证">完整性校验（消息认证）</a><ul>
 <li><a href="#消息认证的目的">消息认证的目的</a></li>
 <li><a href="#常规加密方法实现消息认证">常规加密方法实现消息认证</a></li>
-<li><a href="#非加密方法实现消息认证--消息认证码mac">非加密方法实现消息认证–消息认证码（MAC）</a></li>
-<li><a href="#非加密方法实现消息认证--单向散列函数不带有密钥">非加密方法实现消息认证–单向散列函数（不带有密钥）</a><ul>
+<li><a href="#非加密方法实现消息认证--消息认证码mac">非加密方法实现消息认证—消息认证码（MAC）</a></li>
+<li><a href="#非加密方法实现消息认证--单向散列函数不带有密钥">非加密方法实现消息认证—单向散列函数（不带有密钥）</a><ul>
 <li><a href="#散列函数的要求">散列函数的要求</a></li>
 <li><a href="#散列函数的安全性">散列函数的安全性</a></li>
 <li><a href="#典型散列函数">典型散列函数</a></li>
@@ -336,7 +335,7 @@
 <li>机器时代</li>
 <li>公钥密码理论</li>
 </ul>
-<p>1883年Kerchoffs第一次明确提出了编码的原则：加密算法应建立在<strong>算法的公开不影响明文和密钥的安全</strong>。—-成为判定密码强度的衡量标准，也成为<strong>传统密码和现代密码的分界线</strong>。</p>
+<p>1883年Kerchoffs第一次明确提出了编码的原则：加密算法应建立在<strong>算法的公开不影响明文和密钥的安全</strong>。——成为判定密码强度的衡量标准，也成为<strong>传统密码和现代密码的分界线</strong>。</p>
 <h4 id="密码算法的安全性"><a href="#密码算法的安全性" class="headerlink" title="密码算法的安全性"></a>密码算法的安全性</h4><ul>
 <li>无条件安全</li>
 <li>计算上安全</li>
@@ -350,7 +349,7 @@
 <li>选择文本</li>
 </ul>
 <hr>
-<h3 id="对称密钥体系"><a href="#对称密钥体系" class="headerlink" title="对称密钥体系"></a>对称密钥体系</h3><h4 id="分组密码"><a href="#分组密码" class="headerlink" title="分组密码"></a>分组密码</h4><h5 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h5><p>在明文分组和密文分组上进行运算–通常分组长64bits，有时更长。相同的明文和相同的密钥得到相同的密文。分组密码是将明文消息编码表示后的数字（简称明文数字）序列，划分成长度为n的组（可看成长度为n的矢量），每组分别在密钥的控制下变换成等长的输出数字序列，</p>
+<h3 id="对称密钥体系"><a href="#对称密钥体系" class="headerlink" title="对称密钥体系"></a>对称密钥体系</h3><h4 id="分组密码"><a href="#分组密码" class="headerlink" title="分组密码"></a>分组密码</h4><h5 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h5><p>在明文分组和密文分组上进行运算—通常分组长64bits，有时更长。相同的明文和相同的密钥得到相同的密文。分组密码是将明文消息编码表示后的数字（简称明文数字）序列，划分成长度为n的组（可看成长度为n的矢量），每组分别在密钥的控制下变换成等长的输出数字序列，</p>
 <h5 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h5><ul>
 <li><p>混乱(Confusion)原则：为了避免密码分析者利用明文与密文之间的依赖关系进行破译，密码的设计应该保证这种依赖关系足够复杂。 通常的方法是“替换（Substitution)”。一个二进制字用其它二进制字替换,被称作  S-boxes</p>
 </li>
@@ -408,19 +407,19 @@
 <li>消息中含有序列号、时间戳进行标记（确认完整性）</li>
 <li>错误检测码（确认完整性）</li>
 </ul>
-<h5 id="非加密方法实现消息认证–消息认证码（MAC）"><a href="#非加密方法实现消息认证–消息认证码（MAC）" class="headerlink" title="非加密方法实现消息认证–消息认证码（MAC）"></a>非加密方法实现消息认证–消息认证码（MAC）</h5><p><img src="https://s1.ax1x.com/2020/07/11/UlVenf.png" alt=""></p>
+<h5 id="非加密方法实现消息认证—消息认证码（MAC）"><a href="#非加密方法实现消息认证—消息认证码（MAC）" class="headerlink" title="非加密方法实现消息认证—消息认证码（MAC）"></a>非加密方法实现消息认证—消息认证码（MAC）</h5><p><img src="https://s1.ax1x.com/2020/07/11/UlVenf.png" alt=""></p>
 <p>使用一个密钥生成一个固定大小的数据，并加入到消息中，称MAC或密码校验和（cryptographic checksum）,核心是一个类似于加密的算法CK()，在密钥的作用下，以报文内容作为输入，其输出值是一个较短的定长数据分组，也就是报文鉴别码MAC（带有密钥），即：<br>                       MAC ＝ CK（M）</p>
 <p>（使用附加秘密值在进行计算的MAC就是HMAC）</p>
 <ul>
 <li>基于分组密码的MAC</li>
 </ul>
-<h5 id="非加密方法实现消息认证–单向散列函数（不带有密钥）"><a href="#非加密方法实现消息认证–单向散列函数（不带有密钥）" class="headerlink" title="非加密方法实现消息认证–单向散列函数（不带有密钥）"></a>非加密方法实现消息认证–单向散列函数（不带有密钥）</h5><p>消息摘要（Message Digests）是散列函数，它以变长的信息为输入，把其压缩成一个定长的值输出。若输入的信息被改变了，则输出的定长值（摘要）也会相应改变，提供<strong>错误检测能力</strong>。</p>
+<h5 id="非加密方法实现消息认证—单向散列函数（不带有密钥）"><a href="#非加密方法实现消息认证—单向散列函数（不带有密钥）" class="headerlink" title="非加密方法实现消息认证—单向散列函数（不带有密钥）"></a>非加密方法实现消息认证—单向散列函数（不带有密钥）</h5><p>消息摘要（Message Digests）是散列函数，它以变长的信息为输入，把其压缩成一个定长的值输出。若输入的信息被改变了，则输出的定长值（摘要）也会相应改变，提供<strong>错误检测能力</strong>。</p>
 <h6 id="散列函数的要求"><a href="#散列函数的要求" class="headerlink" title="散列函数的要求"></a>散列函数的要求</h6><ul>
 <li>H可以作用于一个<strong>任意长度的数据块</strong>；</li>
 <li>散列函数H必须对任意长度的明文产生<strong>固定长度的散列值</strong>；</li>
 <li>对任意给定的明文x ,无论是软件还是硬件实现H(x) ，计算都相对容易。</li>
 <li>对任意给定码h，找到x满足H(x)=h具有计算不可行性；（<strong>单向性，抗原像攻击性</strong>）</li>
-<li>对任何给定的报文M，若要寻找不等于M的报文M1 使H( M1 ) ＝ H(M) 在计算上是不可行的。—-<strong>防止伪造（弱碰撞攻击性）</strong></li>
+<li>对任何给定的报文M，若要寻找不等于M的报文M1 使H( M1 ) ＝ H(M) 在计算上是不可行的。——<strong>防止伪造（弱碰撞攻击性）</strong></li>
 <li>要找到任意两个报文M和N使H(M)＝H(N)在计算上是不可行<strong>（抗强碰撞性）</strong></li>
 </ul>
 <blockquote>
@@ -431,6 +430,7 @@
 <li>穷举攻击</li>
 </ul>
 <p>对于长度为m的Hash码，对于穷举攻击所需付出的代价分别于下表中相应量成正比.（通过生日悖论进行穷举攻击）</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -438,19 +438,22 @@
 <th>代价</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>抗原像攻击</td>
-<td>2<sup>m</sub></td>
+<td>2<sup>m&lt;/sub&gt;</td>
 </tr>
 <tr>
 <td>抗弱碰撞攻击</td>
-<td>2<sup>m</sub></td>
+<td>2<sup>m&lt;/sub&gt;</td>
 </tr>
 <tr>
 <td>抗强碰撞攻击</td>
-<td>2<sup>m/2</sub></td>
+<td>2<sup>m/2&lt;/sub&gt;</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h6 id="典型散列函数"><a href="#典型散列函数" class="headerlink" title="典型散列函数"></a>典型散列函数</h6><ul>
 <li>MD5：合成的迭代函数，将数据分为512bit的块，生成128bit摘要</li>
 <li>SHA：预处理与MD5相同，输出5*32bit=160bit</li>
@@ -484,7 +487,7 @@
 <h3 id="公钥密码体制VS对称密钥体制"><a href="#公钥密码体制VS对称密钥体制" class="headerlink" title="公钥密码体制VS对称密钥体制"></a>公钥密码体制VS对称密钥体制</h3><ul>
 <li>对称加密的优点<ul>
 <li>速度快,处理量大，适用于对应用数据的直接加密。</li>
-<li>加密密钥长度相对较短,如40比特—256比特。</li>
+<li>加密密钥长度相对较短,如40比特—-256比特。</li>
 <li>除了加密，还可构造各种加密体制，如产生伪随机数等。</li>
 </ul>
 </li>
@@ -663,7 +666,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#回顾"><span class="nav-number">1.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键词"><span class="nav-number">2.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密码学基本概念"><span class="nav-number">3.</span> <span class="nav-text">密码学基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#密码学的起源和发展"><span class="nav-number">3.1.</span> <span class="nav-text">密码学的起源和发展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#密码算法的安全性"><span class="nav-number">3.2.</span> <span class="nav-text">密码算法的安全性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#密码破解类型"><span class="nav-number">3.3.</span> <span class="nav-text">密码破解类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对称密钥体系"><span class="nav-number">4.</span> <span class="nav-text">对称密钥体系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分组密码"><span class="nav-number">4.1.</span> <span class="nav-text">分组密码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定义"><span class="nav-number">4.1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设计原则"><span class="nav-number">4.1.2.</span> <span class="nav-text">设计原则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Feistel密码结构"><span class="nav-number">4.1.3.</span> <span class="nav-text">Feistel密码结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#工作模式"><span class="nav-number">4.1.4.</span> <span class="nav-text">工作模式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据加密标准DES"><span class="nav-number">4.2.</span> <span class="nav-text">数据加密标准DES</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#DES"><span class="nav-number">4.2.1.</span> <span class="nav-text">DES</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2DES"><span class="nav-number">4.2.2.</span> <span class="nav-text">2DES</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3DES"><span class="nav-number">4.2.3.</span> <span class="nav-text">3DES</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AES"><span class="nav-number">4.2.4.</span> <span class="nav-text">AES</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流密码"><span class="nav-number">4.3.</span> <span class="nav-text">流密码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定义-1"><span class="nav-number">4.3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#流密码VS分组密码"><span class="nav-number">4.3.2.</span> <span class="nav-text">流密码VS分组密码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公钥密码和消息认证"><span class="nav-number">5.</span> <span class="nav-text">公钥密码和消息认证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#完整性校验（消息认证）"><span class="nav-number">5.1.</span> <span class="nav-text">完整性校验（消息认证）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#消息认证的目的"><span class="nav-number">5.1.1.</span> <span class="nav-text">消息认证的目的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#常规加密方法实现消息认证"><span class="nav-number">5.1.2.</span> <span class="nav-text">常规加密方法实现消息认证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#非加密方法实现消息认证–消息认证码（MAC）"><span class="nav-number">5.1.3.</span> <span class="nav-text">非加密方法实现消息认证–消息认证码（MAC）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#非加密方法实现消息认证–单向散列函数（不带有密钥）"><span class="nav-number">5.1.4.</span> <span class="nav-text">非加密方法实现消息认证–单向散列函数（不带有密钥）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#散列函数的要求"><span class="nav-number">5.1.4.1.</span> <span class="nav-text">散列函数的要求</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#散列函数的安全性"><span class="nav-number">5.1.4.2.</span> <span class="nav-text">散列函数的安全性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#典型散列函数"><span class="nav-number">5.1.4.3.</span> <span class="nav-text">典型散列函数</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Hash与MAC的区别"><span class="nav-number">5.1.5.</span> <span class="nav-text">Hash与MAC的区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#公钥密码（非对称加密）"><span class="nav-number">5.2.</span> <span class="nav-text">公钥密码（非对称加密）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#公钥密码系统的应用"><span class="nav-number">5.2.1.</span> <span class="nav-text">公钥密码系统的应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RSA"><span class="nav-number">5.2.2.</span> <span class="nav-text">RSA</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Diffie-hellman"><span class="nav-number">5.2.3.</span> <span class="nav-text">Diffie-hellman</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#EIGamal公钥密码体制"><span class="nav-number">5.2.4.</span> <span class="nav-text">EIGamal公钥密码体制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#椭圆曲线公钥密码体制ECC"><span class="nav-number">5.2.5.</span> <span class="nav-text">椭圆曲线公钥密码体制ECC</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数字签名"><span class="nav-number">5.3.</span> <span class="nav-text">数字签名</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#功能"><span class="nav-number">5.3.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#工作原理"><span class="nav-number">5.3.2.</span> <span class="nav-text">工作原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公钥密码体制VS对称密钥体制"><span class="nav-number">6.</span> <span class="nav-text">公钥密码体制VS对称密钥体制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密钥分配和用户认证"><span class="nav-number">7.</span> <span class="nav-text">密钥分配和用户认证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#密钥管理"><span class="nav-number">7.1.</span> <span class="nav-text">密钥管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#密钥分配"><span class="nav-number">7.2.</span> <span class="nav-text">密钥分配</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基于对称密码体制的密钥分配"><span class="nav-number">7.2.1.</span> <span class="nav-text">基于对称密码体制的密钥分配</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#KDC"><span class="nav-number">7.2.1.1.</span> <span class="nav-text">KDC</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Kerberos"><span class="nav-number">7.2.1.2.</span> <span class="nav-text">Kerberos</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于公开密钥体制的密钥的分配"><span class="nav-number">7.2.2.</span> <span class="nav-text">基于公开密钥体制的密钥的分配</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#公钥证书"><span class="nav-number">7.2.2.1.</span> <span class="nav-text">公钥证书</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#证书验证"><span class="nav-number">7.2.2.2.</span> <span class="nav-text">证书验证</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#公开加密-常规加密的密钥分配"><span class="nav-number">7.2.3.</span> <span class="nav-text">公开加密+常规加密的密钥分配</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PKI"><span class="nav-number">7.3.</span> <span class="nav-text">PKI</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#交叉认证"><span class="nav-number">7.3.1.</span> <span class="nav-text">交叉认证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#联合身份管理"><span class="nav-number">7.3.2.</span> <span class="nav-text">联合身份管理</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数字水印"><span class="nav-number">7.4.</span> <span class="nav-text">数字水印</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#回顾"><span class="nav-number">1.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键词"><span class="nav-number">2.</span> <span class="nav-text">关键词</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密码学基本概念"><span class="nav-number">3.</span> <span class="nav-text">密码学基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#密码学的起源和发展"><span class="nav-number">3.1.</span> <span class="nav-text">密码学的起源和发展</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#密码算法的安全性"><span class="nav-number">3.2.</span> <span class="nav-text">密码算法的安全性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#密码破解类型"><span class="nav-number">3.3.</span> <span class="nav-text">密码破解类型</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对称密钥体系"><span class="nav-number">4.</span> <span class="nav-text">对称密钥体系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分组密码"><span class="nav-number">4.1.</span> <span class="nav-text">分组密码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定义"><span class="nav-number">4.1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设计原则"><span class="nav-number">4.1.2.</span> <span class="nav-text">设计原则</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Feistel密码结构"><span class="nav-number">4.1.3.</span> <span class="nav-text">Feistel密码结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#工作模式"><span class="nav-number">4.1.4.</span> <span class="nav-text">工作模式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据加密标准DES"><span class="nav-number">4.2.</span> <span class="nav-text">数据加密标准DES</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#DES"><span class="nav-number">4.2.1.</span> <span class="nav-text">DES</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2DES"><span class="nav-number">4.2.2.</span> <span class="nav-text">2DES</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3DES"><span class="nav-number">4.2.3.</span> <span class="nav-text">3DES</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AES"><span class="nav-number">4.2.4.</span> <span class="nav-text">AES</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#流密码"><span class="nav-number">4.3.</span> <span class="nav-text">流密码</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定义-1"><span class="nav-number">4.3.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#流密码VS分组密码"><span class="nav-number">4.3.2.</span> <span class="nav-text">流密码VS分组密码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公钥密码和消息认证"><span class="nav-number">5.</span> <span class="nav-text">公钥密码和消息认证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#完整性校验（消息认证）"><span class="nav-number">5.1.</span> <span class="nav-text">完整性校验（消息认证）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#消息认证的目的"><span class="nav-number">5.1.1.</span> <span class="nav-text">消息认证的目的</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#常规加密方法实现消息认证"><span class="nav-number">5.1.2.</span> <span class="nav-text">常规加密方法实现消息认证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#非加密方法实现消息认证—消息认证码（MAC）"><span class="nav-number">5.1.3.</span> <span class="nav-text">非加密方法实现消息认证—消息认证码（MAC）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#非加密方法实现消息认证—单向散列函数（不带有密钥）"><span class="nav-number">5.1.4.</span> <span class="nav-text">非加密方法实现消息认证—单向散列函数（不带有密钥）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#散列函数的要求"><span class="nav-number">5.1.4.1.</span> <span class="nav-text">散列函数的要求</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#散列函数的安全性"><span class="nav-number">5.1.4.2.</span> <span class="nav-text">散列函数的安全性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#典型散列函数"><span class="nav-number">5.1.4.3.</span> <span class="nav-text">典型散列函数</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Hash与MAC的区别"><span class="nav-number">5.1.5.</span> <span class="nav-text">Hash与MAC的区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#公钥密码（非对称加密）"><span class="nav-number">5.2.</span> <span class="nav-text">公钥密码（非对称加密）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#公钥密码系统的应用"><span class="nav-number">5.2.1.</span> <span class="nav-text">公钥密码系统的应用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#RSA"><span class="nav-number">5.2.2.</span> <span class="nav-text">RSA</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Diffie-hellman"><span class="nav-number">5.2.3.</span> <span class="nav-text">Diffie-hellman</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#EIGamal公钥密码体制"><span class="nav-number">5.2.4.</span> <span class="nav-text">EIGamal公钥密码体制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#椭圆曲线公钥密码体制ECC"><span class="nav-number">5.2.5.</span> <span class="nav-text">椭圆曲线公钥密码体制ECC</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数字签名"><span class="nav-number">5.3.</span> <span class="nav-text">数字签名</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#功能"><span class="nav-number">5.3.1.</span> <span class="nav-text">功能</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#工作原理"><span class="nav-number">5.3.2.</span> <span class="nav-text">工作原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#公钥密码体制VS对称密钥体制"><span class="nav-number">6.</span> <span class="nav-text">公钥密码体制VS对称密钥体制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密钥分配和用户认证"><span class="nav-number">7.</span> <span class="nav-text">密钥分配和用户认证</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#密钥管理"><span class="nav-number">7.1.</span> <span class="nav-text">密钥管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#密钥分配"><span class="nav-number">7.2.</span> <span class="nav-text">密钥分配</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基于对称密码体制的密钥分配"><span class="nav-number">7.2.1.</span> <span class="nav-text">基于对称密码体制的密钥分配</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#KDC"><span class="nav-number">7.2.1.1.</span> <span class="nav-text">KDC</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Kerberos"><span class="nav-number">7.2.1.2.</span> <span class="nav-text">Kerberos</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#基于公开密钥体制的密钥的分配"><span class="nav-number">7.2.2.</span> <span class="nav-text">基于公开密钥体制的密钥的分配</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#公钥证书"><span class="nav-number">7.2.2.1.</span> <span class="nav-text">公钥证书</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#证书验证"><span class="nav-number">7.2.2.2.</span> <span class="nav-text">证书验证</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#公开加密-常规加密的密钥分配"><span class="nav-number">7.2.3.</span> <span class="nav-text">公开加密+常规加密的密钥分配</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PKI"><span class="nav-number">7.3.</span> <span class="nav-text">PKI</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#交叉认证"><span class="nav-number">7.3.1.</span> <span class="nav-text">交叉认证</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#联合身份管理"><span class="nav-number">7.3.2.</span> <span class="nav-text">联合身份管理</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数字水印"><span class="nav-number">7.4.</span> <span class="nav-text">数字水印</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -679,7 +682,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -753,7 +756,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:07</span>
+    <span title="站点阅读时长">1:08</span>
 </div>
 
 
