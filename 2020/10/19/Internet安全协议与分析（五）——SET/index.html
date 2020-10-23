@@ -35,8 +35,19 @@
 <meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BiyeER.png">
 <meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Bicim4.png">
 <meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Bi2tOS.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BiWQ2t.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BiWrrT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Bihn1I.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Bihm9A.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFWO9s.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFfkC9.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFhPqf.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BF5OaT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFHbUP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFHHEt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFHTHI.png">
 <meta property="article:published_time" content="2020-10-19T11:52:07.000Z">
-<meta property="article:modified_time" content="2020-10-22T04:46:46.450Z">
+<meta property="article:modified_time" content="2020-10-22T12:20:10.034Z">
 <meta property="article:author" content="Rooki3Ray">
 <meta property="article:tag" content="Internet安全协议与分析">
 <meta property="article:tag" content="SET">
@@ -210,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-22 12:46:46" itemprop="dateModified" datetime="2020-10-22T12:46:46+08:00">2020-10-22</time>
+                <time title="修改时间：2020-10-22 20:20:10" itemprop="dateModified" datetime="2020-10-22T20:20:10+08:00">2020-10-22</time>
               </span>
 
           <br>
@@ -219,14 +230,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>861</span>
+              <span>2.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -321,13 +332,97 @@
 </li>
 <li><p>具体操作</p>
 <ul>
-<li>将PI和OI分别初次Hash</li>
-<li>连接成 [H(PI)||H(OI)] 再hash</li>
-<li>客户私钥加密产生双重签名 </li>
+<li>将 $PI$ 和 $OI$ 分别初次hash</li>
+<li>连接成 $[H(PI)||H(OI)]$ 再hash</li>
+<li>客户私钥加密产生双重签名 $DS=E_{KRC}[H(H(PI)||H(OI))]$</li>
+</ul>
+<p><a href="https://imgchr.com/i/Bi2tOS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Bi2tOS.png" alt="Bi2tOS.png"></a></p>
+<ul>
+<li>商家收到 $OI$ 校验签名</li>
+<li>银行收到 $PI$ 校验签名</li>
+<li>客户连接 $OI$ 和 $PI$，证明该关联</li>
 </ul>
 </li>
 </ul>
-<p><a href="https://imgchr.com/i/Bi2tOS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Bi2tOS.png" alt="Bi2tOS.png"></a></p>
+<p><a href="https://imgchr.com/i/BiWQ2t" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BiWQ2t.png" alt="BiWQ2t.png"></a></p>
+<h3 id="SET电子支付的流程"><a href="#SET电子支付的流程" class="headerlink" title="SET电子支付的流程"></a>SET电子支付的流程</h3><p><a href="https://imgchr.com/i/BiWrrT" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BiWrrT.png" alt="BiWrrT.png"></a></p>
+<ul>
+<li>客户发送订单和支付信息给商家</li>
+<li>商家向支付网关请求支付授权</li>
+<li>商家确认向客户订单</li>
+<li>商家向客户提供商品或者服务</li>
+<li>商家向支付网关请求支付</li>
+</ul>
+<h3 id="SET消息流"><a href="#SET消息流" class="headerlink" title="SET消息流"></a>SET消息流</h3><p><a href="https://imgchr.com/i/Bihn1I" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Bihn1I.png" alt="Bihn1I.png"></a></p>
+<p><a href="https://imgchr.com/i/Bihm9A" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Bihm9A.png" alt="Bihm9A.png"></a></p>
+<h4 id="支付过程初始化InitReq-InitRes"><a href="#支付过程初始化InitReq-InitRes" class="headerlink" title="支付过程初始化InitReq/InitRes"></a>支付过程初始化InitReq/InitRes</h4><p><a href="https://imgchr.com/i/BFWO9s" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFWO9s.png" alt="BFWO9s.png"></a></p>
+<ul>
+<li>持卡人浏览选择商品 , 下订单，选择银行卡；</li>
+<li>持卡人向商家发送 <strong>初始请求</strong> ，请求指定交易环境，包括<ul>
+<li>持卡人所使用的语言 , 交易 ID</li>
+<li>使用的是何种交易卡等</li>
+</ul>
+</li>
+<li>商家接受初始请求，产生 <strong>初始应答</strong> ，对初始应答生成消息摘要，对此消息摘要进行数字签名，将商家证书，网关证书，初始应答，消息摘要的数字签名等</li>
+</ul>
+<h4 id="购物请求"><a href="#购物请求" class="headerlink" title="购物请求"></a>购物请求</h4><p><a href="https://imgchr.com/i/BFfkC9" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFfkC9.png" alt="BFfkC9.png"></a></p>
+<ul>
+<li>持卡人接受初始应答，检查商家证书和网关证书。接着用商家公钥解开消息摘要的数字签名，用 HASH 算法产生初始应答的摘要，将两者比较，如果相同则表示数据在途中未被篡改，否则丢弃。</li>
+<li>持卡人发出购物请求（ PReq ），它包含了真正的交易行为，由两部分组成<ul>
+<li>发往商家的定单信息 (OI) : links to order description</li>
+<li>通过商家转发往网关的支付信息 (PI): amount, card data, IDs</li>
+</ul>
+</li>
+<li>通过双重数字签名将 OI 与 PI 进行关联</li>
+</ul>
+<h5 id="PReq消息结构"><a href="#PReq消息结构" class="headerlink" title="PReq消息结构"></a>PReq消息结构</h5><p><a href="https://imgchr.com/i/BFhPqf" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFhPqf.png" alt="BFhPqf.png"></a></p>
+<h5 id="PReq消息校验"><a href="#PReq消息校验" class="headerlink" title="PReq消息校验"></a>PReq消息校验</h5><p><a href="https://imgchr.com/i/BF5OaT" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BF5OaT.png" alt="BF5OaT.png"></a></p>
+<h4 id="商家验证卡用户的身份和授权"><a href="#商家验证卡用户的身份和授权" class="headerlink" title="商家验证卡用户的身份和授权"></a>商家验证卡用户的身份和授权</h4><ul>
+<li>商家接受持卡人的购物请求，<strong>认证持卡人的证书</strong>。接着<strong>验证双重签名</strong>，看数据在传输过程中是否被篡改。如数据完整，则处理定单信息，<strong>产生支付请求</strong>。</li>
+<li>将支付请求用 HASH 算法<strong>生成摘要，并签名</strong>，网关收到后用商家公钥解密，并确认支付请求是此商家所发在且在途中未被篡改。生成对称密钥对支付请求加密，并用网关公钥加密形成数字信封。</li>
+<li>最后将商家证书，支付请求密文，商家数字签名，数字信封和持卡人通过商家转发的： $sign[H(OP)]$ , $OI$ 摘要，$PI$ 密文，持卡人数字信封，持卡人证书等发往支付网关。</li>
+</ul>
+<h4 id="支付网关认证过程"><a href="#支付网关认证过程" class="headerlink" title="支付网关认证过程"></a>支付网关认证过程</h4><ul>
+<li>支付网关分别检查确认商家发来的数据和持卡人发来的数据用 HASH 算法作用于支付请求，形成摘要，与商家发来的支付请求摘要（解开数字签名所得）相比较，如果相同则表示数据完整，否则丢弃数据</li>
+<li>网关检查持卡人证书，然后<strong>用私钥打开持卡人数字信封</strong>，得到他的<strong>帐号和对称密钥</strong>。用此对称密钥解开 PI 密文，得到 PI ，接着<strong>验证双重签名</strong>，生成 PI 的摘要，与 OI 摘要相连接，再次生成摘要，其结果与 H(OP) (解双重签名所得) 相比较，如果相同则数据完整，如果不同则丢弃。</li>
+<li>网关将信息发送往银行<ul>
+<li>支付网关和银行之间通过金融专用网相连</li>
+</ul>
+</li>
+</ul>
+<h4 id="收单银行处理"><a href="#收单银行处理" class="headerlink" title="收单银行处理"></a>收单银行处理</h4><ul>
+<li>解密AuthReq</li>
+<li>校验商家签名</li>
+<li>解密来自持卡人的PI</li>
+<li>校验双重签名</li>
+<li>从PI中抽取卡数据</li>
+</ul>
+<p><a href="https://imgchr.com/i/BFHbUP" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFHbUP.png" alt="BFHbUP.png"></a></p>
+<p>确保 PI 和 AuthReq 的一致性，校验持卡人和商家对于订购行为的一致性 : H(Order) PI和 AuthReq，生成 AuthRes 及其 Capture Token。</p>
+<h4 id="支付完成"><a href="#支付完成" class="headerlink" title="支付完成"></a>支付完成</h4><p><a href="https://imgchr.com/i/BFHHEt" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFHHEt.png" alt="BFHHEt.png"></a></p>
+<ul>
+<li>完成授权 交易的支付</li>
+<li>通过捕获令牌完成支付</li>
+<li>可能多次AuthResponses的令牌积累后完成</li>
+<li>Capture Token = 金额证据</li>
+</ul>
+<h4 id="下单的回复"><a href="#下单的回复" class="headerlink" title="下单的回复"></a>下单的回复</h4><p><a href="https://imgchr.com/i/BFHTHI" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFHTHI.png" alt="BFHTHI.png"></a></p>
+<ul>
+<li>完成代码CompletionCode：交易状态</li>
+<li>结果Results：交易的授权/捕获代码</li>
+</ul>
+<h4 id="SET中的核心技术"><a href="#SET中的核心技术" class="headerlink" title="SET中的核心技术"></a>SET中的核心技术</h4><ul>
+<li>公钥加密：对称加密和非对称加密4次</li>
+<li>数字签名：进行签名5次，验证签名6次</li>
+<li>电子信封</li>
+<li>电子安全证书：传递证书7次，验证9次</li>
+</ul>
+<h3 id="SET和SSL的不同之处"><a href="#SET和SSL的不同之处" class="headerlink" title="SET和SSL的不同之处"></a>SET和SSL的不同之处</h3><ul>
+<li>首先，SET 远远<strong>不止是一个技术方面的协议</strong>，它还说明了每一方所持有的数字证书的含义，希望得到数字证书以及响应信息的各方应有的动作，与一笔交易紧密相关的责任分担。 SET 实现非常复杂，商家和银行都需要改造系统以实现互操作，并且还需要认证中心的支持。</li>
+<li>SET 是一个<strong>多方的报文协议</strong>，它定义了银行、商家、持卡人之间的必须的报文规范。与此同时， SSL 只是简单地在两方之间建立一条安全连接。 SSL 是面向连接的，而 SET <strong>允许各方之间的报文交换不是实时的</strong>。</li>
+<li>另外，SET 报文能够在银行内部网或者其他网络上传输，而 SSL 之上的卡支付系统只能与 Web 浏览器捆绑在一起。</li>
+<li>最后，SSL 相对不安全，实际上当初它并不是为支持电子商务而设计的。很多银行和电子商务解决方案提供商仍然在使用 SSL 来构建更多的安全支付系统，但是如果没有经裁剪的客户方软件的话，基于 SSL 的系统式不能达到像 SET 这种银行卡专用支付协议所能达到的安全性的。</li>
+</ul>
 
     </div>
 
@@ -361,8 +456,8 @@
       <i class="fa fa-chevron-left"></i> Internet安全协议与分析（四）——SSL
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/10/21/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94PGP/" rel="next" title="InInternet安全协议与分析（五—）liu—PGP">
-      InInternet安全协议与分析（五—）liu—PGP <i class="fa fa-chevron-right"></i>
+    <a href="/2020/10/21/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E5%85%AD%EF%BC%89%E2%80%94%E2%80%94PGP/" rel="next" title="Internet安全协议与分析（五）——PGP">
+      Internet安全协议与分析（五）——PGP <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -422,7 +517,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#电子交易主要模式"><span class="nav-number">1.</span> <span class="nav-text">电子交易主要模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支付系统无安全措施模式"><span class="nav-number">1.1.</span> <span class="nav-text">支付系统无安全措施模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过第三方经纪人支付的模型"><span class="nav-number">1.2.</span> <span class="nav-text">通过第三方经纪人支付的模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字现金支付模型"><span class="nav-number">1.3.</span> <span class="nav-text">数字现金支付模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单加密支付模型"><span class="nav-number">1.4.</span> <span class="nav-text">简单加密支付模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全电子交易SET支付模式"><span class="nav-number">1.5.</span> <span class="nav-text">安全电子交易SET支付模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SET（Secure-Electronic-Transaction-）"><span class="nav-number">2.</span> <span class="nav-text">SET（Secure Electronic Transaction ）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SET的动机和范围"><span class="nav-number">2.1.</span> <span class="nav-text">SET的动机和范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交易中的主体"><span class="nav-number">2.2.</span> <span class="nav-text">交易中的主体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主体证书"><span class="nav-number">2.3.</span> <span class="nav-text">主体证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET安全架构需求"><span class="nav-number">2.4.</span> <span class="nav-text">SET安全架构需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET电子支付流程"><span class="nav-number">2.5.</span> <span class="nav-text">SET电子支付流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET双重数字签名"><span class="nav-number">2.6.</span> <span class="nav-text">SET双重数字签名</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#电子交易主要模式"><span class="nav-number">1.</span> <span class="nav-text">电子交易主要模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支付系统无安全措施模式"><span class="nav-number">1.1.</span> <span class="nav-text">支付系统无安全措施模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过第三方经纪人支付的模型"><span class="nav-number">1.2.</span> <span class="nav-text">通过第三方经纪人支付的模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字现金支付模型"><span class="nav-number">1.3.</span> <span class="nav-text">数字现金支付模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单加密支付模型"><span class="nav-number">1.4.</span> <span class="nav-text">简单加密支付模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#安全电子交易SET支付模式"><span class="nav-number">1.5.</span> <span class="nav-text">安全电子交易SET支付模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SET（Secure-Electronic-Transaction-）"><span class="nav-number">2.</span> <span class="nav-text">SET（Secure Electronic Transaction ）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SET的动机和范围"><span class="nav-number">2.1.</span> <span class="nav-text">SET的动机和范围</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#交易中的主体"><span class="nav-number">2.2.</span> <span class="nav-text">交易中的主体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主体证书"><span class="nav-number">2.3.</span> <span class="nav-text">主体证书</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET安全架构需求"><span class="nav-number">2.4.</span> <span class="nav-text">SET安全架构需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET电子支付流程"><span class="nav-number">2.5.</span> <span class="nav-text">SET电子支付流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET双重数字签名"><span class="nav-number">2.6.</span> <span class="nav-text">SET双重数字签名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET电子支付的流程"><span class="nav-number">2.7.</span> <span class="nav-text">SET电子支付的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET消息流"><span class="nav-number">2.8.</span> <span class="nav-text">SET消息流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#支付过程初始化InitReq-InitRes"><span class="nav-number">2.8.1.</span> <span class="nav-text">支付过程初始化InitReq&#x2F;InitRes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#购物请求"><span class="nav-number">2.8.2.</span> <span class="nav-text">购物请求</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#PReq消息结构"><span class="nav-number">2.8.2.1.</span> <span class="nav-text">PReq消息结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#PReq消息校验"><span class="nav-number">2.8.2.2.</span> <span class="nav-text">PReq消息校验</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#商家验证卡用户的身份和授权"><span class="nav-number">2.8.3.</span> <span class="nav-text">商家验证卡用户的身份和授权</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#支付网关认证过程"><span class="nav-number">2.8.4.</span> <span class="nav-text">支付网关认证过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#收单银行处理"><span class="nav-number">2.8.5.</span> <span class="nav-text">收单银行处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#支付完成"><span class="nav-number">2.8.6.</span> <span class="nav-text">支付完成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下单的回复"><span class="nav-number">2.8.7.</span> <span class="nav-text">下单的回复</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SET中的核心技术"><span class="nav-number">2.8.8.</span> <span class="nav-text">SET中的核心技术</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET和SSL的不同之处"><span class="nav-number">2.9.</span> <span class="nav-text">SET和SSL的不同之处</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -438,14 +533,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -506,13 +601,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">74k</span>
+    <span title="站点总字数">81k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:08</span>
+    <span title="站点阅读时长">1:13</span>
 </div>
 
 
@@ -569,6 +664,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 

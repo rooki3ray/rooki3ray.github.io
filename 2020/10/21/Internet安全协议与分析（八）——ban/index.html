@@ -20,15 +20,38 @@
     var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="InInternet安全协议与分析（五liu—PGP">
+  <meta name="description" content="学习基于推理结构性方法——BAN。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Internet安全协议与分析（八）——Ban">
 <meta property="og:url" content="http://rooki3ray.github.io/2020/10/21/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94ban/index.html">
 <meta property="og:site_name" content="Rooki3Ray | Cyber Security">
+<meta property="og:description" content="学习基于推理结构性方法——BAN。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BESLTS.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BESXFg.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BE9a8J.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BE9wvR.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEPbcj.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEikuR.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEim4O.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEFRTP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEFfFf.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVY9K.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEV8tx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEV3A1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVGh6.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVl7R.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVt1O.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVUje.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVNcD.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVdnH.png">
 <meta property="article:published_time" content="2020-10-21T15:22:49.000Z">
-<meta property="article:modified_time" content="2020-10-21T15:22:50.003Z">
+<meta property="article:modified_time" content="2020-10-23T12:16:38.489Z">
 <meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="Internet安全协议与分析">
+<meta property="article:tag" content="Ban">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/10/23/BESLTS.png">
 
 <link rel="canonical" href="http://rooki3ray.github.io/2020/10/21/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E5%85%AB%EF%BC%89%E2%80%94%E2%80%94ban/">
 
@@ -43,7 +66,7 @@
   };
 </script>
 
-  <title>InInternet安全协议与分析（五liu—PGP | Rooki3Ray | Cyber Security</title>
+  <title>Internet安全协议与分析（八）——Ban | Rooki3Ray | Cyber Security</title>
   
 
 
@@ -180,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          InInternet安全协议与分析（五liu—PGP
+          Internet安全协议与分析（八）——Ban
         </h1>
 
         <div class="post-meta">
@@ -189,10 +212,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-21 23:22:49 / 修改时间：23:22:50" itemprop="dateCreated datePublished" datetime="2020-10-21T23:22:49+08:00">2020-10-21</time>
+              <time title="创建时间：2020-10-21 23:22:49" itemprop="dateCreated datePublished" datetime="2020-10-21T23:22:49+08:00">2020-10-21</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-23 20:16:38" itemprop="dateModified" datetime="2020-10-23T20:16:38+08:00">2020-10-23</time>
+              </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -200,7 +229,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>0</span>
+              <span>1.6k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -219,7 +248,118 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <p>学习基于推理结构性方法——BAN。</p>
+<a id="more"></a>
+<h2 id="安全协议的形式化分析"><a href="#安全协议的形式化分析" class="headerlink" title="安全协议的形式化分析"></a>安全协议的形式化分析</h2><ul>
+<li>目前的技术主要用于对密钥正确的认证 </li>
+<li>安全协议的形式化分析有助于减轻协议设计者的部分工作量： <ul>
+<li>界定安全协议的边界,即协议系统与其运行环境的界面。 </li>
+<li>更准确地描述安全协议的行为。 </li>
+<li>更准确地定义安全协议的特性。 </li>
+<li>证明安全协议满足其说明，以及证明安全协议在什么条件下不能满足其说明。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>基于推理结构性方法</li>
+<li>基于攻击结构性方法</li>
+<li>基于证明结构性方法</li>
+</ul>
+<h2 id="逻辑类分析方法"><a href="#逻辑类分析方法" class="headerlink" title="逻辑类分析方法"></a>逻辑类分析方法</h2><ul>
+<li>逻辑：运用形式化方法研究和判定推理形式有效性</li>
+<li><p>形式化方法 ：将一套特制的人工符号应用于演绎体系以使其严格化 、精确化的研究方法 。包含符号化和系统化 。</p>
+<ul>
+<li>符号化：将命题 (p,q,r) 和常项（如命题连接词）用符号标识</li>
+<li>系统化：在符号化的基础上将一定范围内所有有效的推理形式形成一个形式系统</li>
+</ul>
+</li>
+<li><p>狭义形式系统：形式语言和演绎装置。 </p>
+</li>
+<li>形式语言：系统的初始符号(字母表)，形成规 则(如何使用符号组成公式)。 </li>
+<li>演绎装置：包括定义、公理和规则。 </li>
+<li>广义形式系统：增加<strong>语义</strong>部分。即对初始符号 、公式和规则的解释。解释可把形式系统与一 定模型(代表客观实际)连接起来，从而赋予初始符号和公式一定的实际意义。</li>
+</ul>
+<h2 id="逻辑-推理结构性方法"><a href="#逻辑-推理结构性方法" class="headerlink" title="逻辑-推理结构性方法"></a>逻辑-推理结构性方法</h2><p>运用逻辑系统从用户接收和发送的消息出发，通过一系列的推理公理退证协议是否满足其安全说明。</p>
+<ul>
+<li>典型：BAN逻辑，Kailer逻辑，RV逻辑</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>简洁直观，易于使用</li>
+<li>理想化方法，分析协议之前必须对协议进行形式化处理（用逻辑语言描述）</li>
+<li>使用假设和推理规则<ul>
+<li>假设不正确——不能得到正确的信念</li>
+<li>公里和推理规则是否合理和完备也影响性能</li>
+</ul>
+</li>
+</ul>
+<h2 id="BAN逻辑系统"><a href="#BAN逻辑系统" class="headerlink" title="BAN逻辑系统"></a>BAN逻辑系统</h2><ul>
+<li>定义：基于主体知识和信念推理的模态逻辑</li>
+<li>过程：通过推导<strong>主体是否能够从接收到消息中获得信念</strong>来判断协议是否能够达到认证目标</li>
+</ul>
+<p><a href="https://imgchr.com/i/BESLTS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BESLTS.png" alt="BESLTS.png"></a></p>
+<p><a href="https://imgchr.com/i/BESXFg" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BESXFg.png" alt="BESXFg.png"></a></p>
+<h3 id="推理规则——消息意义规则"><a href="#推理规则——消息意义规则" class="headerlink" title="推理规则——消息意义规则"></a>推理规则——消息意义规则</h3><p>从加密消息所使用密钥以及消息中包含的密码来推断消息发送者的身份</p>
+<p><a href="https://imgchr.com/i/BE9a8J" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BE9a8J.png" alt="BE9a8J.png"></a></p>
+<h3 id="推理规则——随机数验证规则"><a href="#推理规则——随机数验证规则" class="headerlink" title="推理规则——随机数验证规则"></a>推理规则——随机数验证规则</h3><p><a href="https://imgchr.com/i/BE9wvR" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BE9wvR.png" alt="BE9wvR.png"></a></p>
+<h3 id="推理规则——仲裁规则"><a href="#推理规则——仲裁规则" class="headerlink" title="推理规则——仲裁规则"></a>推理规则——仲裁规则</h3><p>拓展主体的推知能力，使主体可以在基于其他主体已有的信仰之上推知新的信仰</p>
+<p><a href="https://imgchr.com/i/BEPbcj" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEPbcj.png" alt="BEPbcj.png"></a></p>
+<h3 id="推理规则——信仰规则"><a href="#推理规则——信仰规则" class="headerlink" title="推理规则——信仰规则"></a>推理规则——信仰规则</h3><p>反映信念在消息的级联和分割的不同操作中一致性以及信仰在此类操作中的传递性</p>
+<p><a href="https://imgchr.com/i/BEikuR" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEikuR.png" alt="BEikuR.png"></a></p>
+<h3 id="推理规则——接收规则"><a href="#推理规则——接收规则" class="headerlink" title="推理规则——接收规则"></a>推理规则——接收规则</h3><p>定义了主体在协议运行中获取消息</p>
+<p><a href="https://imgchr.com/i/BEim4O" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEim4O.png" alt="BEim4O.png"></a></p>
+<h3 id="推理规则——新鲜规则"><a href="#推理规则——新鲜规则" class="headerlink" title="推理规则——新鲜规则"></a>推理规则——新鲜规则</h3><p><a href="https://imgchr.com/i/BEFRTP" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEFRTP.png" alt="BEFRTP.png"></a></p>
+<h3 id="推理规则——传递规则"><a href="#推理规则——传递规则" class="headerlink" title="推理规则——传递规则"></a>推理规则——传递规则</h3><p><a href="https://imgchr.com/i/BEFfFf" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEFfFf.png" alt="BEFfFf.png"></a></p>
+<h3 id="BAN逻辑的假设"><a href="#BAN逻辑的假设" class="headerlink" title="BAN逻辑的假设"></a>BAN逻辑的假设</h3><h4 id="时间假设"><a href="#时间假设" class="headerlink" title="时间假设"></a>时间假设</h4><ul>
+<li>协议分析中区分current-time和past-time。<ul>
+<li>current-time：起始于本次协议运行的开始阶段</li>
+<li>past-time：current-time之前的时间</li>
+</ul>
+</li>
+</ul>
+<p>如果某一观点在协议开始时是成立的，那么在整个current-time中也是成立的</p>
+<p>但在past-time中成立的观点在current-time中却并不一定成立</p>
+<h4 id="密钥-主体-假设"><a href="#密钥-主体-假设" class="headerlink" title="密钥-主体-假设"></a>密钥-主体-假设</h4><ul>
+<li>密钥不能从密文中推导</li>
+<li>不拥有正确密钥不能解密</li>
+<li>主体能够知道是否正确使用了解密密钥（错误解密无意义）</li>
+</ul>
+<h4 id="主体-假设"><a href="#主体-假设" class="headerlink" title="主体-假设"></a>主体-假设</h4><p>假设参与协议运行的主体都是诚实的</p>
+<h4 id="自身消息可识别-假设"><a href="#自身消息可识别-假设" class="headerlink" title="自身消息可识别-假设"></a>自身消息可识别-假设</h4><p>假设接收方能分辨接收到的消息是否为自己发送过的消息</p>
+<h4 id="应用BAN逻辑"><a href="#应用BAN逻辑" class="headerlink" title="应用BAN逻辑"></a>应用BAN逻辑</h4><ul>
+<li>对协议进行理想化预处理（<strong>初始化</strong>）。</li>
+<li>给出协议<strong>初始状态</strong>及其所基于的假设。 </li>
+<li><strong>形式化</strong>说明协议将达成的<strong>安全目标</strong>。</li>
+<li>运用公理和推理规则以及协议会话事实和 假设，从协议的开始进行<strong>推证</strong>直至验证协议 是否满足其最终运行目标。</li>
+</ul>
+<h4 id="BAN逻辑应用实例——NS协议漏洞"><a href="#BAN逻辑应用实例——NS协议漏洞" class="headerlink" title="BAN逻辑应用实例——NS协议漏洞"></a>BAN逻辑应用实例——NS协议漏洞</h4><p><a href="https://imgchr.com/i/BEVY9K" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVY9K.png" alt="BEVY9K.png"></a></p>
+<p><a href="https://imgchr.com/i/BEV8tx" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEV8tx.png" alt="BEV8tx.png"></a></p>
+<p><a href="https://imgchr.com/i/BEV3A1" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEV3A1.png" alt="BEV3A1.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVGh6" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVGh6.png" alt="BEVGh6.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVl7R" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVl7R.png" alt="BEVl7R.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVt1O" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVt1O.png" alt="BEVt1O.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVUje" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVUje.png" alt="BEVUje.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVNcD" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVNcD.png" alt="BEVNcD.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVdnH" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVdnH.png" alt="BEVdnH.png"></a></p>
+<h4 id="BAN逻辑的局限性"><a href="#BAN逻辑的局限性" class="headerlink" title="BAN逻辑的局限性"></a>BAN逻辑的局限性</h4><ul>
+<li>省略掉对于推知主体信仰无用部分，如明文。 </li>
+<li>协议的理想化过于依赖于分享者的直觉，使得原始协议与理想化协议间存在语义鸿沟。</li>
+<li>协议的理想化是将协议过程语言中对协议主体行为的描述解释为用逻辑语言描述的主体的知识和信仰 ，并以此来表示协议说明的语义。现有的逻辑形式 化分析系统很难解决此问题。 </li>
+<li>BAN证明没有问题，并不能保证该协议没有问题。</li>
+</ul>
+<p>BAN逻辑缺陷：</p>
+<ul>
+<li>不合理的假设<ul>
+<li>BAN逻辑钟，初始状态的假设难以确定，从而无法确 认和自动验证假设的正确性和有效性</li>
+<li>BAN逻辑系统认为参与协议运行的主体都是诚实的</li>
+</ul>
+</li>
+<li>不能检查协议并发运行带来的攻击<ul>
+<li>BAN缺少一个良好定义的语义</li>
+</ul>
+</li>
+</ul>
+
     </div>
 
     
@@ -237,6 +377,10 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag"># Internet安全协议与分析</a>
+              <a href="/tags/Ban/" rel="tag"># Ban</a>
+          </div>
 
         
 
@@ -244,10 +388,13 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2020/10/21/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94Kerberos/" rel="prev" title="InInternet安全协议与分析（五liu—PGP">
-      <i class="fa fa-chevron-left"></i> InInternet安全协议与分析（五liu—PGP
+    <a href="/2020/10/21/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%83%EF%BC%89%E2%80%94%E2%80%94Kerberos/" rel="prev" title="Internet安全协议与分析（七）——Kerberos">
+      <i class="fa fa-chevron-left"></i> Internet安全协议与分析（七）——Kerberos
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/23/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94csp/" rel="next" title="Internet安全协议与分析（九）——csp">
+      Internet安全协议与分析（九）——csp <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -306,6 +453,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安全协议的形式化分析"><span class="nav-number">1.</span> <span class="nav-text">安全协议的形式化分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑类分析方法"><span class="nav-number">2.</span> <span class="nav-text">逻辑类分析方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#逻辑-推理结构性方法"><span class="nav-number">3.</span> <span class="nav-text">逻辑-推理结构性方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BAN逻辑系统"><span class="nav-number">4.</span> <span class="nav-text">BAN逻辑系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#推理规则——消息意义规则"><span class="nav-number">4.1.</span> <span class="nav-text">推理规则——消息意义规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推理规则——随机数验证规则"><span class="nav-number">4.2.</span> <span class="nav-text">推理规则——随机数验证规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推理规则——仲裁规则"><span class="nav-number">4.3.</span> <span class="nav-text">推理规则——仲裁规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推理规则——信仰规则"><span class="nav-number">4.4.</span> <span class="nav-text">推理规则——信仰规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推理规则——接收规则"><span class="nav-number">4.5.</span> <span class="nav-text">推理规则——接收规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推理规则——新鲜规则"><span class="nav-number">4.6.</span> <span class="nav-text">推理规则——新鲜规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推理规则——传递规则"><span class="nav-number">4.7.</span> <span class="nav-text">推理规则——传递规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BAN逻辑的假设"><span class="nav-number">4.8.</span> <span class="nav-text">BAN逻辑的假设</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#时间假设"><span class="nav-number">4.8.1.</span> <span class="nav-text">时间假设</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#密钥-主体-假设"><span class="nav-number">4.8.2.</span> <span class="nav-text">密钥-主体-假设</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主体-假设"><span class="nav-number">4.8.3.</span> <span class="nav-text">主体-假设</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自身消息可识别-假设"><span class="nav-number">4.8.4.</span> <span class="nav-text">自身消息可识别-假设</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用BAN逻辑"><span class="nav-number">4.8.5.</span> <span class="nav-text">应用BAN逻辑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BAN逻辑应用实例——NS协议漏洞"><span class="nav-number">4.8.6.</span> <span class="nav-text">BAN逻辑应用实例——NS协议漏洞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BAN逻辑的局限性"><span class="nav-number">4.8.7.</span> <span class="nav-text">BAN逻辑的局限性</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -321,14 +469,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">36</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -389,13 +537,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">74k</span>
+    <span title="站点总字数">81k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:08</span>
+    <span title="站点阅读时长">1:13</span>
 </div>
 
 
@@ -452,6 +600,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
