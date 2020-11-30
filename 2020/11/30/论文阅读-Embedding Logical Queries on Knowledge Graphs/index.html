@@ -20,19 +20,21 @@
     var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+  <meta name="description" content="论文链接：Embedding Logical Queries on Knowledge Graphs">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://rooki3ray.github.io/2020/07/07/hello-world/index.html">
+<meta property="og:title" content="论文阅读-Embedding Logical Queries on Knowledge Graphs">
+<meta property="og:url" content="http://rooki3ray.github.io/2020/11/30/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Embedding%20Logical%20Queries%20on%20Knowledge%20Graphs/index.html">
 <meta property="og:site_name" content="Rooki3Ray | Cyber Security">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.">
+<meta property="og:description" content="论文链接：Embedding Logical Queries on Knowledge Graphs">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-07-07T04:30:04.223Z">
-<meta property="article:modified_time" content="2020-07-07T07:41:29.143Z">
+<meta property="article:published_time" content="2020-11-30T10:34:31.000Z">
+<meta property="article:modified_time" content="2020-11-30T10:38:09.679Z">
 <meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="KG">
+<meta property="article:tag" content="Knowledge Reasoning">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://rooki3ray.github.io/2020/07/07/hello-world/">
+<link rel="canonical" href="http://rooki3ray.github.io/2020/11/30/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Embedding%20Logical%20Queries%20on%20Knowledge%20Graphs/">
 
 
 <script id="page-configurations">
@@ -45,7 +47,7 @@
   };
 </script>
 
-  <title>Hello World | Rooki3Ray | Cyber Security</title>
+  <title>论文阅读-Embedding Logical Queries on Knowledge Graphs | Rooki3Ray | Cyber Security</title>
   
 
 
@@ -169,7 +171,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/07/07/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/11/30/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Embedding%20Logical%20Queries%20on%20Knowledge%20Graphs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -182,7 +184,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World
+          论文阅读-Embedding Logical Queries on Knowledge Graphs
         </h1>
 
         <div class="post-meta">
@@ -193,7 +195,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-07-07 12:30:04 / 修改时间：15:41:29" itemprop="dateCreated datePublished" datetime="2020-07-07T12:30:04+08:00">2020-07-07</time>
+              <time title="创建时间：2020-11-30 18:34:31 / 修改时间：18:38:09" itemprop="dateCreated datePublished" datetime="2020-11-30T18:34:31+08:00">2020-11-30</time>
             </span>
 
           <br>
@@ -202,14 +204,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>357</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -221,15 +223,33 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.<br><a id="more"></a></p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>论文链接：<a href="https://arxiv.org/pdf/1806.01445v1.pdf" target="_blank" rel="noopener">Embedding Logical Queries on Knowledge Graphs</a></p>
+<a id="more"></a>
+<p>[TOC]</p>
+<h3 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h3><h4 id="总体思路"><a href="#总体思路" class="headerlink" title="总体思路"></a>总体思路</h4><p>用算子$\mathcal{P, L}$ 将查询$q$ embedding到 $\mathbf{q} \in \mathbb{R}^d$，目标是优化这些算子以用来预测q的回答——节点v。</p>
+<p>通过生成query和node的嵌入向量，用距离来表示得分：</p>
+<script type="math/tex; mode=display">\mathbb{score} (\mathbf{q},\mathbf{z}_v) = \frac{\mathbf{q}\cdot \mathbf{z}_v}{\begin{Vmatrix}\mathbf{q}\end{Vmatrix}\begin{Vmatrix}{\mathbf{z}_v}\end{Vmatrix}}</script><p>目标是生成一个能隐含外延的$\mathbf{q}$，即<script type="math/tex">\mathbb{score} (\mathbf{q},\mathbf{z}_v) = 1, \forall v \in [q]  \ and \ \mathbb{score} (\mathbf{q},\mathbf{z}_v) = 0,\forall v \notin [q]</script></p>
+<p><strong>在推理时，对查询$q$ 的嵌入向量执行最近邻搜索，在嵌入向量空间中寻找可能满足查询的节点</strong>。</p>
+<h4 id="生成嵌入向量-mathbf-q"><a href="#生成嵌入向量-mathbf-q" class="headerlink" title="生成嵌入向量 $\mathbf{q} $"></a>生成嵌入向量 $\mathbf{q} $</h4><ul>
+<li><p>将query用其DAG依赖图表示</p>
+<p>依赖图中包含anchor nodes和variable nodes和他们之间的边。其中查询目标为唯一的 汇聚节点</p>
+</li>
+<li><p>从其中anchor nodes的嵌入向量$\mathbf{z}_{v1} ,\cdots,\mathbf{z}_{vn}$ 开始，用$\mathcal{P, L}$ 从这些嵌入向量中计算$\mathbf{q}$</p>
+</li>
+</ul>
+<h4 id="mathcal-P-算子"><a href="#mathcal-P-算子" class="headerlink" title="$\mathcal{P}$ 算子"></a>$\mathcal{P}$ 算子</h4><p>给定query的嵌入向量$\mathbf{q}$ 和边的类型$\tau$，几何投影（Projection）算子输出一个新的query嵌入向量$\mathbf{q’} = \mathcal{P}(\mathbf{q},\tau)$，相应的外延为$[q’]= \bigcup_{v \in [q]} \ N(v,\tau)$，其中$N(v,\tau)$ 表示和节点$v$ 通过$\tau$ 类型的边连接的节点集。</p>
+<p>$\mathcal{P}$ 接收一个对应于节点集[q]的嵌入向量，输出一个对应于和其以$\tau$ 连接的节点集的嵌入向量。</p>
+<p>$\mathcal{P}(\mathbf{q},\tau) = \mathbf{R_\tau q}$</p>
+<p>其中$\mathbf{R_\tau^{d\times d}}$ 是边类型$\tau$ 的可训练参数矩阵。</p>
+<h4 id="mathcal-L-算子"><a href="#mathcal-L-算子" class="headerlink" title="$\mathcal{L}$ 算子"></a>$\mathcal{L}$ 算子</h4><p>给定具有相同的输出节点类型$\gamma$ 的query的嵌入向量集$\mathbf{q_1},\cdots,\mathbf{q_n}$，几何交集（Intersection）算子输出一个新的嵌入向量$\mathbf{q’}$，对应于$[q’]=\bigcap_{i=1,\cdots,n}\ [q]_i$ ，在嵌入空间执行交集。</p>
+<p>$\mathcal{L}(\{\mathbf{q_1},\cdots,\mathbf{q_n}\})=\mathbf{W}_\gamma\Psi(\mathbf{NN_k(q_i)},\forall i=1,\cdots,n)$</p>
+<p>$\mathbf{NN_k}$ 是一个k层的前馈神经网络，$\Psi$ 是对称的向量函数，$\mathbf{W}_\gamma$ 是可训练的对每个节点类型$\gamma \in \Gamma$的变换矩阵</p>
+<h4 id="用-mathcal-P-L-算子推理"><a href="#用-mathcal-P-L-算子推理" class="headerlink" title="用$\mathcal{P,L}$算子推理"></a>用$\mathcal{P,L}$算子推理</h4><p>为了生成query的嵌入向量，首先根据anchor nodes的出边对其嵌入向量投影（$\mathcal{P}$）。</p>
+<p>如果一个节点在query的DAG中有多个入边，用$\mathcal{L}$ 算子聚合传入的信息。</p>
+<p>然后重复这个过程直至到达query的目标。</p>
+<h4 id="节点embedding"><a href="#节点embedding" class="headerlink" title="节点embedding"></a>节点embedding</h4><p>原则上，任何生成节点embedding的有效可微算法都可以用，本文中用了标准的”bag-of-features”方法，假设每一个类型为$\gamma$ 的节点都有一个相关的二值特征向量$\mathbf{x}_u \in \mathbb{Z}^{m_\gamma}$，计算embedding的方法如下：</p>
+<p> $\mathbf{z}_u = \mathbf{\frac{Z_\gamma X_u}{|X_u|}}$</p>
+<p>其中$\mathbf{Z_\gamma}$ 是可训练的embedding矩阵，$\mathbf{x_u}$ 是独热指示向量。</p>
 
     </div>
 
@@ -248,17 +268,21 @@
 
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/KG/" rel="tag"># KG</a>
+              <a href="/tags/Knowledge-Reasoning/" rel="tag"># Knowledge Reasoning</a>
+          </div>
 
         
 
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/07/07/HelloBlog/" rel="next" title="HelloBlog">
-      HelloBlog <i class="fa fa-chevron-right"></i>
+    <a href="/2020/11/30/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Logic-Tensor-Networks-Deep-Learning-and-Logical-Reasoning-from-Data-and-Knowledge/" rel="prev" title="论文阅读-Embedding Logical Queries on Knowledge Graphs">
+      <i class="fa fa-chevron-left"></i> 论文阅读-Embedding Logical Queries on Knowledge Graphs
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -317,7 +341,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Approach"><span class="nav-number">1.</span> <span class="nav-text">Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#总体思路"><span class="nav-number">1.1.</span> <span class="nav-text">总体思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成嵌入向量-mathbf-q"><span class="nav-number">1.2.</span> <span class="nav-text">生成嵌入向量 $\mathbf{q} $</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mathcal-P-算子"><span class="nav-number">1.3.</span> <span class="nav-text">$\mathcal{P}$ 算子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mathcal-L-算子"><span class="nav-number">1.4.</span> <span class="nav-text">$\mathcal{L}$ 算子</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用-mathcal-P-L-算子推理"><span class="nav-number">1.5.</span> <span class="nav-text">用$\mathcal{P,L}$算子推理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#节点embedding"><span class="nav-number">1.6.</span> <span class="nav-text">节点embedding</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -464,6 +488,59 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
