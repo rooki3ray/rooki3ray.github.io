@@ -27,12 +27,14 @@
 <meta property="og:site_name" content="Rooki3Ray | Cyber Security">
 <meta property="og:description" content="论文链接：Embedding Logical Queries on Knowledge Graphs">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.11.30/20201130184325.png">
 <meta property="article:published_time" content="2020-11-30T10:34:31.000Z">
-<meta property="article:modified_time" content="2020-11-30T10:38:09.679Z">
+<meta property="article:modified_time" content="2020-11-30T10:43:39.579Z">
 <meta property="article:author" content="Rooki3Ray">
 <meta property="article:tag" content="KG">
 <meta property="article:tag" content="Knowledge Reasoning">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.11.30/20201130184325.png">
 
 <link rel="canonical" href="http://rooki3ray.github.io/2020/11/30/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Embedding%20Logical%20Queries%20on%20Knowledge%20Graphs/">
 
@@ -195,7 +197,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-11-30 18:34:31 / 修改时间：18:38:09" itemprop="dateCreated datePublished" datetime="2020-11-30T18:34:31+08:00">2020-11-30</time>
+              <time title="创建时间：2020-11-30 18:34:31 / 修改时间：18:43:39" itemprop="dateCreated datePublished" datetime="2020-11-30T18:34:31+08:00">2020-11-30</time>
             </span>
 
           <br>
@@ -226,7 +228,8 @@
         <p>论文链接：<a href="https://arxiv.org/pdf/1806.01445v1.pdf" target="_blank" rel="noopener">Embedding Logical Queries on Knowledge Graphs</a></p>
 <a id="more"></a>
 <p>[TOC]</p>
-<h3 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h3><h4 id="总体思路"><a href="#总体思路" class="headerlink" title="总体思路"></a>总体思路</h4><p>用算子$\mathcal{P, L}$ 将查询$q$ embedding到 $\mathbf{q} \in \mathbb{R}^d$，目标是优化这些算子以用来预测q的回答——节点v。</p>
+<h3 id="Approach"><a href="#Approach" class="headerlink" title="Approach"></a>Approach</h3><h4 id="总体思路"><a href="#总体思路" class="headerlink" title="总体思路"></a>总体思路</h4><p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.11.30/20201130184325.png" alt=""></p>
+<p>用算子$\mathcal{P, L}$ 将查询$q$ embedding到 $\mathbf{q} \in \mathbb{R}^d$，目标是优化这些算子以用来预测q的回答——节点v。</p>
 <p>通过生成query和node的嵌入向量，用距离来表示得分：</p>
 <script type="math/tex; mode=display">\mathbb{score} (\mathbf{q},\mathbf{z}_v) = \frac{\mathbf{q}\cdot \mathbf{z}_v}{\begin{Vmatrix}\mathbf{q}\end{Vmatrix}\begin{Vmatrix}{\mathbf{z}_v}\end{Vmatrix}}</script><p>目标是生成一个能隐含外延的$\mathbf{q}$，即<script type="math/tex">\mathbb{score} (\mathbf{q},\mathbf{z}_v) = 1, \forall v \in [q]  \ and \ \mathbb{score} (\mathbf{q},\mathbf{z}_v) = 0,\forall v \notin [q]</script></p>
 <p><strong>在推理时，对查询$q$ 的嵌入向量执行最近邻搜索，在嵌入向量空间中寻找可能满足查询的节点</strong>。</p>
@@ -282,7 +285,10 @@
     <a href="/2020/11/28/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Reasoning%20on%20Knowledge%20Graphs%20with%20Debate%20Dynamics/" rel="prev" title="论文阅读: Reasoning on Knowledge Graphs with Debate Dynamics">
       <i class="fa fa-chevron-left"></i> 论文阅读: Reasoning on Knowledge Graphs with Debate Dynamics
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/30/algorithm-1-%E2%80%94%E2%80%94Java%E5%9F%BA%E7%A1%80/" rel="next" title="algorithm(1)——Java基础">
+      algorithm(1)——Java基础 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -357,14 +363,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-count">38</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -425,13 +431,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">88k</span>
+    <span title="站点总字数">89k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:20</span>
+    <span title="站点阅读时长">1:21</span>
 </div>
 
 
