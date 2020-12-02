@@ -164,6 +164,117 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/12/01/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Reasoning-Like-Human-Hierarchical-Reinforcement-Learning-for-Knowledge-Graph-Reasoning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rooki3Ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rooki3Ray | Cyber Security">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/01/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Reasoning-Like-Human-Hierarchical-Reinforcement-Learning-for-Knowledge-Graph-Reasoning/" class="post-title-link" itemprop="url">论文阅读: Reasoning Like Human: Hierarchical Reinforcement Learning for Knowledge Graph Reasoning</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-01 12:02:03" itemprop="dateCreated datePublished" datetime="2020-12-01T12:02:03+08:00">2020-12-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-02 11:38:46" itemprop="dateModified" datetime="2020-12-02T11:38:46+08:00">2020-12-02</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <a id="more"></a>
+<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>KG推理补全的一种流行方法是通过对连接两实体的其他路径上发现的信息来进行多跳推理。当<strong>一个关系/实体具有多含义</strong>时，效果会显著降低，本文受人类处理认知模糊情况的分层结构启发，提出了层次强化学习框架来自动从KG中学习推理链。</p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>本文提出了分层强化学习框架（RLH，Reason Like Human）以模仿人的思维模式，在KG上进行多跳推理。通过模拟分层决策，模型能够自动学习推理的路径链。</p>
+<p>模型由一个高级策略和一个低级策略组成，将宏观操作分解成更简单的子任务，从而学习每个关系的潜在语义。</p>
+<h3 id="Definitions-and-Notations"><a href="#Definitions-and-Notations" class="headerlink" title="Definitions and Notations"></a>Definitions and Notations</h3><p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.01/20201201140411.png" alt=""></p>
+<h4 id="Definition-1-KG"><a href="#Definition-1-KG" class="headerlink" title="Definition 1 KG"></a>Definition 1 KG</h4><p>KG是一个有向图$G=\mathcal{(E,R,U)}$，其中$\mathcal{E、R、U}$ 分别为实体集、关系集、边集（$(e_o,r,e_t)$） </p>
+<h4 id="Definition-2-KG-Reasoning"><a href="#Definition-2-KG-Reasoning" class="headerlink" title="Definition 2 KG Reasoning"></a>Definition 2 KG Reasoning</h4><p>给定三种情况$(h,r,?)，(?,r,t)，(h,?,t)$，KG Reasoning通过k跳的推理路径（$e_1 \xrightarrow {r_1} e_2 \xrightarrow {r_2} \cdots \xrightarrow {r_k} e_{k+1}$）来预测其中的 $?$ 。</p>
+<h4 id="Definition-3-Markov-Decision-Process"><a href="#Definition-3-Markov-Decision-Process" class="headerlink" title="Definition 3 Markov Decision Process"></a>Definition 3 Markov Decision Process</h4><p>马尔可夫决策过程是一个四元组$(S,A,P_a,R_a)$，其中$S$ 是有限状态集，$A$ 是有限行动集（$A_s$ 是状态$S$ 下的行动集），$P_a(s,s’)=P_r(s_{t+1}=s’|s_t=s,a_t=a)$ 是$t$ 时间$s$ 状态下采取行动$a$ 会在$t+1$时间到达状态$s’$ 的概率，$R_a(s,s’)$ 是通过动作$a$ 完成$s \rightarrow s’$ 的奖励。</p>
+<p>RL是一个MDP，在序列的每一阶段，Agent观察一个环境状态$s$，并执行一个动作$a$，收到一个期望为$R(s,a)$ 的即时奖励和状态转移概率 $P(s’|s,a)$。</p>
+<h4 id="Definition-4-Hierarchical-Reinforcement-Learning"><a href="#Definition-4-Hierarchical-Reinforcement-Learning" class="headerlink" title="Definition 4 Hierarchical Reinforcement Learning"></a>Definition 4 Hierarchical Reinforcement Learning</h4><p>分层强化学习是一个semi-MDP$(S,A,P_a,r_{a,\Phi})$，其中$P_a(s,s’)=P_r(s_{t+1}=s’|s_t=s,a_t=a)\Pi_{i=1}^{K-1}P_r(\phi_{i+1}|\Phi_i)$。$\Phi$ 是一个用来描述动作$a$ 内部的K个转移阶段的转移函数空间，每个$\phi$ 都是$a$ 的一个子动作，所有的$\phi$ 都是相关的。</p>
+<p>HRL的每个多做包括时间上离散的、可计数的子动作。HRL将整个问题的优化下发给更简单的子问题，在子问题中知识可以相互传递，重组子问题中的解决方案可以解决更大更复杂的问题。</p>
+<h3 id="Methodology"><a href="#Methodology" class="headerlink" title="Methodology"></a>Methodology</h3><h4 id="RLH"><a href="#RLH" class="headerlink" title="RLH"></a>RLH</h4><p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.01/20201201140526.png" alt=""></p>
+<p>Agent对每个query预测一个源实体到目标实体的路径，它观察当前state并执行分层策略决定下一跳的实体。Agent不断观察并决定下一跳，直至它到达目标实体或最大长度。Agent的轨迹就是一个推理链，可以解释如何从推理系统获得查询结果。</p>
+<p>在KG环境中，动作空间通常是层次结构，所以复杂的动作空间就会分解为像决策树一样的子任务，关系的多重语义也被分解为更具体的表示。</p>
+<h4 id="High-Level-Policy-for-Encoding-History-Information"><a href="#High-Level-Policy-for-Encoding-History-Information" class="headerlink" title="High Level Policy for Encoding History Information"></a>High Level Policy for Encoding History Information</h4><p>RL训练Agent从KG与环境的交互中学习。KG中，RL由四元组$\mathcal{(S,A,P,R)}$ 表示。</p>
+<p><strong>States</strong> step $i$ 的state表示为$s_i=(e_{i-1},r_i,e_i,e_t)$ ，其中$e_i\in \mathcal{E}$ 表示当前实体，$e_{i-1}$ 表示上一个实体，$r_i$ 表示这两实体间的关系，$e_t$ 是目标实体。给定实体对$(e_o,e_t)$，起始状态为$(‘ST’,’ST’,e_o,e_t)$，终态为$(e_{t-1},r_t,e_t,e_t)$。</p>
+<p><strong>Actions</strong> 状态$s_i$的行动集是当前实体$e_i$ 的出边集。</p>
+<p><strong>Transition</strong> 转移$\mathcal{P:S \times A \rightarrow S}$ 是状态转移概率函数，转移策略是选择$\mathcal{P}(s_{i+1}|s_i,a_i)$ 中最大概率的$a_i$。</p>
+<p><strong>Policy</strong> 高级策略网络$\mu(s,\mathcal{A})=P(a|s;\theta)$ 用于在连续空间中建模RL Agent，$\theta$ 是网络参数。用历史向量$\mathbf{h_t}$ 来保存历史信息进行序列决策。给定步骤$t$ 的轨迹$\tau$，历史向量$\mathbf{h_t}$ 由$\mathbf{h_{t-1}、s_{t-1}}$ 决定<script type="math/tex">\mathbf{h_t} = GRU(\mathbf{h_{t-1},s_{t-1}}) \\ a \sim \pi(a_t|s_{t-1}) = softmax(\mathbf{W_\pi c})</script></p>
+<p>其中$\mathbf{c}$ 是低级策略输出子动作的向量表示，$\mathbf{W_\pi}$ 是Rewards矩阵</p>
+<p><strong>Rewards</strong> 如果agent到达了目标实体，则每跳的奖励定义如下：</p>
+<script type="math/tex; mode=display">R_{H(\tau_i)} = \begin{cases} 1 \cdot \gamma_i, & \hat e_t = e_t \\ 0, & otherwise\end{cases}</script><h4 id="Low-Level-Policy-for-Structured-Action-Space"><a href="#Low-Level-Policy-for-Structured-Action-Space" class="headerlink" title="Low Level Policy for Structured Action Space"></a>Low Level Policy for Structured Action Space</h4><p>低级策略$\Phi$ 将复杂动作空间$\mathcal{A_s}$ 分解为结构化的子动作。子动作转换也是一个马尔可夫过程。通过层级聚类的关系嵌入方法，KG中的关系可以形成关系簇，低级RL的所有状态被组织为一个搜索树，可以很好地表达每个关系的潜在多重语义。</p>
+<p><strong>Actions</strong> 首先执行TransE获得嵌入向量，然后应用k means算法初始化关系簇，构建层次结构的关系簇集。</p>
+<p><strong>State</strong> 低级状态$s_i$ 包括当前有效子动作集，一个轨迹的起始状态是$A_s$，如果成功则终态为${a_{t+1}}$，否则为$\varnothing$。</p>
+<p><strong>Policy</strong> Agent观察$s_i^l$ 的子操作空间，执行子任务</p>
+<script type="math/tex; mode=display">c \sim \mu(c_t|c_{t-1},h_t,s_{t-1}) = Softmax(ReLU(\sigma(\mathbf{W_S|[H_T;S_{T-1}}])[s_i^l]\mathbf{W_cC_i}))</script><p>其中$c_t$ 是要采用的子动作</p>
+<p><strong>Reward</strong> 对终态包含正确动作$a_{next}$时获得奖励。</p>
+<script type="math/tex; mode=display">R_L (\epsilon) = \begin{cases} 1 , & a_{next} \in s^l \\ 0, & otherwise\end{cases}</script><h4 id="Optimization-and-Training"><a href="#Optimization-and-Training" class="headerlink" title="Optimization and Training"></a>Optimization and Training</h4><p>低级策略网络的目标函数是最大化层次决策的累计回报</p>
+<script type="math/tex; mode=display">J^L(\theta_L) = \mathbb{E}_{\epsilon \sim p\theta_L(\epsilon)}[R_L(\epsilon)]</script><p>其中$\epsilon$ 表示从低级策略$\mu$ 的潜在分布$p\theta_L(\epsilon)$ 中生成的$M$ 长的轨迹。</p>
+<p>高级策略的目标函数是</p>
+<script type="math/tex; mode=display">J^H(\theta_H) = \mathbb{E}_{\theta_L,\tau \sim p\theta_H(\tau)}[R_H(\tau)]</script><p>其中$\epsilon$ 表示从潜在分布$p\theta_H(\tau)$ 中生成的$N$ 长的轨迹。</p>
+<p>然后使用 policy gradient methods的 REINFORCE 算法优化两个策略。</p>
+<p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.02/20201202112504.png" alt=""></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/11/30/algorithm-1-%E2%80%94%E2%80%94Java%E5%9F%BA%E7%A1%80/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -368,7 +479,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-30 18:42:56" itemprop="dateModified" datetime="2020-11-30T18:42:56+08:00">2020-11-30</time>
+                <time title="修改时间：2020-12-01 12:57:09" itemprop="dateModified" datetime="2020-12-01T12:57:09+08:00">2020-12-01</time>
               </span>
 
           <br>
@@ -935,92 +1046,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/10/19/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94IPSec/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Rooki3Ray">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Rooki3Ray | Cyber Security">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/19/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94IPSec/" class="post-title-link" itemprop="url">Internet安全协议与分析（三）——IPSec</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-10-19 19:47:45" itemprop="dateCreated datePublished" datetime="2020-10-19T19:47:45+08:00">2020-10-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-20 22:06:35" itemprop="dateModified" datetime="2020-10-20T22:06:35+08:00">2020-10-20</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1.7k</span>
-            </span>
-            <span class="post-meta-item" title="阅读时长">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>2 分钟</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>介绍IPSec协议。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/10/19/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90%EF%BC%88%E4%B8%89%EF%BC%89%E2%80%94%E2%80%94IPSec/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1092,14 +1117,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">38</span>
+          <span class="site-state-item-count">39</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">24</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1160,13 +1185,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">90k</span>
+    <span title="站点总字数">93k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:22</span>
+    <span title="站点阅读时长">1:24</span>
 </div>
 
 
