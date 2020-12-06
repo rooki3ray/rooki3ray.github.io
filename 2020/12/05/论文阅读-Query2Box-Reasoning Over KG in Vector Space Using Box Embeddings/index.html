@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Abstract最近在大规模KG上回答query的一种典型方法是将KG实体和query嵌入到向量空间中，答案实体在嵌入向量空间中会和query很近。 先前工作将query投影成单点，但复杂查询的answer会是一个潜在的大集合。 先前工作只能处理合取$\wedge$和存在$\exists$，对析取$\vee $查询的处理仍未解决。 本文提出的Query2box将query嵌入为box超矩形框，b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文阅读-Query2Box:Reasoning Over KG in Vector Space Using Box Embeddings">
+<meta property="og:url" content="http://rooki3ray.github.io/2020/12/05/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Query2Box-Reasoning%20Over%20KG%20in%20Vector%20Space%20Using%20Box%20Embeddings/index.html">
+<meta property="og:site_name" content="Rooki3Ray | Cyber Security">
+<meta property="og:description" content="Abstract最近在大规模KG上回答query的一种典型方法是将KG实体和query嵌入到向量空间中，答案实体在嵌入向量空间中会和query很近。 先前工作将query投影成单点，但复杂查询的answer会是一个潜在的大集合。 先前工作只能处理合取$\wedge$和存在$\exists$，对析取$\vee $查询的处理仍未解决。 本文提出的Query2box将query嵌入为box超矩形框，b">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="c:/Users/deng/AppData/Roaming/Typora/typora-user-images/image-20201205231045331.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206111851.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206201655.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206204922.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206204902.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206210406.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206212303.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206213558.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206214008.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206224615.png">
+<meta property="article:published_time" content="2020-12-05T14:01:40.000Z">
+<meta property="article:modified_time" content="2020-12-06T14:50:48.494Z">
+<meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="KG">
+<meta property="article:tag" content="Knowledge Reasoning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:/Users/deng/AppData/Roaming/Typora/typora-user-images/image-20201205231045331.png">
+
+<link rel="canonical" href="http://rooki3ray.github.io/2020/12/05/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Query2Box-Reasoning%20Over%20KG%20in%20Vector%20Space%20Using%20Box%20Embeddings/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>论文阅读-Query2Box:Reasoning Over KG in Vector Space Using Box Embeddings | Rooki3Ray | Cyber Security</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c5dcd17d515f19e2d355facf9d8e773a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rooki3Ray | Cyber Security</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/12/05/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Query2Box-Reasoning%20Over%20KG%20in%20Vector%20Space%20Using%20Box%20Embeddings/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rooki3Ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rooki3Ray | Cyber Security">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          论文阅读-Query2Box:Reasoning Over KG in Vector Space Using Box Embeddings
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-05 22:01:40" itemprop="dateCreated datePublished" datetime="2020-12-05T22:01:40+08:00">2020-12-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-06 22:50:48" itemprop="dateModified" datetime="2020-12-06T22:50:48+08:00">2020-12-06</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <a id="more"></a>
+<h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>最近在大规模KG上回答query的一种典型方法是将KG实体和query嵌入到向量空间中，答案实体在嵌入向量空间中会和query很近。</p>
+<p>先前工作将query投影成<strong>单点</strong>，但复杂查询的answer会是一个潜在的大集合。</p>
+<p>先前工作只能处理合取$\wedge$和存在$\exists$，对<strong>析取$\vee $</strong>查询的处理仍未解决。</p>
+<p>本文提出的Query2box<strong>将query嵌入为box超矩形框，box内的一组点对应于一组答案实体</strong>，作者证明了合取可以天然地表示为boxes地交集，但处理析取需要embedding的维度和KG实体数成比例。但是，通过将query转换为<strong>析取范式</strong>，Query2box能以可扩展方式处理合取、析取和存在逻辑查询。</p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>一阶逻辑查询可以表示为有向无环图DAG，并可以根据DAG进行推理，缺点是（1）<strong>子图匹配的计算复杂度和query size成指数关系</strong>，这会影响到向大规模KG的扩展；<strong>（2）子图匹配非常敏感，因为它不能正确地回答缺少关系的查询</strong>。为了解决第二个问题，可以对KG中缺失的关系进行补全，但是这样会使得KG更加稠密，这就加剧了第一个问题。</p>
+<p>Embedding方法将<strong>逻辑查询和KG实体嵌入到低维向量空间中</strong>，而答案会在query附近，这种方法可以鲁棒地补全关系，且速度很快，因为回答任意的逻辑查询被简化为了识别在向量空间中最接近于query嵌入向量的实体。</p>
+<p><img src="C:\Users\deng\AppData\Roaming\Typora\typora-user-images\image-20201205231045331.png" alt="image-20201205231045331"></p>
+<p>先前工作中（1）<strong>将query嵌入到向量空间的单点</strong>，而回答一个query需要遍历KG并建立一个active实体集，且如何有效地将一个集合建模成一个单点还是有待研究的。（2）<strong>在向量空间中定义两个点的逻辑操作符（例如 集合交集）也是不自然的</strong>。（3）<strong>只能处理conjuctive queries，是一阶逻辑中的子集，包含合取$\wedge$和存在$\exists$，但不包括析取$\vee$</strong>。在向量空间有效地处理析取逻辑还是一个有待解决的问题。</p>
+<hr>
+<p>本文中提出的query2box能以可扩展方式处理任意EPFO（Existential Positive First-order）逻辑查询（包含任意$\wedge、\exists、 \vee$的查询）。关键思想是使用向量空间中的封闭区域box而非单点来表示query（Figure1-D），如此（1）<strong>Boxes可以自然地对其包含的实体进行建模</strong>；（2）<strong>逻辑运算符（例如 集合交集）在box上的定义也很自然，就像venn图一样</strong>；（3）<strong>在box上执行逻辑运算符就会产生新的box，这意味着操作符是封闭的，通过逻辑计算迭代box可以高效地执行推理</strong>。</p>
+<p>作者证明了query2box可以很自然地处理conjunctive query，也证明了将EPFO查询嵌入到单个点或box中需要与KG实体数量成比例地嵌入向量尺寸，难以实现。本文的解决方案是<strong>将EPFO查询转化为析取范式（DNF）</strong>，将其表示成一组boxes，<strong>每个box对应DNF中的一个conjunctive query，再将最近的实体作为查询答案返回，即回答多个EPFO取并集再找最近实体。</strong></p>
+<p>（boxes本质上是向量空间中的venn图，但box是和嵌入共同学习的。）</p>
+<h3 id="QUERY2BOX-LOGICAL-REASONING-OVER-KGS-IN-VECTOR-SPACE"><a href="#QUERY2BOX-LOGICAL-REASONING-OVER-KGS-IN-VECTOR-SPACE" class="headerlink" title="QUERY2BOX: LOGICAL REASONING OVER KGS IN VECTOR SPACE"></a>QUERY2BOX: LOGICAL REASONING OVER KGS IN VECTOR SPACE</h3><h4 id="KNOWLEDGE-GRAPHS-AND-CONJUNCTIVE-QUERIES"><a href="#KNOWLEDGE-GRAPHS-AND-CONJUNCTIVE-QUERIES" class="headerlink" title="KNOWLEDGE GRAPHS AND CONJUNCTIVE QUERIES"></a>KNOWLEDGE GRAPHS AND CONJUNCTIVE QUERIES</h4><p>KG：$\mathcal{G=(V,R)，\\ V表示实体，\\ R:V\times V \rightarrow \{true,false\}表示两实体之间是否存在有向边}$</p>
+<p>Conjunctive queries: 使用$\exists、\wedge$操作的一阶逻辑查询的子类，表示如下</p>
+<p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206111851.png" alt=""></p>
+<p>$v_a$表示<strong>不变锚实体</strong>，$V_1,…,V_k$是量化的边界变量（<strong>quantified bound variables</strong>）,$V_?$ 是<strong>目标变量实体</strong>。回答查询q的目标是$找到一个实体集[q] \subseteq \mathcal{V} 使得 v\in[q]当且仅当(iff) q[v]=True$，$[q]$就是query的答案集。</p>
+<p>从DAG(Figure1-A)可以得到计算图(Figure1-B)，其中包含了Projection和Intersection两种计算。</p>
+<p>对给定的查询q，计算图<strong>将推理过程转换为通过计算得到答案实体集的过程</strong>，即从锚节点集合出发，迭代使用两种运算直至到达唯一的目标节点。</p>
+<h4 id="REASONING-OVER-SETS-OF-ENTITIES-USING-BOX-EMBEDDINGS"><a href="#REASONING-OVER-SETS-OF-ENTITIES-USING-BOX-EMBEDDINGS" class="headerlink" title="REASONING OVER SETS OF ENTITIES USING BOX EMBEDDINGS"></a>REASONING OVER SETS OF ENTITIES USING BOX EMBEDDINGS</h4><p>到目前为止我们将conjunctive queries定义成了计算图，并且可以直接在KG的节点和边上执行.</p>
+<p>给定一个复杂query，<strong>将其分解为一系列逻辑运算，并在向量空间中定义逻辑推理执行这些运算</strong>，这样将获得查询的嵌入，且<strong>查询嵌入box中会包含查询答案</strong>。</p>
+<h5 id="Box-embeddings"><a href="#Box-embeddings" class="headerlink" title="Box embeddings"></a>Box embeddings</h5><p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206201655.png" alt=""></p>
+<p>$Cen(p)$表示box的中心，$Off(p)$表示box的正偏移（大小）。KG中的每个实体都被表示为为一个$\mathbf{v} \in \mathbb{R}^d$ 即大小为0的box，box的p建模了一个实体集$\{v\in \mathcal{V}:\mathbf{v} \in Box_p\}$ ，即其向量在box内的实体。</p>
+<p>本文的框架是基于query的计算图在向量空间中进行推理的，如Figure1-D所示：从初始锚节点的box开始，根据逻辑操作不断更新box的embedding。下边介绍entity-to-box<strong>距离函数</strong>以及为了学习嵌入和几何操作符（geometric operators）的<strong>整体目标函数</strong>。</p>
+<h5 id="Initial-boxes-for-source-nodes"><a href="#Initial-boxes-for-source-nodes" class="headerlink" title="Initial boxes for source nodes"></a>Initial boxes for source nodes</h5><p>每个源节点表示一个锚实体$v\mathcal{\in V}$，这可以很自然地表示为Cen为v，Off为0的box，即$(v,0)$。</p>
+<h5 id="Geometric-projection-operator"><a href="#Geometric-projection-operator" class="headerlink" title="Geometric projection operator"></a>Geometric projection operator</h5><p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206204922.png" alt=""></p>
+<p>将每个关系$r\in \mathcal{R}$和关系嵌入$\mathbf{r} = (Cen(r),Off(r)) \in \mathbb{R}^{2d}$联系，给定一个输出box embedding $\mathbf{p}$，用<strong>$\mathbf{p+r}$表示其projection运算</strong>：对Cen和Off分别求和，得到一个<strong>中心转移的、大小更大的box</strong>，如Figure2-A所示。</p>
+<h5 id="Geometric-intersection-operator"><a href="#Geometric-intersection-operator" class="headerlink" title="Geometric intersection operator"></a>Geometric intersection operator</h5><p>对一组box embeddings$\mathbf{p_1,\cdots,p_n}$，用$\mathbf{p_{inter}} = (Cen(\mathbf{p_{inter}}),Off(\mathbf{p_{inter}}))$<strong>表示其intersection运算</strong>，对box的中心使用<strong>注意力机制</strong>，并使用sigmoid函数缩小box的偏移量。</p>
+<p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206204902.png" alt=""></p>
+<p>其中$\odot$表示<strong>dimension-wise</strong>的乘积；$MLP(\cdot): \mathbb{R}^{2d}\rightarrow \mathbb{R}^d$是多层感知机；$\sigma(\cdot)$表示sigmoid函数；$DeepSets(\cdot)$表示<strong>排列不变</strong>的（permutation-invariant）深层架构；$Min(\cdot), exp(\cdot)$都在<strong>dimension-wise</strong>进行操作。作者用 $DeepSets({\{\mathbf{x_1}, …, \mathbf{x_N}}\}) = MLP((1/N)\cdot \sum^N_{i=1}MLP(\mathbf{x_i}))$表示所有的deep sets，其中的MLP隐层维度都和输入维度相同。</p>
+<p>几何交集运算的思想是在一组box内生成一个小的box，和通常用的deep sets不同，本文的几何交集操作<strong>有效地限制了中心的位置并且缩小了set的大小</strong>。</p>
+<h5 id="Entity-to-box-distance"><a href="#Entity-to-box-distance" class="headerlink" title="Entity-to-box distance"></a>Entity-to-box distance</h5><p>给定一个query box $\mathbf{q} \in \mathbb{R^{2d}}$和一个实体向量$\mathbf{v} \in \mathbb{R^d}$，距离定义为：</p>
+<p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206210406.png" alt=""></p>
+<p>如Figure2-C所示，$\mathbb{dist_{outside}}$对应于<strong>实体和其在box内最接近的边/角的距离</strong>；$\mathbb{dist_{inside}}$对应于<strong>box的中心和它的边/角的距离</strong>（如果实体在box内则为实体自身）。</p>
+<p>关键在于<strong>用$\alpha$降低了$dist_{inside}$的权重</strong>，这意味着<strong>在box内的实体被视为和box距离足够近</strong>，若$\alpha=1$，则距离退化为$L_1$距离，如TransE中用的$|Cen(q)-\mathbf{v}|_1$。</p>
+<h5 id="Training-objective"><a href="#Training-objective" class="headerlink" title="Training objective"></a>Training objective</h5><p>模型需要学习<strong>实体嵌入</strong>以及几何映射和交集操作符。</p>
+<p>给定queries和answer的训练集，通过优化<strong>负采样损失</strong>优化基于距离的模型：</p>
+<p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206212303.png" alt=""></p>
+<p>其中$\gamma$表示margin；$v\in [q]$是正实体（query q的答案）；$v^{‘}_i \notin [q]$是第i个负实体（非query q的答案）；k是负实体的数目。</p>
+<h4 id="TRACTABLE-HANDLING-OF-DISJUNCTION-USING-DISJUNCTIVE-NORMAL-FORM"><a href="#TRACTABLE-HANDLING-OF-DISJUNCTION-USING-DISJUNCTIVE-NORMAL-FORM" class="headerlink" title="TRACTABLE HANDLING OF DISJUNCTION USING DISJUNCTIVE NORMAL FORM"></a>TRACTABLE HANDLING OF DISJUNCTION USING DISJUNCTIVE NORMAL FORM</h4><p>增加了一种<strong>新类型的有向边Union</strong></p>
+<p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206213558.png" alt=""></p>
+<p>一种简单的方法是为union定义几何操作符，如同前面的操作一样。但是对于box embedding有一个<strong>挑战</strong>：<strong>boxes可以位于向量空间中的任意位置，它们的union可以不再是一个简单的box</strong>。</p>
+<p>作者证明了一个适用于所有通过embedding将query嵌入为$\mathbf{q}$并通过距离查找实体的方法的负面结果。</p>
+<h5 id="Theorem-1"><a href="#Theorem-1" class="headerlink" title="Theorem 1"></a>Theorem 1</h5><p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206214008.png" alt=""></p>
+<p>对任意M个不相交的合取查询 $q_1,\cdots,q_M$,D是函数集${sign(\beta-dist(\cdot;\mathbf{q})):q\in \Xi}$的VC维数，其中$\Xi$表示query的嵌入空间，sign为符号函数，那么<strong>需要$D\ge M$才能建模任意的EPFO以通过距离寻找答案</strong>。</p>
+<p>对于真实世界的的KG，有$M \approx \mathcal{|V|}$个不相交的合取查询，这就<strong>要求距离函数的VC维度和KG实体数目一样大</strong>，因此无法扩展到大型KG/边缘未知的KG。</p>
+<p>为了解决这个问题，作者的主要思想是<strong>将给定的EPFO query转换为析取范式（DNF）即合取的析取</strong>，以使析取操作仅出现在最后一步，从而可以在低维空间中对每个合取查询进行推理。</p>
+<h5 id="Transformation-to-DNF"><a href="#Transformation-to-DNF" class="headerlink" title="Transformation to DNF"></a>Transformation to DNF</h5><p>所有的一阶逻辑都可以转换为DNF，可以直接在计算图的空间进行转换。给定EPFO query q，其计算图为$G_q=(V_q,E_q)$，<br>$V_{union}\subset V_q$表示入边的类型为“union”的节点集合。对于每个$ v\in V_{union}$，定义$P_v \subset V_q$为其父节点的集合。</p>
+<p>首先生成 $N=\prod_{v\in V_{union}}|P_v|$个不同的计算图$G_{q^{(1)}}, \cdots, G_{q^{(N)}}$（步骤如下所示），其中每个在第一步都有不同的$v_{parent}$选择：</p>
+<ol>
+<li>对每个$v\in V_{union}$，选择一个父节点$v_{parent} \in P_v$</li>
+<li>删除所有union类型的边</li>
+<li>合并$v$和$v_{parent}$，并保留所有其他类型的边</li>
+</ol>
+<p>然后<strong>组合</strong>获得的计算图$G_{q^{(1)}}, \cdots, G_{q^{(N)}}$，以得到最终的等价的计算图：</p>
+<ol>
+<li>将获得的所有计算图的目标汇聚节点转换成量化边界的变量节点（the existentially quantified bound variables nodes）;</li>
+<li>创建一个行额目标汇聚节点$V_?$，从上述所有的变量节点到新的目标节点连接“union”类型的有向边。</li>
+</ol>
+<p>整个转化过程如下Figure3所示，该计算图与原始计算图等价。</p>
+<h5 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h5><p>定义给定EPFO查询$q$ 和实体$v\in \mathcal{V}$ 间的距离函数，因为$q$ 在逻辑上等效于$ q^{(1)}\vee \cdots \vee q^{(N)}$，距离函数很自然地定义为：</p>
+<p><img src="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206224615.png" alt=""></p>
+<p>该模型和union操作一致，只要实体在一个集合中，该实体就在集合的union中。</p>
+<h5 id="Computational-complexity"><a href="#Computational-complexity" class="headerlink" title="Computational complexity"></a>Computational complexity</h5><p>计算复杂度等同于回答N个交集查询，且这N个查询是可并行的。回答每个conjunctive query的速度很快，因为它执行一个简单的box操作序列，然后在嵌入空间中执行一系列搜索，搜索可以基于<strong>局部敏感哈希</strong>（LSH）技术在固定时间内完成。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>你可以打赏我哦！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/KG/" rel="tag"># KG</a>
+              <a href="/tags/Knowledge-Reasoning/" rel="tag"># Knowledge Reasoning</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/01/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Reasoning-Like-Human-Hierarchical-Reinforcement-Learning-for-Knowledge-Graph-Reasoning/" rel="prev" title="论文阅读: Reasoning Like Human: Hierarchical Reinforcement Learning for Knowledge Graph Reasoning">
+      <i class="fa fa-chevron-left"></i> 论文阅读: Reasoning Like Human: Hierarchical Reinforcement Learning for Knowledge Graph Reasoning
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QUERY2BOX-LOGICAL-REASONING-OVER-KGS-IN-VECTOR-SPACE"><span class="nav-number">3.</span> <span class="nav-text">QUERY2BOX: LOGICAL REASONING OVER KGS IN VECTOR SPACE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#KNOWLEDGE-GRAPHS-AND-CONJUNCTIVE-QUERIES"><span class="nav-number">3.1.</span> <span class="nav-text">KNOWLEDGE GRAPHS AND CONJUNCTIVE QUERIES</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#REASONING-OVER-SETS-OF-ENTITIES-USING-BOX-EMBEDDINGS"><span class="nav-number">3.2.</span> <span class="nav-text">REASONING OVER SETS OF ENTITIES USING BOX EMBEDDINGS</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Box-embeddings"><span class="nav-number">3.2.1.</span> <span class="nav-text">Box embeddings</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Initial-boxes-for-source-nodes"><span class="nav-number">3.2.2.</span> <span class="nav-text">Initial boxes for source nodes</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Geometric-projection-operator"><span class="nav-number">3.2.3.</span> <span class="nav-text">Geometric projection operator</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Geometric-intersection-operator"><span class="nav-number">3.2.4.</span> <span class="nav-text">Geometric intersection operator</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Entity-to-box-distance"><span class="nav-number">3.2.5.</span> <span class="nav-text">Entity-to-box distance</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Training-objective"><span class="nav-number">3.2.6.</span> <span class="nav-text">Training objective</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TRACTABLE-HANDLING-OF-DISJUNCTION-USING-DISJUNCTIVE-NORMAL-FORM"><span class="nav-number">3.3.</span> <span class="nav-text">TRACTABLE HANDLING OF DISJUNCTION USING DISJUNCTIVE NORMAL FORM</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Theorem-1"><span class="nav-number">3.3.1.</span> <span class="nav-text">Theorem 1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Transformation-to-DNF"><span class="nav-number">3.3.2.</span> <span class="nav-text">Transformation to DNF</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Aggregation"><span class="nav-number">3.3.3.</span> <span class="nav-text">Aggregation</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Computational-complexity"><span class="nav-number">3.3.4.</span> <span class="nav-text">Computational complexity</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rooki3Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rooki3Ray</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rooki3ray" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2922859032@qq.com" title="E-Mail → mailto:2922859032@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5355766445" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5355766445" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2922859032" title="QQ → 2922859032"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/rooki3ray" title="https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank">GitHub</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rooki3Ray</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">99k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:30</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
