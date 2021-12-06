@@ -17,15 +17,15 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
   </script>
 
-  <meta name="description" content="论文链接：Query2Box:Reasoning Over KG in Vector Space Using Box Embeddings">
+  <meta name="description" content="论文链接：Query2Box:Reasoning Over KG in Vector Space Using Box Embeddings 主要思路是（1）将query转换为实体、关系间的逻辑运算；（2）在嵌入空间上定义逻辑运算；（3）用实体和关系的嵌入向量，通过逻辑运算得到query的嵌入向量；（4）定义距离函数，查找离query近（本文为在box中）的实体，即为推理的答案。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="论文阅读-Query2Box:Reasoning Over KG in Vector Space Using Box Embeddings">
 <meta property="og:url" content="http://rooki3ray.github.io/2020/12/05/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Query2Box-Reasoning%20Over%20KG%20in%20Vector%20Space%20Using%20Box%20Embeddings/index.html">
 <meta property="og:site_name" content="Rooki3Ray | Cyber Security">
-<meta property="og:description" content="论文链接：Query2Box:Reasoning Over KG in Vector Space Using Box Embeddings">
+<meta property="og:description" content="论文链接：Query2Box:Reasoning Over KG in Vector Space Using Box Embeddings 主要思路是（1）将query转换为实体、关系间的逻辑运算；（2）在嵌入空间上定义逻辑运算；（3）用实体和关系的嵌入向量，通过逻辑运算得到query的嵌入向量；（4）定义距离函数，查找离query近（本文为在box中）的实体，即为推理的答案。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="c:/Users/deng/AppData/Roaming/Typora/typora-user-images/image-20201205231045331.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206111851.png">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206214008.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/rooki3ray/blogImage/main/2020.12.06/20201206224615.png">
 <meta property="article:published_time" content="2020-12-05T14:01:40.000Z">
-<meta property="article:modified_time" content="2020-12-07T01:36:37.650Z">
+<meta property="article:modified_time" content="2021-01-27T04:45:36.586Z">
 <meta property="article:author" content="Rooki3Ray">
 <meta property="article:tag" content="KG">
 <meta property="article:tag" content="Knowledge Reasoning">
@@ -125,6 +125,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -149,16 +150,48 @@
     <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -212,8 +245,17 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-12-07 09:36:37" itemprop="dateModified" datetime="2020-12-07T09:36:37+08:00">2020-12-07</time>
+                <time title="修改时间：2021-01-27 12:45:36" itemprop="dateModified" datetime="2021-01-27T12:45:36+08:00">2021-01-27</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/KG/" itemprop="url" rel="index"><span itemprop="name">KG</span></a>
+                </span>
+            </span>
 
           <br>
             <span class="post-meta-item" title="本文字数">
@@ -221,7 +263,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>5.2k</span>
+              <span>5.3k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -241,6 +283,7 @@
 
       
         <p>论文链接：<a href="https://arxiv.org/abs/2002.05969" target="_blank" rel="noopener">Query2Box:Reasoning Over KG in Vector Space Using Box Embeddings</a></p>
+<p>主要思路是（1）将query转换为实体、关系间的逻辑运算；（2）在嵌入空间上定义逻辑运算；（3）用实体和关系的嵌入向量，通过逻辑运算得到query的嵌入向量；（4）定义距离函数，查找离query近（本文为在box中）的实体，即为推理的答案。</p>
 <a id="more"></a>
 <h3 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h3><p>最近在大规模KG上回答query的一种典型方法是将KG实体和query嵌入到向量空间中，答案实体在嵌入向量空间中会和query很近。</p>
 <p>先前工作将query投影成<strong>单点</strong>，但复杂查询的answer会是一个潜在的大集合。</p>
@@ -337,7 +380,10 @@
     <a href="/2020/12/01/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Reasoning-Like-Human-Hierarchical-Reinforcement-Learning-for-Knowledge-Graph-Reasoning/" rel="prev" title="论文阅读: Reasoning Like Human: Hierarchical Reinforcement Learning for Knowledge Graph Reasoning">
       <i class="fa fa-chevron-left"></i> 论文阅读: Reasoning Like Human: Hierarchical Reinforcement Learning for Knowledge Graph Reasoning
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/13/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-KG-BERT-BERT-for-Knowledge-Graph-Completion/" rel="next" title="论文阅读 KG-BERT: BERT for Knowledge Graph Completion">
+      论文阅读 KG-BERT: BERT for Knowledge Graph Completion <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -412,14 +458,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">33</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -470,7 +522,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -480,13 +532,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">站点总字数：</span>
-    <span title="站点总字数">99k</span>
+    <span title="站点总字数">118k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:30</span>
+    <span title="站点阅读时长">1:47</span>
 </div>
 
 
@@ -527,6 +579,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
