@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
+  </script>
+
+  <meta name="description" content="跟李沐再读《Attention Is All You Need》。(视频链接)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reread *Attention Is All You Need*">
+<meta property="og:url" content="http://rooki3ray.github.io/2022/01/20/attention%20is%20all%20you%20need/index.html">
+<meta property="og:site_name" content="Rooki3Ray | Cyber Security">
+<meta property="og:description" content="跟李沐再读《Attention Is All You Need》。(视频链接)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://rooki3ray.github.io/uploads/upload_94e5630aa8c00c531f241a431f58c5e2.png">
+<meta property="og:image" content="http://rooki3ray.github.io/uploads/upload_ba3e07af45d5cd5430f5fe4f54818928.png">
+<meta property="og:image" content="http://rooki3ray.github.io/uploads/upload_1f6bdcf108f7e5185d2899c9038615c8.png">
+<meta property="og:image" content="http://rooki3ray.github.io/uploads/upload_b623ebb8d122a7f541215896dab6d4d5.png">
+<meta property="article:published_time" content="2022-01-20T10:53:16.000Z">
+<meta property="article:modified_time" content="2022-01-25T16:06:04.875Z">
+<meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="Transformer">
+<meta property="article:tag" content="Attention">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://rooki3ray.github.io/uploads/upload_94e5630aa8c00c531f241a431f58c5e2.png">
+
+<link rel="canonical" href="http://rooki3ray.github.io/2022/01/20/attention%20is%20all%20you%20need/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Reread *Attention Is All You Need* | Rooki3Ray | Cyber Security</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c5dcd17d515f19e2d355facf9d8e773a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rooki3Ray | Cyber Security</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2022/01/20/attention%20is%20all%20you%20need/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rooki3Ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rooki3Ray | Cyber Security">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Reread *Attention Is All You Need*
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-20 18:53:16" itemprop="dateCreated datePublished" datetime="2022-01-20T18:53:16+08:00">2022-01-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-26 00:06:04" itemprop="dateModified" datetime="2022-01-26T00:06:04+08:00">2022-01-26</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index"><span itemprop="name">NLP</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/Transformer/" itemprop="url" rel="index"><span itemprop="name">Transformer</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/Transformer/Attention/" itemprop="url" rel="index"><span itemprop="name">Attention</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>跟李沐再读《Attention Is All You Need》。(<a href="https://www.bilibili.com/video/BV1pu411o7BE?spm_id_from=333.999.0.0" target="_blank" rel="noopener">视频链接</a>)</p>
+<a id="more"></a>
+<h2 id="Introction"><a href="#Introction" class="headerlink" title="Introction"></a>Introction</h2><ul>
+<li>机器翻译通常使用语言模型和encoder-decoder架构</li>
+<li>RNN的特点：序列从左到右串行，$h_t$取决于$h_{t-1}$和$w_t$。<ul>
+<li>长程依赖问题</li>
+<li>时序的依赖导致难以并行</li>
+</ul>
+</li>
+<li>attention在RNN中的使用<ul>
+<li>解决距离依赖的问题</li>
+</ul>
+</li>
+<li>本文的纯attention模型——Transformer</li>
+</ul>
+<h2 id="Background"><a href="#Background" class="headerlink" title="Background"></a>Background</h2><ul>
+<li>用CNN代替RNN的工作<ul>
+<li>可以并行计算</li>
+<li>长程依赖依旧难以捕获（卷积核的限制）</li>
+<li><strong>多通道conv</strong>意味着多层次信息 -&gt; Multi-head attention</li>
+</ul>
+</li>
+<li>Attention机制</li>
+<li>memory network</li>
+</ul>
+<h2 id="model-architecture"><a href="#model-architecture" class="headerlink" title="model architecture"></a>model architecture</h2><p><img src="/uploads/upload_94e5630aa8c00c531f241a431f58c5e2.png" alt=""></p>
+<ul>
+<li>encoder-decoder<ul>
+<li>encoder：$(x_1,\dots,x_n)-&gt;(z_1,\dots,z_n)$</li>
+<li>decoder：$(z_1,\dots,z_n)-&gt;(y_1,\dots,y_m)$<ul>
+<li>decoder是auto-regressve的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="encoder-and-decoder-stacks"><a href="#encoder-and-decoder-stacks" class="headerlink" title="encoder and decoder stacks"></a>encoder and decoder stacks</h3><h4 id="encoder"><a href="#encoder" class="headerlink" title="encoder"></a>encoder</h4><h5 id="encoder架构"><a href="#encoder架构" class="headerlink" title="encoder架构"></a>encoder架构</h5><ul>
+<li>encoder = 6 layers<ul>
+<li>layer = 2 sub-layer<ul>
+<li>multi-head self-attention</li>
+<li>fully connected feed-forward network（MLP）</li>
+</ul>
+</li>
+<li>residual connection<ul>
+<li>$layernorm(x+Sublayer(x))$</li>
+</ul>
+</li>
+<li>每一层输出维度$d_{model}$都为512</li>
+</ul>
+</li>
+</ul>
+<h5 id="LayerNorm-和-BatchNorm"><a href="#LayerNorm-和-BatchNorm" class="headerlink" title="LayerNorm 和 BatchNorm"></a>LayerNorm 和 BatchNorm</h5><ul>
+<li>2-D：输入为$b \times d$<ul>
+<li>BN：对每个特征做norm</li>
+<li>LN：对每个输入做norm</li>
+</ul>
+</li>
+<li>3-D：输入为$b \times n \times d$<ul>
+<li>BN：对每个特征的$b \times n$，同时需要计算全局的方差</li>
+<li>LN：对每个输入$n \times d$，只需对每个样本计算方差</li>
+</ul>
+</li>
+</ul>
+<h4 id="decoder"><a href="#decoder" class="headerlink" title="decoder"></a>decoder</h4><h5 id="decoder架构"><a href="#decoder架构" class="headerlink" title="decoder架构"></a>decoder架构</h5><ul>
+<li>decoder = 6 layers<ul>
+<li>layer = 3 sub-layer<ul>
+<li>multi-head self-attention</li>
+<li>fully connected feed-forward network（MLP）</li>
+<li><strong>maskeded</strong> multi-head attention</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h3><p><img src="/uploads/upload_ba3e07af45d5cd5430f5fe4f54818928.png" alt=""></p>
+<ul>
+<li>attention函数根据query和一系列key-value pairs计算一个output</li>
+<li>output是value的加权和，权重是query和key的相似度，output的维度和value相同</li>
+</ul>
+<h4 id="scaled-dot-product-attention"><a href="#scaled-dot-product-attention" class="headerlink" title="scaled dot-product attention"></a>scaled dot-product attention</h4><ul>
+<li>$q、k$维度都是$d_k$，$v$的维度是$d_v$，则计算$q$和所有$k$的内积再除以$\sqrt{d_k}$，用softmax即可得到attention</li>
+<li>matrix形式：<br>${\rm Attention}(Q,K,V)={\rm softmax}(\frac{QK_T}{\sqrt{d_k}})V$</li>
+<li>除以$\sqrt{d_k}$是为了缩小点积结果的差距，否则softmax很接近max，梯度难以传播</li>
+</ul>
+<h4 id="multi-head-attention"><a href="#multi-head-attention" class="headerlink" title="multi-head attention"></a>multi-head attention</h4><ul>
+<li>将$q、k、v$用可训练的MLP投影到多个低维空间<br>${\rm MultiHead}(Q,K,V) = {\rm Concat(head_1,\dots,head_h)}W^O,\\ {\rm head_i=Attention}(QW_i^Q,KW_i^K,VW_i^V)$</li>
+</ul>
+<h4 id="application-of-attention-in-Transformer"><a href="#application-of-attention-in-Transformer" class="headerlink" title="application of attention in Transformer"></a>application of attention in Transformer</h4><ul>
+<li>encoder的multi-head self-attention<ul>
+<li>输入同时作为q、k、v</li>
+</ul>
+</li>
+<li>decoder的masked multi-head self-attention<ul>
+<li>当前输出后的部分mask掉</li>
+</ul>
+</li>
+<li>decoder的multi-head attention<ul>
+<li>k和v来自encoder的输出，q来自decoder中masked attention输出</li>
+<li>有效提取encoder输出中的有效部分</li>
+</ul>
+</li>
+</ul>
+<h3 id="position-wise-feed-forward-network"><a href="#position-wise-feed-forward-network" class="headerlink" title="position-wise feed-forward network"></a>position-wise feed-forward network</h3><ul>
+<li><p>是双层的MLP：${\rm FFN}(x)={\rm max}(0,xW_1+b_1)W_2+b_2$</p>
+</li>
+<li><p>经过attention后已经汇聚了序列信息，因此每个向量可以单独通过MLP（并行）</p>
+</li>
+<li><p>RNN和Transformer（图源：李沐）<br><img src="/uploads/upload_1f6bdcf108f7e5185d2899c9038615c8.png" alt=""></p>
+</li>
+</ul>
+<h3 id="embedding-and-softmax"><a href="#embedding-and-softmax" class="headerlink" title="embedding and softmax"></a>embedding and softmax</h3><p>乘$\sqrt{d}$</p>
+<h3 id="positional-encoding"><a href="#positional-encoding" class="headerlink" title="positional encoding"></a>positional encoding</h3><ul>
+<li>attention不包含时序信息<ul>
+<li>打乱顺序后attention是不变的</li>
+</ul>
+</li>
+<li>在输入中添加时序信息</li>
+<li>对位置的数字作embedding<br>$PE_{(pos,2i)}=sin(pos/10000^{2i/d_{model}})$<br>$PE_{(pos,2i+1)}=cos(pos/10000^{2i/d_{model}})$</li>
+</ul>
+<h2 id="Why-self-attention"><a href="#Why-self-attention" class="headerlink" title="Why self-attention"></a>Why self-attention</h2><p><img src="/uploads/upload_b623ebb8d122a7f541215896dab6d4d5.png" alt=""></p>
+<ul>
+<li>CNN的Maximum Path Length：在不同kernel内需要到高层卷积才能传递</li>
+</ul>
+<h2 id="experiment"><a href="#experiment" class="headerlink" title="experiment"></a>experiment</h2><h3 id="optimizer"><a href="#optimizer" class="headerlink" title="optimizer"></a>optimizer</h3><ul>
+<li>Adam optimizer</li>
+<li>$\beta_1=0.9,\ \beta_2=0.98,\ \epsilon=10^{-9}$</li>
+<li>$lr=d_{model}^{-0.5}\cdot min(step_num^{-0.5},step_num\cdot warmup_steps^{-1.5})$<ul>
+<li>warmup机制：从一个小lr慢慢爬到大lr，之后再衰减</li>
+<li>$warmup_steps=4000$</li>
+</ul>
+</li>
+</ul>
+<h3 id="regularization"><a href="#regularization" class="headerlink" title="regularization"></a>regularization</h3><h4 id="residual-dropout"><a href="#residual-dropout" class="headerlink" title="residual dropout"></a>residual dropout</h4><ul>
+<li>对每个sub-layer的输出，进入residual connection和layernorm之前，做dropout</li>
+<li>输入➕word embedding➕position embedding时，做dropout</li>
+<li>label smoothing：正确的label score削减为$\epsilon_{ls}=0.1$</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>你可以打赏我哦！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
+              <a href="/tags/Transformer/" rel="tag"># Transformer</a>
+              <a href="/tags/Attention/" rel="tag"># Attention</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/11/27/%EF%BC%88EMNLP2019%EF%BC%89%20Heterogeneous%20Graph%20Attention%20Networks%20for%20Semi-supervised%20Short%20Text%20Classification/" rel="prev" title="（EMNLP2019） Heterogeneous Graph Attention Networks for Semi-supervised Short Text Classification">
+      <i class="fa fa-chevron-left"></i> （EMNLP2019） Heterogeneous Graph Attention Networks for Semi-supervised Short Text Classification
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/26/CS224n/" rel="next" title="Stanford-CS224n">
+      Stanford-CS224n <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introction"><span class="nav-number">1.</span> <span class="nav-text">Introction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Background"><span class="nav-number">2.</span> <span class="nav-text">Background</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-architecture"><span class="nav-number">3.</span> <span class="nav-text">model architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#encoder-and-decoder-stacks"><span class="nav-number">3.1.</span> <span class="nav-text">encoder and decoder stacks</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#encoder"><span class="nav-number">3.1.1.</span> <span class="nav-text">encoder</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#encoder架构"><span class="nav-number">3.1.1.1.</span> <span class="nav-text">encoder架构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#LayerNorm-和-BatchNorm"><span class="nav-number">3.1.1.2.</span> <span class="nav-text">LayerNorm 和 BatchNorm</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#decoder"><span class="nav-number">3.1.2.</span> <span class="nav-text">decoder</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#decoder架构"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">decoder架构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Attention"><span class="nav-number">3.2.</span> <span class="nav-text">Attention</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#scaled-dot-product-attention"><span class="nav-number">3.2.1.</span> <span class="nav-text">scaled dot-product attention</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#multi-head-attention"><span class="nav-number">3.2.2.</span> <span class="nav-text">multi-head attention</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#application-of-attention-in-Transformer"><span class="nav-number">3.2.3.</span> <span class="nav-text">application of attention in Transformer</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#position-wise-feed-forward-network"><span class="nav-number">3.3.</span> <span class="nav-text">position-wise feed-forward network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#embedding-and-softmax"><span class="nav-number">3.4.</span> <span class="nav-text">embedding and softmax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#positional-encoding"><span class="nav-number">3.5.</span> <span class="nav-text">positional encoding</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Why-self-attention"><span class="nav-number">4.</span> <span class="nav-text">Why self-attention</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiment"><span class="nav-number">5.</span> <span class="nav-text">experiment</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#optimizer"><span class="nav-number">5.1.</span> <span class="nav-text">optimizer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#regularization"><span class="nav-number">5.2.</span> <span class="nav-text">regularization</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#residual-dropout"><span class="nav-number">5.2.1.</span> <span class="nav-text">residual dropout</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rooki3Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rooki3Ray</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rooki3ray" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2922859032@qq.com" title="E-Mail → mailto:2922859032@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5355766445" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5355766445" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2922859032" title="QQ → 2922859032"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/rooki3ray" title="https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank">GitHub</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rooki3Ray</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">117k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:46</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>

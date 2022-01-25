@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
+  </script>
+
+  <meta name="description" content="复习《Internet安全协议与分析》。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Internet安全协议与分析">
+<meta property="og:url" content="http://rooki3ray.github.io/2020/10/12/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Rooki3Ray | Cyber Security">
+<meta property="og:description" content="复习《Internet安全协议与分析》。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/10/0y9KUI.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/13/0fdQYV.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/16/0H3Fwd.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/16/0H3lwj.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/20/BSUWod.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/20/BSaXnO.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/20/BSd3uT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/20/BSdzrT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/20/BSwSqU.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/20/Bpdwlt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/20/Bp0mx1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/20/Bp01aD.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCAnBT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCEkVO.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCZr8J.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCZs29.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCZDC4.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BCkZwD.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BC4jJA.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/21/BC5rYd.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Biyp40.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BiyigU.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BiyVb9.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BiyeER.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Bicim4.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BiWrrT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Bi2tOS.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BiWQ2t.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Bihn1I.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/Bihm9A.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFWO9s.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFfkC9.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFhPqf.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BF5OaT.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFHbUP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFHHEt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/22/BFHTHI.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BACdAO.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BAPPDx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BAPMrt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BAPTiD.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BAismt.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BAGyB6.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BAJnDx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BAJ5iF.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BAYEo8.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BAYXXn.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BESLTS.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BESXFg.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BE9a8J.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BE9wvR.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEPbcj.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEikuR.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEim4O.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEFRTP.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEFfFf.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVY9K.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEV8tx.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEV3A1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVGh6.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVl7R.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVt1O.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVUje.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVNcD.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/23/BEVdnH.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/28/B1wljJ.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/28/B1spQO.md.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/28/B1sieH.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/28/B1s9yD.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/28/B1sSSK.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/28/B1sCOe.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/28/B1s1Ts.png">
+<meta property="og:image" content="https://s1.ax1x.com/2020/10/28/B1s8kn.png">
+<meta property="article:published_time" content="2020-10-12T12:03:20.000Z">
+<meta property="article:modified_time" content="2022-01-25T15:58:59.246Z">
+<meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="Internet安全协议与分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s1.ax1x.com/2020/10/10/0y9KUI.png">
+
+<link rel="canonical" href="http://rooki3ray.github.io/2020/10/12/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Internet安全协议与分析 | Rooki3Ray | Cyber Security</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c5dcd17d515f19e2d355facf9d8e773a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rooki3Ray | Cyber Security</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2020/10/12/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rooki3Ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rooki3Ray | Cyber Security">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Internet安全协议与分析
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-12 20:03:20" itemprop="dateCreated datePublished" datetime="2020-10-12T20:03:20+08:00">2020-10-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-25 23:58:59" itemprop="dateModified" datetime="2022-01-25T23:58:59+08:00">2022-01-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">Internet安全协议与分析</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>复习《Internet安全协议与分析》。</p>
+<a id="more"></a>
+<p>[TOC]</p>
+<h2 id="CH1：无线通信系统安全"><a href="#CH1：无线通信系统安全" class="headerlink" title="CH1：无线通信系统安全"></a>CH1：无线通信系统安全</h2><h3 id="网络与因特网"><a href="#网络与因特网" class="headerlink" title="网络与因特网"></a>网络与因特网</h3><p>网络连接许多计算机，因特网连接许多网络。</p>
+<h4 id="发展阶段"><a href="#发展阶段" class="headerlink" title="发展阶段"></a>发展阶段</h4><ul>
+<li>单个网络ARPANET向互联网发展：1983年TCP/IP协议成为ARPANET上的标准协议。</li>
+<li>建成了三级结构的因特网：主干网、地区网和校园网（企业网）。</li>
+<li>形成了多层次ISP（Internet Service Provider）结构的因特网。</li>
+</ul>
+<h4 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h4><ul>
+<li>边缘部分：所有连接在因特网上的主机组成。这部分是用户直接使用，用于通信和资源共享。</li>
+<li>核心部分：由大量网络和连接这些网络的路由器组成，为边缘部分提供服务（连通性和交换）。</li>
+</ul>
+<h4 id="协议体系结构"><a href="#协议体系结构" class="headerlink" title="协议体系结构"></a>协议体系结构</h4><ul>
+<li>应用层</li>
+<li>运输层</li>
+<li>网络层</li>
+<li>数据链路层</li>
+<li>物理层</li>
+</ul>
+<h3 id="无线通信安全历史"><a href="#无线通信安全历史" class="headerlink" title="无线通信安全历史"></a>无线通信安全历史</h3><h4 id="移动通信"><a href="#移动通信" class="headerlink" title="移动通信"></a>移动通信</h4><ul>
+<li>第一代：几乎没有采取安全措施</li>
+<li>第二代：基于<strong>私钥密码体制</strong>的安全机制，通过系统对用户进行鉴权来防止非法用户使用网络，通过加密技术防止对无线信道进行窃听，但在身份认证及加密算法等方面存在着许多安全隐患</li>
+<li>第三代：三个层面、五个安全域上提供安全措施。</li>
+</ul>
+<h4 id="无线局域网标准"><a href="#无线局域网标准" class="headerlink" title="无线局域网标准"></a>无线局域网标准</h4><p>IEEE 802.11 802.11b 802.11i</p>
+<h4 id="无线通信网的主要安全威胁"><a href="#无线通信网的主要安全威胁" class="headerlink" title="无线通信网的主要安全威胁"></a>无线通信网的主要安全威胁</h4><h5 id="四个概念"><a href="#四个概念" class="headerlink" title="四个概念"></a>四个概念</h5><ul>
+<li>无线终端：移动台/移动终端</li>
+<li>无线接入点：移动通信中指基站，无线局域网中指无线路由器，负责接收和发送无线信号。</li>
+<li>网络基础设施：满足通信基本要求的各种硬件与服务的总称。移动通信系统中主要是指包括基站、交换机在内的基本通信设备及其软件。</li>
+<li>空中接口：无线终端和无线接入点之间的接口，移动通信系统中“移动性”的集中体现。</li>
+</ul>
+<h5 id="三个威胁"><a href="#三个威胁" class="headerlink" title="三个威胁"></a>三个威胁</h5><ul>
+<li>对传递信息的威胁：针对系统中传输的个人消息<ul>
+<li><strong>侦听</strong>：非授权方可能获悉传输或存储在系统中的信息。</li>
+<li><strong>篡改</strong>：非授权方更改系统中的各种信息。（非法修改和重放）</li>
+<li><strong>抵赖</strong>：参与通信的一方否认或部分否认他的行为。（接受抵赖和源发抵赖）</li>
+</ul>
+</li>
+<li>对用户的威胁：针对系统中用户的一般行为<ul>
+<li>流量分析：指分析网络中的通信流量。<ul>
+<li>防止方法：：对消息内容和可能的控制信息进行<strong>加密</strong>。（如果采用低级别（链路之间）加密通信，也可以采用其他模式进行统计分析，因此可以采用类似<strong>消息填充和插入虚假消息</strong>等作为加密措施的补充）</li>
+</ul>
+</li>
+<li>监视：监视一个特殊用户的行为。<ul>
+<li>防止方法：使用假名来实现匿名发送、接受和计费。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>对通信系统的威胁：破坏整个系统的完整或功能<ul>
+<li>拒绝服务：系统内外的非法攻击者故以削弱系统的服务能力或使系统无法提供服务。</li>
+<li>资源的非授权使用：使用禁用资源或越权使用无线信道、设备、服务或系统数据库邓系统资源。</li>
+<li>越权使用资源：用户允许使用一些资源，但访问的资源超越了权限范围。</li>
+</ul>
+</li>
+</ul>
+<h3 id="移动通信系统的安全需求"><a href="#移动通信系统的安全需求" class="headerlink" title="移动通信系统的安全需求"></a>移动通信系统的安全需求</h3><ul>
+<li>能唯一标识用户</li>
+<li>冒充合法用户是困难的</li>
+<li>信令、传输数据和身份等信息应是保密的</li>
+<li>双向认证：合法的用户、信任的网络和服务提供商。</li>
+<li>机密性：用户和网络服务器之间需协商会话密钥用于消息加密。密钥协商通常是认证过程的最后部分，为了增强安全性，每次通信的会话密钥必须不同。</li>
+<li>用户身份的匿名性</li>
+<li>不可否认性</li>
+<li>完整性：消息和业务的完整性</li>
+<li>新鲜性：防重传攻击的重要手段，时间戳、随机数、计数器</li>
+<li>公平性</li>
+<li>端到端保密</li>
+<li>合法的监视</li>
+<li>调度功能：<ul>
+<li>认证</li>
+<li>通信的机密性</li>
+<li>通信的完整性</li>
+</ul>
+</li>
+</ul>
+<h3 id="移动通信系统的安全体系"><a href="#移动通信系统的安全体系" class="headerlink" title="移动通信系统的安全体系"></a>移动通信系统的安全体系</h3><p>系统的任何一个安全措施都可以映射成这个三维空间的一个点，可以解释为每个安全措施都是在某个安全域内，为满足某个层次上的安全需求而提供的某种安全服务。</p>
+<p><img src="https://s1.ax1x.com/2020/10/10/0y9KUI.png" alt="0y9KUI.png"></p>
+<h4 id="安全服务"><a href="#安全服务" class="headerlink" title="安全服务"></a>安全服务</h4><ul>
+<li>认证和密钥管理服务<ul>
+<li>在移动终端接入网络或一次通话开始时鉴权；认证服务包括用户和网络之间鉴权、网络实体间的认证以及在终端内安全服务模块和终端的认证。</li>
+<li>密钥管理是产生、分发、选择、删除、和管理在鉴权和加解密过程中使用的密钥的过程</li>
+</ul>
+</li>
+<li>访问控制服务：防止对任何资源进行非授权访问</li>
+<li>完整性服务</li>
+<li>机密性服务</li>
+<li>不可否认性服务</li>
+</ul>
+<h4 id="安全需求"><a href="#安全需求" class="headerlink" title="安全需求"></a>安全需求</h4><ul>
+<li>管理层：对安全威胁的管理和制定合理的管理标准</li>
+<li>用户层：提供事务处理的端到端安全</li>
+<li>控制层：负责网络过程。</li>
+<li>链路层：保证数据在无线电线路上传输的正确性和安全性。</li>
+<li>物理层：由定时结构、无线电射频发射和接收等部分组成。</li>
+</ul>
+<h4 id="安全域"><a href="#安全域" class="headerlink" title="安全域"></a>安全域</h4><ul>
+<li>网络接入域安全：安全接入服务</li>
+<li>网络域安全：网络实体间的认证、数据传输机密性和完整性、攻击信息的监视等</li>
+<li>用户域安全：主要提供终端安全服务模块域用户间的认证以及终端安全服务模块域移动终端间的认证。</li>
+</ul>
+<h3 id="移动通信系统安全"><a href="#移动通信系统安全" class="headerlink" title="移动通信系统安全"></a>移动通信系统安全</h3><h4 id="GSM系统"><a href="#GSM系统" class="headerlink" title="GSM系统"></a>GSM系统</h4><p>GSM系统主要由移动终端（ MS ）、基站子系统 （BSS ）、网络子系统（NSS ）、介于操作人员与系统设备之间的操作与维护子系统 （OSS ）和各子系统之间的接口共同组成。</p>
+<h5 id="GSM系统的安全目标"><a href="#GSM系统的安全目标" class="headerlink" title="GSM系统的安全目标"></a>GSM系统的安全目标</h5><ul>
+<li>防止未经授权的用户接入网络：通过鉴权机制<ul>
+<li>用户身份认证</li>
+</ul>
+</li>
+<li>用户的隐私权保护：通过加解密技术<ul>
+<li>数据机密性</li>
+<li>用户身份（IMSI，国际移动用户标识）保密</li>
+</ul>
+</li>
+</ul>
+<h5 id="GSM系统的安全实体"><a href="#GSM系统的安全实体" class="headerlink" title="GSM系统的安全实体"></a>GSM系统的安全实体</h5><ul>
+<li>SIM</li>
+<li>GSM手机和基站</li>
+<li>GSM网络子系统</li>
+</ul>
+<h5 id="GSM系统的鉴权过程"><a href="#GSM系统的鉴权过程" class="headerlink" title="GSM系统的鉴权过程"></a>GSM系统的鉴权过程</h5><p><img src="https://s1.ax1x.com/2020/10/13/0fdQYV.png" alt="0fdQYV.png"></p>
+<ul>
+<li>GSM网络侧从业务请求<strong>提取TMSI或IMSI</strong>，并查看是否保存有认证向量三元组triplet（RAND，XRES，Kc），有则可以<strong>直接给MS发送RAND</strong>作为挑战信息，否则继续。</li>
+<li>VLR<strong>向鉴权中心AuC发送认证数据请求</strong>，其中包含用户的IMSI。</li>
+<li>认证中心<strong>根据用户的IMSI找到用户的密钥Ki</strong>，然后利用<strong>自己产生的随机数RAND</strong>，利用A3算法，产生预期响应<strong>XRES</strong>，利用A8算法产生用于加密的密钥Kc，即产生认证向量三元组：triplet（RAND，XRES，Kc），发送到MSC/VLR；</li>
+<li>MSC/VLR将其中的RAND发送给MS，MS中的SIM卡<strong>根据收到的RAND和存储在卡中的Ki</strong>，利用A3和A8算法分别计算出用于认证的响应<strong>RES</strong>和用于加密的密钥（Kc），并将RES回送到MSC/VLR中；</li>
+<li>在MSC/VLR里，比较来自MS的RES和来自认证中心的XRES，若不同，则认证失败，拒绝用户接入网络；若相同，则认证成功，用户可以访问网络服务，并且在后续的通信过程中，用户和基站之间无线链路的通信利用加密密钥Kc和A5算法进行加密。</li>
+</ul>
+<h5 id="GSM系统的加密机制"><a href="#GSM系统的加密机制" class="headerlink" title="GSM系统的加密机制"></a>GSM系统的加密机制</h5><p>被加密数据包括信令消息、业务信道上的用户数据和信令信道上无连接的用户数据。</p>
+<p>这一机制涉及 4 种网络功能：加密方法协商、密钥设置、加解密过程的发起、加/解密的同步。加密算法采用流密码 A5 算法，待加密数据和 A5 的输出逐比特异或。</p>
+<h5 id="GSM系统的匿名机制"><a href="#GSM系统的匿名机制" class="headerlink" title="GSM系统的匿名机制"></a>GSM系统的匿名机制</h5><ul>
+<li>为保证用户身份的机密性，对用户的鉴权成功之后，网络为用户分配<strong>临时移动用户标识 TMSI</strong> 来替代国际移动用户标识 IMSI ，使第三方无法在无线信道上跟踪 GSM 用户。</li>
+</ul>
+<h5 id="GSM系统的安全性分析"><a href="#GSM系统的安全性分析" class="headerlink" title="GSM系统的安全性分析"></a>GSM系统的安全性分析</h5><ul>
+<li>安全算法方面：算法安全性未经公众验证。 A3/A8 算法易受到选择质询（ chosen challenge ）攻击 A5 语音保密算法被已知明文攻击攻破。</li>
+<li>安全机制设计方面：只在空中接口实施了单项鉴权和加密，在固定网内没有定义安全功能，攻击者如果在固定网窃取认证向量三元组，就可以冒充网络单元。</li>
+<li>系统对用户进行 <strong>单向实体认证</strong> ，很难防止中间人攻击和假基站攻击<ul>
+<li>获取正常基站的GSM频率后，使用该GSM频率并以更高功率伪装诱骗连接。</li>
+</ul>
+</li>
+<li>GSM 系统本身不提供端到端的加密；</li>
+<li>用户数据和信令数据缺乏完整性保护机制。</li>
+</ul>
+<h4 id="3G系统"><a href="#3G系统" class="headerlink" title="3G系统"></a>3G系统</h4><h5 id="3G系统实体"><a href="#3G系统实体" class="headerlink" title="3G系统实体"></a>3G系统实体</h5><ul>
+<li>移动终端<ul>
+<li>ME ：移动设备 Mobile Equipment </li>
+<li>USIM ：全球用户识别模块 Universal Subscriber Identity Module</li>
+</ul>
+</li>
+<li>无线接入系统：UTRAN、GERAN</li>
+<li>核心网：分组交换域PS、电路交换域CS</li>
+</ul>
+<h5 id="3G安全架构"><a href="#3G安全架构" class="headerlink" title="3G安全架构"></a>3G安全架构</h5><p>特点：</p>
+<ul>
+<li>基于IP网络</li>
+<li><strong>非话音服务</strong>的多样性和重要性</li>
+<li>将增强用户服务范围的控制和对其终端能力的控制</li>
+<li>存在对用户的主动攻击</li>
+<li>终端将用作电子商务应用和其它应用的平台</li>
+</ul>
+<p>安全域：</p>
+<ul>
+<li>接入域</li>
+<li>网络域</li>
+<li>用户域</li>
+<li>应用域：用户域服务提供商在应用层面安全交换数据。</li>
+<li>安全的可视性和可配置性：使用户知道网络的安全性服务是否在运行，以及它所使用的服务是否安全。</li>
+</ul>
+<h4 id="LTE网络"><a href="#LTE网络" class="headerlink" title="LTE网络"></a>LTE网络</h4><p>由UE、E-UTRAN、EPC三部分构成</p>
+<p>LTE的网络从空口无线侧开始就是 IP 网络，同时智能终端只要开启电源就会附着 IP 地址，因而智能终端、 LTE 无线接入侧、传输网侧和 EPC 都面临着原来 IP 网络固有的安全威胁：</p>
+<ul>
+<li>无线侧智能终端面临僵木蠕、恶意代码等攻击；</li>
+<li>无线智能侧终端成为 DDoS 攻击源对整个 LTE EPS 网络发起 DDoS 攻击；</li>
+<li>EPC 核心网元面临信令风暴问题；</li>
+<li>智能终端通过 LTE EPC 、 Internet 等非信任网络时进行明文传输敏感数据时，面临泄露数据的问题；</li>
+<li>LTE EPS 综合业务平台面临攻击的威胁；</li>
+<li>EPC Pi 口 (P GW&lt;—&gt; 面临来自 Internet 攻击的威胁；</li>
+</ul>
+<h3 id="无线局域网安全（WLAN）"><a href="#无线局域网安全（WLAN）" class="headerlink" title="无线局域网安全（WLAN）"></a>无线局域网安全（WLAN）</h3><p>基于IEEE802.11协议的无线局域网分为基础结构（infrastructrue）模式和自组织（ad-hoc）模式</p>
+<p>基础结构模式网络结构由AP（固定接入点）和STA（无线设备）组成。</p>
+<h4 id="无线局域网关联过程"><a href="#无线局域网关联过程" class="headerlink" title="无线局域网关联过程"></a>无线局域网关联过程</h4><p>AP以固定的时间间隔（通常为每秒钟10次）发送信标，它们能使无线设备发现AP的标识。STA初始化后，开始寻找AP。STA会依次调谐到每个无线频段（称为信道）上，并收听信标消息。这个过程称为<strong>扫描</strong>。</p>
+<ul>
+<li>STA-&gt;AP 认证请求</li>
+<li>AP-&gt;STA  认证响应</li>
+<li>STA-&gt;AP 关联请求</li>
+<li>AP-&gt;STA 关联响应</li>
+</ul>
+<p>三种消息：</p>
+<ul>
+<li>控制</li>
+<li>管理</li>
+<li>数据</li>
+</ul>
+<h4 id="IEEE802-11-认证"><a href="#IEEE802-11-认证" class="headerlink" title="IEEE802.11 认证"></a>IEEE802.11 认证</h4><ul>
+<li><p>开放系统认证（默认认证机制）</p>
+<p>整个认证过程以明文形式进行，包括认证请求和响应</p>
+</li>
+<li><p>共享密钥认证</p>
+<p>响应工作站根据当前请求工作站是否拥有合法的密钥来决定是否允许接入，但不要求在空中接口传送这个密钥。</p>
+<ul>
+<li>请求工作站-&gt;响应工作站 请求认证</li>
+<li>响应工作站-&gt;请求工作站 随机质询文本</li>
+<li>请求工作站-&gt;响应工作站 共享密钥加密文本</li>
+</ul>
+</li>
+</ul>
+<h4 id="IEEE802-11-加密"><a href="#IEEE802-11-加密" class="headerlink" title="IEEE802.11 加密"></a>IEEE802.11 加密</h4><p>802.11 定义了 WEP Wired Equivalent Privacy ）来为无线通信提供和有线网络相近的安全性来有效的防止窃听。</p>
+<p>WEP基于RC4算法，必须在每帧重新初始化密钥流，需要引入IV和ICV。</p>
+<h5 id="加密过程"><a href="#加密过程" class="headerlink" title="加密过程"></a>加密过程</h5><p><img src="https://s1.ax1x.com/2020/10/16/0H3Fwd.png" alt="0H3Fwd.png"></p>
+<h5 id="解密过程"><a href="#解密过程" class="headerlink" title="解密过程"></a>解密过程</h5><p><img src="https://s1.ax1x.com/2020/10/16/0H3lwj.png" alt="0H3lwj.png"></p>
+<h4 id="WEP的分析"><a href="#WEP的分析" class="headerlink" title="WEP的分析"></a>WEP的分析</h4><ul>
+<li><p>认证及其弱点</p>
+<p>IEEE802.11认证手段不能有效实现认证目的，且是<strong>单向认证</strong>，伪装AP的攻击很容易实现（会话劫持和中间人攻击）</p>
+<ul>
+<li>开放系统认证：空认证</li>
+<li>共享密钥认证：一旦攻击者得到密钥流，就可以完成认证</li>
+<li>服务组标识符SSID：SSID是用来逻辑分割无线网络，以防止一个工作站意外连接到邻居AP 上，它并不是为提供网络认证服务而设计的。一明文形式传送，不提供用户认证。</li>
+<li>MAC地址控制：迫使只有注册了MAC的工作站才能连接到AP上，但用户可以重新配置无线网卡的MAC地址，并不能阻止非授权用户访问。</li>
+</ul>
+</li>
+<li><p>完整性分析</p>
+<ul>
+<li>ICV采用CRC-32实现，只用来检查随即错误，不具备身份认证能力；且CRC-32对异或运算是线性的，不能抵御对明文的篡改。</li>
+<li>WEP的完整性保护只应用于数据载荷，而不保护地址以及防止重放等。</li>
+</ul>
+</li>
+<li><p>机密性分析</p>
+<ul>
+<li>弱密钥问题：RC4算法密钥空间存在大量弱密钥</li>
+<li>静态共享密钥和IV空间：没有密钥管理方法，使用静态共享密钥；IV管理很困难，易重用。</li>
+</ul>
+</li>
+</ul>
+<h4 id="IEEE802-11安全问题"><a href="#IEEE802-11安全问题" class="headerlink" title="IEEE802.11安全问题"></a>IEEE802.11安全问题</h4><ul>
+<li>认证协议简单且为单向认证</li>
+<li>完整性算法CRC-32不能阻止攻击者篡改数据</li>
+<li>WEP不能抵抗<strong>重放</strong>攻击</li>
+<li>IV和Share Key级联在RC4算法下容易产生<strong>弱密钥</strong></li>
+<li>IV易发生重用冲突</li>
+</ul>
+<h3 id="移动自组网络安全（Ad-Hoc）"><a href="#移动自组网络安全（Ad-Hoc）" class="headerlink" title="移动自组网络安全（Ad Hoc）"></a>移动自组网络安全（Ad Hoc）</h3><p>AdHoc网络中的每个移动终端兼备路由器和主机两种功能：</p>
+<ul>
+<li>主机需要运行面向用户的应用程序；</li>
+<li>路由器需要运行相应的路由协议，根据路由策略和路由表参与分组转发和路由维护工作。</li>
+</ul>
+<p>Ad Hoc 网络节点间的路由通常由多个网段（跳）组成，由于终端的无线传输范围有限，两个无法直接通信的终端节点往往要通过多个中间节点的转发来实现通信。</p>
+<h4 id="移动Ad-Hoc网络的特点"><a href="#移动Ad-Hoc网络的特点" class="headerlink" title="移动Ad Hoc网络的特点"></a>移动Ad Hoc网络的特点</h4><ul>
+<li>网络的自组织性</li>
+<li>动态的网络拓扑</li>
+<li>多跳的通信路由</li>
+<li>有限的无线通信带宽</li>
+<li>有限的主机能源</li>
+<li>网络的分布式特点</li>
+<li>安全性较差</li>
+</ul>
+<h4 id="移动Ad-Hoc网络的安全弱点"><a href="#移动Ad-Hoc网络的安全弱点" class="headerlink" title="移动Ad Hoc网络的安全弱点"></a>移动Ad Hoc网络的安全弱点</h4><ul>
+<li>传输信道：采用无线信号作为传输媒介，容易被窃听/干扰；</li>
+<li>移动节点：节点是自主移动的，安全性比较脆弱；</li>
+<li>动态拓扑：节点位置不固定，网络拓扑不断变化；</li>
+<li>路由协议：路由协议假定了所有节点相互合作。</li>
+</ul>
+<h4 id="移动Ad-Hoc网络的密钥管理"><a href="#移动Ad-Hoc网络的密钥管理" class="headerlink" title="移动Ad Hoc网络的密钥管理"></a>移动Ad Hoc网络的密钥管理</h4><ul>
+<li>部分分布的CA：每个节点拥有证书签名密钥的一部分，可产生部分证书，但只有组合k个才能得到有效证书。</li>
+<li>自安全方案：CA功能完全分布到系统每个节点。</li>
+</ul>
+<h4 id="移动Ad-Hoc网络的安全路由"><a href="#移动Ad-Hoc网络的安全路由" class="headerlink" title="移动Ad Hoc网络的安全路由"></a>移动Ad Hoc网络的安全路由</h4><p>移动Ad Hoc网络不能采用常规路由协议，因为：</p>
+<ul>
+<li>主机间的无线信道可能存在单向信道</li>
+<li>动态变化的拓扑结构</li>
+<li>有限的无线传输带宽</li>
+<li>无线移动终端的局限性</li>
+</ul>
+<p>Ad Hoc网络的拓扑结构主要有平面结构和分级结构两种，协议也划分为平面结构的路由协议和分簇式路由协议。</p>
+<h5 id="针对Ad-Hoc网络路由协议的攻击"><a href="#针对Ad-Hoc网络路由协议的攻击" class="headerlink" title="针对Ad Hoc网络路由协议的攻击"></a>针对Ad Hoc网络路由协议的攻击</h5><ul>
+<li><p>路由破坏攻击</p>
+<ul>
+<li>篡改</li>
+<li>删除</li>
+<li>虫洞</li>
+<li>伪造路由错误</li>
+<li>rushing</li>
+</ul>
+</li>
+<li><p>资源消耗攻击</p>
+<ul>
+<li>Dos</li>
+<li>伪造路由发现</li>
+<li>路由表溢出</li>
+</ul>
+</li>
+</ul>
+<h5 id="Ad-Hoc网络路由协议的特点"><a href="#Ad-Hoc网络路由协议的特点" class="headerlink" title="Ad Hoc网络路由协议的特点"></a>Ad Hoc网络路由协议的特点</h5><ul>
+<li>协议能够抵抗单攻击者的安全威胁，对于联合攻击如Worm hole无法抵抗</li>
+<li>协议强调了安全性而忽视了可用性，节点算力弱，电池和通信带宽有限</li>
+<li>屏蔽了路由协议的某些功能，降低了路由协议的有效性</li>
+<li>有的协议要求网络中存在集中服务器，有单点失效的风险</li>
+</ul>
+<h5 id="Ad-Hoc网络的入侵检测"><a href="#Ad-Hoc网络的入侵检测" class="headerlink" title="Ad Hoc网络的入侵检测"></a>Ad Hoc网络的入侵检测</h5><ul>
+<li>无公信结点集中控制节点的认证</li>
+<li>没有集中网络流量的节点，无法集中监控</li>
+<li>正常节点和恶意节点的行为区别不明显</li>
+<li>资源和带宽有限</li>
+</ul>
+<h3 id="无线传感器网络（WSN）"><a href="#无线传感器网络（WSN）" class="headerlink" title="无线传感器网络（WSN）"></a>无线传感器网络（WSN）</h3><p>WSN系统包括传感器节点、汇聚节点（基站/网关）和管理节点。</p>
+<ul>
+<li>传感器节点随机部署在监测区域内部或附近，通过自组织方式构成网络，用于收集数据，并且将数据路由至汇聚节点；</li>
+<li>汇聚节点与管理节点通过广域网络(如Internet网络、移动通信网络或者卫星网络等)或直接进行通信，从而将收集到的数据传送到管理节点；</li>
+<li>用户通过管理节点对传感器网络进行配置和管理、发布监测任务以及收集监测数据。</li>
+</ul>
+<h4 id="WSN的特点"><a href="#WSN的特点" class="headerlink" title="WSN的特点"></a>WSN的特点</h4><ul>
+<li>无控制中心</li>
+<li>自组织性</li>
+<li>动态拓扑</li>
+<li>多跳路由</li>
+<li>节点数量大、分布广</li>
+<li>与应用相关的网络</li>
+<li>资源有限</li>
+</ul>
+<h4 id="WSN面临的安全威胁和措施"><a href="#WSN面临的安全威胁和措施" class="headerlink" title="WSN面临的安全威胁和措施"></a>WSN面临的安全威胁和措施</h4><ul>
+<li><p>物理层</p>
+<ul>
+<li><p>信号干扰/阻塞</p>
+<p>扩频通信</p>
+</li>
+<li><p>窃听</p>
+<p>加密敏感信息</p>
+</li>
+<li><p>节点被俘</p>
+<p>实行篡改证明，但成本较高，WSN中不用。</p>
+</li>
+</ul>
+</li>
+<li><p>数据链路层</p>
+<ul>
+<li><p>碰撞</p>
+<p>使用纠错码</p>
+</li>
+<li><p>资源耗尽</p>
+<p>对MAC访问许可进行控制；时分复用；邻居节点监视反常行为</p>
+</li>
+<li><p>不公平访问（弱Dos）</p>
+</li>
+</ul>
+</li>
+<li><p>网络层</p>
+<ul>
+<li><p>仿冒节点</p>
+<p>网络各节点之间相互认证</p>
+</li>
+<li><p>虫洞</p>
+</li>
+<li><p>HELLO洪泛：以能量足够大的信号广播，使节点认为攻击者使直接邻居，导致网络混乱</p>
+<p>建立对密钥，以便任意两个邻居节点相互验证；利用基站检查节点身份和邻居关系</p>
+</li>
+<li><p>确认欺骗：使发送者相信一条差链路</p>
+</li>
+<li><p>虚假路由</p>
+</li>
+<li><p>选择性转发</p>
+<p>使用多条路径同时发送或采取协议检测恶意节点</p>
+</li>
+<li><p>槽洞（sinkhole）：尽可能地引诱一个区域中的流量通过恶意节点</p>
+<p>采用随机密钥预分配机制和基站入侵检测与响应</p>
+</li>
+<li><p>女巫（Sybil）：位于某个位置的单个恶意节点不断的声明其有多重身份（如多个位置等），使得它在其它节点面前具有多个不同的身份。</p>
+<p>建立对密钥，以便任意两个邻居节点相互验证</p>
+</li>
+</ul>
+</li>
+<li><p>传输层</p>
+<ul>
+<li>洪泛：当需要一个协议来<strong>维护一个连接两端的状态</strong>时，通过洪泛攻击可以使内存很快耗尽。攻击者可能重复建立新的连接请求直到每个连接需要的资源耗尽或达到上限。无论是哪种情况，接下来的合法请求都会被拒绝。</li>
+<li>分离式同步：是指中断一个已有的连接。比如，攻击者可能重复地对一个终端主机发送欺骗信息而引起主机要求重发丢失的包。如果时间恰当，攻击者就能够降低甚至阻止终端主机成功交换数据，因此，发送端将不断地试图恢复实际并不存在的错误而无法进行正常的通信。</li>
+</ul>
+</li>
+<li><p>应用层</p>
+</li>
+</ul>
+<h2 id="CH2：安全协议概述"><a href="#CH2：安全协议概述" class="headerlink" title="CH2：安全协议概述"></a>CH2：安全协议概述</h2><h3 id="安全协议"><a href="#安全协议" class="headerlink" title="安全协议"></a>安全协议</h3><ul>
+<li>协议：两个或以上的参与者采取一系列步骤已完成某项特定的任务</li>
+<li>安全协议：密码体制基础上的一种高互通协议</li>
+</ul>
+<h4 id="安全协议常见类型"><a href="#安全协议常见类型" class="headerlink" title="安全协议常见类型"></a>安全协议常见类型</h4><ul>
+<li>密钥交换协议：用于完成会话密钥的建立</li>
+<li>认证协议：实体、身份、数据源、消息。用来防止篡改、假冒、否认等攻击</li>
+<li>认证和密钥交换协议：互联网密钥交换协议IKE、分布认证安全服务DASS、Kerberos认证协议等</li>
+<li>电子商务协议：协议双方存在利益矛盾，需要保证公平。电子商务SET协议</li>
+</ul>
+<h4 id="安全协议系统模型"><a href="#安全协议系统模型" class="headerlink" title="安全协议系统模型"></a>安全协议系统模型</h4><ul>
+<li>环境定义<ul>
+<li>系统环境：消息的发送和接收者、攻击者（恶意网络环境）、管理消息发送和接收的规则</li>
+<li>恶意网络环境：攻击者</li>
+<li>攻击者操作：截取、重放、篡改、级联、分离、加密、解密</li>
+<li>被动攻击者：知晓信息</li>
+<li>主动攻击者：操纵信息</li>
+</ul>
+</li>
+<li>攻击行为<ul>
+<li>转发消息到特定接收者处</li>
+<li>延迟消息的送达</li>
+<li>篡改后转发</li>
+<li>合并消息</li>
+<li>改变部分或全部消息的去处</li>
+<li>重放消息</li>
+</ul>
+</li>
+</ul>
+<h4 id="安全协议的性质及实现"><a href="#安全协议的性质及实现" class="headerlink" title="安全协议的性质及实现"></a>安全协议的性质及实现</h4><p>目的通过协议消息的传递来达成通信主体身份的<strong>识别与认证</strong>，并在此基础上为下一步的秘密通信分配所使用的<strong>会话密钥</strong></p>
+<ul>
+<li><p>认证性实现</p>
+<p>通过共享秘密实现：可以对抗假冒攻击，确保身份</p>
+<ul>
+<li>声称者用仅他和验证者知道的密钥封装消息</li>
+<li>声称者用私钥签名，验证者用公钥验证签名</li>
+<li>声称者通过可信第三方证明自己</li>
+</ul>
+</li>
+<li><p>秘密性实现</p>
+<ul>
+<li>目的：保护协议消息不泄露；攻击者无法根据消息格式提炼消息</li>
+<li>实现方法：对消息明文加密</li>
+</ul>
+</li>
+<li><p>完整性实现</p>
+<ul>
+<li>目的：保护协议消息不被非法篡改、删除和替代</li>
+<li>实现方法：封装和签名</li>
+</ul>
+</li>
+<li>不可否认性实现<ul>
+<li>目的：通过通信主体提供对方参与协议交换的证据来保证合法利益不受侵害</li>
+<li>实现方法：签名消息</li>
+<li>协议特点：证据的正确性，交易的公平性。 次要：适时中止性、可追究性</li>
+</ul>
+</li>
+</ul>
+<h4 id="协议设计准则"><a href="#协议设计准则" class="headerlink" title="协议设计准则"></a>协议设计准则</h4><ul>
+<li><p>消息独立完整性原则：一条消息的解释应完全由该条消息的内容决定，不必借助上下文推断</p>
+<ul>
+<li><p>常用的协议消息描述格式：</p>
+<p>&lt;序列号&gt;发送者标识-&gt;接收者标识：消息</p>
+<p><2>A-&gt;B：m   m应包含A、B的标识，否则易造成攻击</p>
+</li>
+</ul>
+</li>
+<li><p>消息前提准确原则：与消息的执行相关的先决前提条件应当明确指出，且正确性和合理性能够验证，由此判断消息是否应当被接收，即<strong>每条消息所基于的假设是否能够成立</strong>。</p>
+</li>
+<li>主体身份标识原则：主体标识重要时应在消息中明确附上主体名称<ul>
+<li>显式：明文主体名字</li>
+<li>隐式：加密或签名</li>
+</ul>
+</li>
+<li>加密目的原则：加密可实现多种安全目的（秘密性、完整性、认证性），使用加密算法前确定目的</li>
+<li>签名原则：主体对加密消息签名并不表明主题知道加密消息的内容，如果主体先签名再加密，则表明主体知道消息内容。同时使用加密和签名时，应<strong>先签名后加密</strong>。</li>
+<li>随机数的使用原则：使用随机数的目的是提供消息的新鲜性。关键问题是随机数的真正随机性。</li>
+<li>时戳的使用原则：考虑各机器的时钟与当地标准时间的差异，时戳的使用主要依赖于时钟同步。</li>
+<li>编码原则：明确指出具体的编码格式</li>
+</ul>
+<h4 id="安全协议缺陷分类"><a href="#安全协议缺陷分类" class="headerlink" title="安全协议缺陷分类"></a>安全协议缺陷分类</h4><ul>
+<li>基本协议缺陷：设计时很少考虑攻击者</li>
+<li>口令/密钥猜测缺陷<ul>
+<li>可检测的口令在线猜测攻击：不成功的登录能被检测并记录</li>
+<li>不可检测的口令在线猜测攻击：攻击者从响应中逐渐推导出正确的口令</li>
+<li>可离线的口令猜测攻击：攻击者使用认证协议消息附件，猜测口令并离线验证</li>
+<li>改进措施：只响应新鲜的请求；只响应可验证的真实性。</li>
+</ul>
+</li>
+<li>陈旧消息缺陷：消息的新鲜性——消息重放攻击</li>
+<li>并行会话缺陷：攻击者通过交换一定的协议消息获得重要的消息</li>
+<li>内部协议缺陷：协议参与者中至少有一方不能完成所有必须的动作</li>
+<li>密码系统缺陷：密码算法的安全强度问题</li>
+</ul>
+<h4 id="消息重放攻击及对策"><a href="#消息重放攻击及对策" class="headerlink" title="消息重放攻击及对策"></a>消息重放攻击及对策</h4><p>攻击利用其消息再生能力生成诚实用户所期望的消息格式并重放，分为本协议的轮内攻击和轮外攻击。</p>
+<p>消息去向：发送方——反射攻击；第三方——第三方攻击；接收方但被延迟——直接攻击</p>
+<p>对策：</p>
+<ul>
+<li><p>序列号机制——接收方通过比较消息中的序列号以判断消息是新产生的还是重放的</p>
+<p>问题：开销增大，小型系统适用</p>
+</li>
+<li><p><strong>挑战-应答机制</strong>——消息的时间变量参数由接收方在该消息传递前明确地向消息发送方说明</p>
+<p>问题：系统开销增加</p>
+</li>
+<li><p>时戳机制——当消息上地时戳与本地时间差值在一定范围内才有效</p>
+<p>问题：需要全局时钟，但仍难以同步</p>
+</li>
+</ul>
+<h2 id="CH3：IPSec协议"><a href="#CH3：IPSec协议" class="headerlink" title="CH3：IPSec协议"></a>CH3：IPSec协议</h2><h3 id="IP安全问题"><a href="#IP安全问题" class="headerlink" title="IP安全问题"></a>IP安全问题</h3><p>IP协议从本质上来说是不安全的，修改IP包重新计算校验和很容易。</p>
+<p>IPv4没有安全选项，缺乏通信双方真实<strong>身份验证</strong>、<strong>数据完整性和机密性保护</strong>……</p>
+<h3 id="IPSec"><a href="#IPSec" class="headerlink" title="IPSec"></a>IPSec</h3><p>IPSec随着IPv6产生，有三种机制共同保障：<strong>认证、信息机密性和密钥管理</strong></p>
+<p>IPSec 提供访问控制、无连接完整性、数据源鉴别、载荷机密性和有限流量机密等安全服务。</p>
+<h3 id="IPSec体系结构"><a href="#IPSec体系结构" class="headerlink" title="IPSec体系结构"></a>IPSec体系结构</h3><p><a href="https://imgchr.com/i/BSUWod" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/20/BSUWod.png" alt="BSUWod.png"></a></p>
+<h4 id="安全联盟SA"><a href="#安全联盟SA" class="headerlink" title="安全联盟SA"></a>安全联盟SA</h4><p>SA是两个通信实体间建立的一个简单单向协定，由安全参数索引SPI和目标地址组成，单个IPSec连接至少需要两个SA。</p>
+<h4 id="安全策略库SPD"><a href="#安全策略库SPD" class="headerlink" title="安全策略库SPD"></a>安全策略库SPD</h4><p>用于提供安全策略配置，其中的动作指定某些数据流必须绕过IPSec的处理、某些丢弃、其余的必须经过IPSec模块的处理。</p>
+<p>含有规则列表：<TrafficSelector, action></p>
+<ul>
+<li>Traffic Selectors: IP addresses and/or ports, protocol;</li>
+<li>Actions: Discard; Bypass IPsec; Apply IPsec</li>
+</ul>
+<h4 id="安全关联数据库SAD"><a href="#安全关联数据库SAD" class="headerlink" title="安全关联数据库SAD"></a>安全关联数据库SAD</h4><p>包含了所有活跃SA的所有参数信息。</p>
+<p>流出数据由SPD数据项包含指向某SAD数据项的指针，决定数据包使用的SA。</p>
+<p>流入数据由SAD决定如何对数据包做处理。</p>
+<h4 id="认证头AH"><a href="#认证头AH" class="headerlink" title="认证头AH"></a>认证头AH</h4><p>为IP通信提供数据源认证，数据完整性和反重播保证，可防篡改，不防窃听，<strong>无机密性保护</strong></p>
+<p>原理：在每一个数据包上添加身份验证报头，包含一个带密钥的hash散列，提供<strong>完整性保护</strong>。</p>
+<h5 id="AH传输模式"><a href="#AH传输模式" class="headerlink" title="AH传输模式"></a>AH传输模式</h5><p><a href="https://imgchr.com/i/BSaXnO" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/20/BSaXnO.png" alt="BSaXnO.png"></a></p>
+<p>AH被插在原始IP头之后但在所有的传输层协议或其他IPSec协议头之前 。</p>
+<p>使用原始的明文IP头，安全信息在AH中，可以保证整个IP包不被修改。</p>
+<p><strong>AH在传输模式下和NAT是冲突的</strong>，因为NAT会修改源/目的IP地址。</p>
+<h5 id="AH隧道模式"><a href="#AH隧道模式" class="headerlink" title="AH隧道模式"></a>AH隧道模式</h5><p><a href="https://imgchr.com/i/BSd3uT" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/20/BSd3uT.png" alt="BSd3uT.png"></a></p>
+<p>AH插在原始IP头之前，共同作为IP数据部分。加密整个IP数据报，用自己的地址作为源地址加入新的IP头。</p>
+<p>验证整个IP包，<strong>AH在隧道模式下也与NAT冲突</strong>。</p>
+<h4 id="封装安全载荷ESP"><a href="#封装安全载荷ESP" class="headerlink" title="封装安全载荷ESP"></a>封装安全载荷ESP</h4><p>ESP是插入IP数据包内的一个协议头，提供机密性、数据源认证、抗重播以及数据完整性等安全服务。</p>
+<p>ESP将保护数据加密后封装在IP包中。也提供认证服务。</p>
+<p><strong>ESP总是先使用，AH头在最外层</strong></p>
+<h5 id="ESP传输模式与隧道模式"><a href="#ESP传输模式与隧道模式" class="headerlink" title="ESP传输模式与隧道模式"></a>ESP传输模式与隧道模式</h5><p><a href="https://imgchr.com/i/BSdzrT" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/20/BSdzrT.png" alt="BSdzrT.png"></a></p>
+<p><a href="https://imgchr.com/i/BSwSqU" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/20/BSwSqU.png" alt="BSwSqU.png"></a></p>
+<p>ESP在传输模式时会保护TCP/UDP头，但是并不保护IP 头，因此修改IP 地址并不会破坏整个数据包的完整性。但是如果数据包是TCP/UDP数据包，NAT设备就需要修改数据包的校验值（被ESP 所保护）。所以<strong>ESP在传输模式不能用于NAT穿越</strong>。</p>
+<p>ESP隧道模式不验证IP包头，因此<strong>ESP隧道模式并不和NAT冲突</strong>。</p>
+<p>ESP隧道模式对原IP地址也做了保护，有助于保护<strong>端对端隧道通信中数据的安全性</strong>。</p>
+<h4 id="因特网密钥交换协议IKE"><a href="#因特网密钥交换协议IKE" class="headerlink" title="因特网密钥交换协议IKE"></a>因特网密钥交换协议IKE</h4><p>IKE是信令协议，提供自动协商交换密钥、建立安全联盟的服务。有自保护机制，可以在不安全的网络上工作。</p>
+<p>IKE不在网络上直接传送密钥，而通过一系列数据交换，最终计算共享密钥（即使被截获所有交换数据，也不足以计算出真正的密钥）</p>
+<p>IKE是<strong>UDP之上的一个应用层协议</strong>，为IPSec协商建立SA，并把参数和生成的密钥交给IPSec。</p>
+<h5 id="IKE的安全机制"><a href="#IKE的安全机制" class="headerlink" title="IKE的安全机制"></a>IKE的安全机制</h5><ul>
+<li>完善的前向安全性PFS：一个密钥被破解不影响其他密钥的安全性（由DH算法保障）</li>
+<li>数据验证：数据完整性和身份保护</li>
+<li>DH交换和密钥分发</li>
+</ul>
+<h5 id="IKE协商过程阶段一"><a href="#IKE协商过程阶段一" class="headerlink" title="IKE协商过程阶段一"></a>IKE协商过程阶段一</h5><p>在网络上建立IKE SA，为其他协议的协商提供保护和快速协商。</p>
+<p>通过协商创建一个通信信道，并对该信道进行认证，为进一步IKE通信提供机密性、消息完整性以及消息源认证服务。</p>
+<p>协商过程包含三对消息：</p>
+<ul>
+<li>SA交换：协商确认有关安全策略</li>
+<li>密钥交换：交换DH公共值和辅助数据，加密物在这个阶段产生</li>
+<li>ID信息和验证数据交换：进行身份验证和对整个SA交换进行验证</li>
+</ul>
+<h6 id="主模式协商"><a href="#主模式协商" class="headerlink" title="主模式协商"></a>主模式协商</h6><p><a href="https://imgchr.com/i/Bpdwlt" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/20/Bpdwlt.png" alt="Bpdwlt.png"></a></p>
+<p>适用于两设备的公网IP固定、且要实现设备之间点对点的环境</p>
+<h6 id="野蛮模式协商"><a href="#野蛮模式协商" class="headerlink" title="野蛮模式协商"></a>野蛮模式协商</h6><p><a href="https://imgchr.com/i/Bp0mx1" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/20/Bp0mx1.png" alt="Bp0mx1.png"></a></p>
+<p>对于例如ADSL拨号用户，其获得的公网IP不是固定的，且可能存在NAT设备的情况下，<strong>用野蛮模式做NAT穿越</strong>，同时用name作为id-type。</p>
+<h6 id="两种模式对比"><a href="#两种模式对比" class="headerlink" title="两种模式对比"></a>两种模式对比</h6><p><a href="https://imgchr.com/i/Bp01aD" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/20/Bp01aD.png" alt="Bp01aD.png"></a></p>
+<h5 id="IKE协商过程二"><a href="#IKE协商过程二" class="headerlink" title="IKE协商过程二"></a>IKE协商过程二</h5><p>使用快速模式交换，效果为协商出IPSec单向SA，为保护IPSec数据流而创建，整个协商过程受第一阶段ISAKMP/IKE SA保护。</p>
+<p>主要功能：</p>
+<ul>
+<li>协商安全参数保护数据连接</li>
+<li>周期更新密钥信息</li>
+</ul>
+<h2 id="CH4：SSL"><a href="#CH4：SSL" class="headerlink" title="CH4：SSL"></a>CH4：SSL</h2><p>利用数据加密、身份验证和消息完整性验证机制，为HTTP提供安全连接</p>
+<p>SSL位于<strong>应用层和传输层之间</strong>，能够为基于TCP等可靠连接的应用层协议提供安全性保证</p>
+<h3 id="SSL安全机制"><a href="#SSL安全机制" class="headerlink" title="SSL安全机制"></a>SSL安全机制</h3><ul>
+<li>传输数据的机密性：对称密钥算法</li>
+<li>身份验证机制：基于证书利用数字签名对server和client（可选）进行身份验证</li>
+<li>消息完整性验证：MAC算法</li>
+</ul>
+<h3 id="SSL分层结构"><a href="#SSL分层结构" class="headerlink" title="SSL分层结构"></a>SSL分层结构</h3><h4 id="上层协议"><a href="#上层协议" class="headerlink" title="上层协议"></a>上层协议</h4><h5 id="SSL握手协议"><a href="#SSL握手协议" class="headerlink" title="SSL握手协议"></a>SSL握手协议</h5><p>SSL的<strong>核心协议部分</strong>，协商通信过程中使用的加密套件（加密算法、密钥交换算法、MAC算法等）、在S/C之间安全交换密钥、实现S和C的身份验证。</p>
+<p><a href="https://imgchr.com/i/BCAnBT" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCAnBT.png" alt="BCAnBT.png"></a></p>
+<h6 id="阶段1：建立安全能力"><a href="#阶段1：建立安全能力" class="headerlink" title="阶段1：建立安全能力"></a>阶段1：建立安全能力</h6><p>启动逻辑连接，建立这个连接的安全能力。</p>
+<p><a href="https://imgchr.com/i/BCEkVO" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCEkVO.png" alt="BCEkVO.png"></a></p>
+<p>client hello消息包括：</p>
+<ul>
+<li>支持的协议版本</li>
+<li>一个客户端生成的随机数，用于生成对话密钥</li>
+<li>支持的加密算法</li>
+<li>支持的压缩方法</li>
+</ul>
+<p>server hello消息对client hello中的信息进行确认：</p>
+<ul>
+<li>确认使用的协议版本</li>
+<li>一个服务器生成的随机数，用于生成对话密钥</li>
+<li>确认加密方法</li>
+<li>服务器证书</li>
+</ul>
+<h6 id="阶段2：服务器鉴别与密钥交换"><a href="#阶段2：服务器鉴别与密钥交换" class="headerlink" title="阶段2：服务器鉴别与密钥交换"></a>阶段2：服务器鉴别与密钥交换</h6><p><a href="https://imgchr.com/i/BCZr8J" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCZr8J.png" alt="BCZr8J.png"></a></p>
+<ul>
+<li>certificate：服务器发送自己的证数</li>
+<li>server_key_exchange：可选，包含被签名的两个随机数和服务器参数</li>
+<li>certificate_request：非匿名server可以请求客户端证书</li>
+</ul>
+<h6 id="阶段3：客户机鉴别与密钥交换"><a href="#阶段3：客户机鉴别与密钥交换" class="headerlink" title="阶段3：客户机鉴别与密钥交换"></a>阶段3：客户机鉴别与密钥交换</h6><p><a href="https://imgchr.com/i/BCZs29" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCZs29.png" alt="BCZs29.png"></a></p>
+<ul>
+<li>客户根据服务器证书判断是否可以接受参数</li>
+<li>如果服务器请求证书就首先发送certificate消息/no_certificate警告，然后发送client_key_exchange</li>
+<li>certificate_verify包含对之前所有握手消息的MAC的签名</li>
+</ul>
+<h6 id="阶段4：完成"><a href="#阶段4：完成" class="headerlink" title="阶段4：完成"></a>阶段4：完成</h6><p><a href="https://imgchr.com/i/BCZDC4" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCZDC4.png" alt="BCZDC4.png"></a></p>
+<p>建立起一个安全的连接</p>
+<ul>
+<li>客户发送change_cipher_spec消息（是一个独立的协议，用于告知服务端客户端已经切换到协商好的CipherSuite的状态），并把协商得到的CipherSuite拷贝到当前连接</li>
+<li>客户用新的算法、密钥参数发送finished消息</li>
+<li>服务器同样发送，握手完成</li>
+</ul>
+<h5 id="SSLpassword变化协议"><a href="#SSLpassword变化协议" class="headerlink" title="SSLpassword变化协议"></a>SSLpassword变化协议</h5><p>C和S通过该协议通知对端：随后的报文都将使用新协商的加密套件和密钥进行保护和传输。</p>
+<h5 id="SSL警告协议"><a href="#SSL警告协议" class="headerlink" title="SSL警告协议"></a>SSL警告协议</h5><p>向对端报告告警信息，包含告警的严重级别和描写叙述。</p>
+<ul>
+<li>致命消息：立即终止当前连接</li>
+<li>警告消息</li>
+</ul>
+<h4 id="下层协议"><a href="#下层协议" class="headerlink" title="下层协议"></a>下层协议</h4><h5 id="SSL记录协议"><a href="#SSL记录协议" class="headerlink" title="SSL记录协议"></a>SSL记录协议</h5><p>负责对上层数据（上层协议和应用层协议报文）进行分块、计算并加入MAC值、加密，然后传送给对端</p>
+<ul>
+<li>机密性：协助双方产生共有的密钥对数据加密</li>
+<li>消息完整性：产生另一把密钥计算出消息认证码</li>
+</ul>
+<p>操作流程</p>
+<ul>
+<li>分片</li>
+<li>压缩</li>
+<li>计算MAC</li>
+<li>加密</li>
+<li>附加SSL头</li>
+</ul>
+<h3 id="SSL基本过程"><a href="#SSL基本过程" class="headerlink" title="SSL基本过程"></a>SSL基本过程</h3><ul>
+<li>建立一个会话<ul>
+<li>协商算法</li>
+<li>分享秘密</li>
+<li>身份认证</li>
+</ul>
+</li>
+<li>传送应用数据<ul>
+<li>确保机密性和完整性</li>
+</ul>
+</li>
+</ul>
+<h4 id="SSL连接"><a href="#SSL连接" class="headerlink" title="SSL连接"></a>SSL连接</h4><ul>
+<li>是一个提供一种合适类型服务的传输</li>
+<li>点对点的关系</li>
+<li>连接是暂时的，每个连接和一个会话关联</li>
+</ul>
+<h4 id="SSL会话"><a href="#SSL会话" class="headerlink" title="SSL会话"></a>SSL会话</h4><ul>
+<li>一个SSL会话是在C和S之间的一个关联。会话由Handshake Protocol创建。定义了一组<strong>可供多个连接共享的密码安全参数</strong>。</li>
+<li>会话用以<strong>避免</strong>每一个连接提供新的安全参数所需的<strong>协商代价</strong>。</li>
+</ul>
+<p><a href="https://imgchr.com/i/BCkZwD" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BCkZwD.png" alt="BCkZwD.png"></a></p>
+<h4 id="SSL协议的加密和认证算法"><a href="#SSL协议的加密和认证算法" class="headerlink" title="SSL协议的加密和认证算法"></a>SSL协议的加密和认证算法</h4><p>认证算法采用X.509电子证书标准，使用RSA算法进行数字签名实现</p>
+<h4 id="SSL安全性分析"><a href="#SSL安全性分析" class="headerlink" title="SSL安全性分析"></a>SSL安全性分析</h4><ul>
+<li>鉴别机制：公钥技术和数字证书</li>
+<li>加密机制：混合密码体制，使用非对称密码体制协商处会话密钥，并选择对称加密算法</li>
+<li>完整性机制：定义了共享的、可用来生成MAC的密钥</li>
+<li>抗重放攻击：使用序列号作为数据包负载防重放。整个SSL握手中都有一个唯一的随机数标记这个SSL握手。</li>
+</ul>
+<h4 id="SSL脆弱性分析"><a href="#SSL脆弱性分析" class="headerlink" title="SSL脆弱性分析"></a>SSL脆弱性分析</h4><ul>
+<li>客户端假冒：SSL并不默认要求进行客户鉴别（防止由于安全协议导致网络性能大幅下降）</li>
+<li>无法提供基于UDP应用的安全保护</li>
+<li>不能对抗通信流量分析：数据包的IP头和TCP头仍然暴露，只保护应用数据</li>
+<li>进程中主密钥泄露：主密钥将会存留在SSL进程存储空间中</li>
+</ul>
+<h4 id="WTLS"><a href="#WTLS" class="headerlink" title="WTLS"></a>WTLS</h4><p>保证传输层安全，在TLS基础上，根据无线环境增加了一些新特性</p>
+<h2 id="CH5：SET"><a href="#CH5：SET" class="headerlink" title="CH5：SET"></a>CH5：SET</h2><h3 id="电子交易主要模式"><a href="#电子交易主要模式" class="headerlink" title="电子交易主要模式"></a>电子交易主要模式</h3><h4 id="支付系统无安全措施模式"><a href="#支付系统无安全措施模式" class="headerlink" title="支付系统无安全措施模式"></a>支付系统无安全措施模式</h4><p><a href="https://imgchr.com/i/BC4jJA" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BC4jJA.png" alt="BC4jJA.png"></a></p>
+<ul>
+<li>风险由商家承担</li>
+<li>商家完全掌握用户的信用卡信息</li>
+<li>信用卡信息的传递无安全保障</li>
+</ul>
+<h4 id="通过第三方经纪人支付的模型"><a href="#通过第三方经纪人支付的模型" class="headerlink" title="通过第三方经纪人支付的模型"></a>通过第三方经纪人支付的模型</h4><p><a href="https://imgchr.com/i/BC5rYd" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/21/BC5rYd.png" alt="BC5rYd.png"></a></p>
+<ul>
+<li>用户账户的开设不通过网络</li>
+<li>信用卡信息不在开放网络上传送</li>
+<li>通过电子邮件确认用户身份</li>
+<li>商家自由度大、风险小</li>
+<li>支付是通过双方都信任的第三方完成的</li>
+</ul>
+<h4 id="数字现金支付模型"><a href="#数字现金支付模型" class="headerlink" title="数字现金支付模型"></a>数字现金支付模型</h4><p><a href="https://imgchr.com/i/Biyp40" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Biyp40.png" alt="Biyp40.png"></a></p>
+<ul>
+<li>银行和商家之间应该有协议和授权关系</li>
+<li>用户、商家和数字现金的发行都需要使用数字现金软件</li>
+<li>适用于小额交易</li>
+<li>身份验证由数字现金完成</li>
+<li>数字现金的发行负责用户和商家之间的实际资金转移</li>
+<li>数字现金和普通现金一样，可以存取转让</li>
+</ul>
+<h4 id="简单加密支付模型"><a href="#简单加密支付模型" class="headerlink" title="简单加密支付模型"></a>简单加密支付模型</h4><p><a href="https://imgchr.com/i/BiyigU" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BiyigU.png" alt="BiyigU.png"></a></p>
+<ul>
+<li>信用卡等关键信息需要加密</li>
+<li>使用对称和非对称加密技术</li>
+<li>可能要启用身份认证系统</li>
+<li>以数字签名确认信息的真实性</li>
+<li>需要业务服务器和服务软件的支持</li>
+</ul>
+<h4 id="安全电子交易SET支付模式"><a href="#安全电子交易SET支付模式" class="headerlink" title="安全电子交易SET支付模式"></a>安全电子交易SET支付模式</h4><p><a href="https://imgchr.com/i/BiyVb9" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BiyVb9.png" alt="BiyVb9.png"></a></p>
+<p>SET协议的目标</p>
+<ul>
+<li>信息在互联网上安全传输，不能被窃听或篡改</li>
+<li>用户资料要妥善保护，商家只能看到订货信息，看不到用户的账户信息</li>
+<li>持卡人和商家相互认证，确定对方身份</li>
+<li>软件遵循相同的协议和消息格式，具有兼容性和互操作性</li>
+</ul>
+<h3 id="SET（Secure-Electronic-Transaction-）"><a href="#SET（Secure-Electronic-Transaction-）" class="headerlink" title="SET（Secure Electronic Transaction ）"></a>SET（Secure Electronic Transaction ）</h3><h4 id="SET的动机和范围"><a href="#SET的动机和范围" class="headerlink" title="SET的动机和范围"></a>SET的动机和范围</h4><ul>
+<li>Internet的不安全性</li>
+<li>SET仅仅关心支付问题</li>
+</ul>
+<h4 id="交易中的主体"><a href="#交易中的主体" class="headerlink" title="交易中的主体"></a>交易中的主体</h4><p><a href="https://imgchr.com/i/BiyeER" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BiyeER.png" alt="BiyeER.png"></a></p>
+<h4 id="主体证书"><a href="#主体证书" class="headerlink" title="主体证书"></a>主体证书</h4><ul>
+<li>协议各方持有名字和密钥对</li>
+<li>身份使用X.509v3证书和密钥关联</li>
+</ul>
+<p><a href="https://imgchr.com/i/Bicim4" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Bicim4.png" alt="Bicim4.png"></a></p>
+<h4 id="SET安全架构需求"><a href="#SET安全架构需求" class="headerlink" title="SET安全架构需求"></a>SET安全架构需求</h4><ul>
+<li>支付订单信息的机密性</li>
+<li>传输数据的完整性</li>
+<li>卡持有者身份的合法性认证</li>
+<li>商家的身份认证</li>
+<li>保证参与方的利益</li>
+<li>独立于传输安全</li>
+<li>软件架构沟通性</li>
+</ul>
+<h4 id="SET电子支付流程"><a href="#SET电子支付流程" class="headerlink" title="SET电子支付流程"></a>SET电子支付流程</h4><p><a href="https://imgchr.com/i/BiWrrT" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BiWrrT.png" alt="BiWrrT.png"></a></p>
+<ul>
+<li>客户在发卡行开户</li>
+<li>客户持有银行签发的X.509v3证书</li>
+<li>商家持有两个同类品牌的X.509v3证书（签名+密钥交换）</li>
+<li>客户向商家发订单</li>
+<li>商家发送证书拷贝向客户出示自己身份</li>
+<li>客户发送订单和支付信息给商家</li>
+<li>商家向支付网关请求支付授权</li>
+<li>商家确认向客户订单</li>
+<li>商家向客户提供商品或者服务</li>
+<li>商家向支付网关请求支付</li>
+</ul>
+<h4 id="SET双重数字签名"><a href="#SET双重数字签名" class="headerlink" title="SET双重数字签名"></a>SET双重数字签名</h4><ul>
+<li><p>将两个消息连接在一起，这两个消息面向的对象不同</p>
+<ul>
+<li>Order Information（OI）：客户给商家</li>
+<li>Payment Information（PI）：客户给银行</li>
+</ul>
+</li>
+<li><p>按需分发消息：</p>
+<ul>
+<li>商家不需要卡信息</li>
+<li>银行需要订单信息</li>
+<li>保护客户隐私</li>
+</ul>
+</li>
+<li><p>具体操作</p>
+<ul>
+<li>将 $PI$ 和 $OI$ 分别初次hash</li>
+<li>连接成 $[H(PI)||H(OI)]$ 再hash</li>
+<li>客户私钥加密产生双重签名 $DS=E_{KRC}[H(H(PI)||H(OI))]$</li>
+</ul>
+<p><a href="https://imgchr.com/i/Bi2tOS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Bi2tOS.png" alt="Bi2tOS.png"></a></p>
+<ul>
+<li>商家收到 $OI$ 校验签名</li>
+<li>银行收到 $PI$ 校验签名</li>
+<li>客户连接 $OI$ 和 $PI$，证明该关联</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://imgchr.com/i/BiWQ2t" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BiWQ2t.png" alt="BiWQ2t.png"></a></p>
+<h4 id="SET消息流"><a href="#SET消息流" class="headerlink" title="SET消息流"></a>SET消息流</h4><p><a href="https://imgchr.com/i/Bihn1I" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Bihn1I.png" alt="Bihn1I.png"></a></p>
+<p><a href="https://imgchr.com/i/Bihm9A" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/Bihm9A.png" alt="Bihm9A.png"></a></p>
+<h5 id="支付过程初始化InitReq-InitRes"><a href="#支付过程初始化InitReq-InitRes" class="headerlink" title="支付过程初始化InitReq/InitRes"></a>支付过程初始化InitReq/InitRes</h5><p><a href="https://imgchr.com/i/BFWO9s" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFWO9s.png" alt="BFWO9s.png"></a></p>
+<ul>
+<li>持卡人浏览选择商品 , 下订单，选择银行卡；</li>
+<li>持卡人向商家发送 <strong>初始请求</strong> ，请求指定交易环境，包括<ul>
+<li>持卡人所使用的语言 , 交易 ID</li>
+<li>使用的是何种交易卡等</li>
+</ul>
+</li>
+<li>商家接受初始请求，产生 <strong>初始应答</strong> ，对初始应答生成消息摘要，对此消息摘要进行数字签名，将商家证书，网关证书，初始应答，消息摘要的数字签名等</li>
+</ul>
+<h5 id="购物请求"><a href="#购物请求" class="headerlink" title="购物请求"></a>购物请求</h5><p><a href="https://imgchr.com/i/BFfkC9" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFfkC9.png" alt="BFfkC9.png"></a></p>
+<ul>
+<li>持卡人接受初始应答，检查商家证书和网关证书。接着用商家公钥解开消息摘要的数字签名，用 HASH 算法产生初始应答的摘要，将两者比较，如果相同则表示数据在途中未被篡改，否则丢弃。</li>
+<li>持卡人发出购物请求（ PReq ），它包含了真正的交易行为，由两部分组成<ul>
+<li>发往商家的定单信息 (OI) : links to order description</li>
+<li>通过商家转发往网关的支付信息 (PI): amount, card data, IDs</li>
+</ul>
+</li>
+<li>通过双重数字签名将 OI 与 PI 进行关联</li>
+</ul>
+<h6 id="PReq消息结构"><a href="#PReq消息结构" class="headerlink" title="PReq消息结构"></a>PReq消息结构</h6><p><a href="https://imgchr.com/i/BFhPqf" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFhPqf.png" alt="BFhPqf.png"></a></p>
+<h6 id="PReq消息校验"><a href="#PReq消息校验" class="headerlink" title="PReq消息校验"></a>PReq消息校验</h6><p><a href="https://imgchr.com/i/BF5OaT" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BF5OaT.png" alt="BF5OaT.png"></a></p>
+<h5 id="商家验证卡用户的身份和授权"><a href="#商家验证卡用户的身份和授权" class="headerlink" title="商家验证卡用户的身份和授权"></a>商家验证卡用户的身份和授权</h5><ul>
+<li>商家接受持卡人的购物请求，<strong>认证持卡人的证书</strong>。接着<strong>验证双重签名</strong>，看数据在传输过程中是否被篡改。如数据完整，则处理定单信息，<strong>产生支付请求</strong>。</li>
+<li>将支付请求用 HASH 算法<strong>生成摘要，并签名</strong>，网关收到后用商家公钥解密，并确认支付请求是此商家所发在且在途中未被篡改。生成对称密钥对支付请求加密，并用网关公钥加密形成数字信封。</li>
+<li>最后将商家证书，支付请求密文，商家数字签名，数字信封和持卡人通过商家转发的： $sign[H(OP)]$ , $OI$ 摘要，$PI$ 密文，持卡人数字信封，持卡人证书等发往支付网关。</li>
+</ul>
+<h5 id="支付网关认证过程"><a href="#支付网关认证过程" class="headerlink" title="支付网关认证过程"></a>支付网关认证过程</h5><ul>
+<li>支付网关分别检查确认商家发来的数据和持卡人发来的数据用 HASH 算法作用于支付请求，形成摘要，与商家发来的支付请求摘要（解开数字签名所得）相比较，如果相同则表示数据完整，否则丢弃数据</li>
+<li>网关检查持卡人证书，然后<strong>用私钥打开持卡人数字信封</strong>，得到他的<strong>帐号和对称密钥</strong>。用此对称密钥解开 PI 密文，得到 PI ，接着<strong>验证双重签名</strong>，生成 PI 的摘要，与 OI 摘要相连接，再次生成摘要，其结果与 H(OP) (解双重签名所得) 相比较，如果相同则数据完整，如果不同则丢弃。</li>
+<li>网关将信息发送往银行<ul>
+<li>支付网关和银行之间通过金融专用网相连</li>
+</ul>
+</li>
+</ul>
+<h5 id="收单银行处理"><a href="#收单银行处理" class="headerlink" title="收单银行处理"></a>收单银行处理</h5><ul>
+<li>解密AuthReq</li>
+<li>校验商家签名</li>
+<li>解密来自持卡人的PI</li>
+<li>校验双重签名</li>
+<li>从PI中抽取卡数据</li>
+</ul>
+<p><a href="https://imgchr.com/i/BFHbUP" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFHbUP.png" alt="BFHbUP.png"></a></p>
+<p>确保 PI 和 AuthReq 的一致性，校验持卡人和商家对于订购行为的一致性 : H(Order) PI和 AuthReq，生成 AuthRes 及其 Capture Token。</p>
+<h5 id="支付完成"><a href="#支付完成" class="headerlink" title="支付完成"></a>支付完成</h5><p><a href="https://imgchr.com/i/BFHHEt" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFHHEt.png" alt="BFHHEt.png"></a></p>
+<ul>
+<li>完成授权 交易的支付</li>
+<li>通过捕获令牌完成支付</li>
+<li>可能多次AuthResponses的令牌积累后完成</li>
+<li>Capture Token = 金额证据</li>
+</ul>
+<h5 id="下单的回复"><a href="#下单的回复" class="headerlink" title="下单的回复"></a>下单的回复</h5><p><a href="https://imgchr.com/i/BFHTHI" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/22/BFHTHI.png" alt="BFHTHI.png"></a></p>
+<ul>
+<li>完成代码CompletionCode：交易状态</li>
+<li>结果Results：交易的授权/捕获代码</li>
+</ul>
+<h5 id="SET中的核心技术"><a href="#SET中的核心技术" class="headerlink" title="SET中的核心技术"></a>SET中的核心技术</h5><ul>
+<li>公钥加密：对称加密和非对称加密4次</li>
+<li>数字签名：进行签名5次，验证签名6次</li>
+<li>电子信封</li>
+<li>电子安全证书：传递证书7次，验证9次</li>
+</ul>
+<h4 id="SET和SSL的不同之处"><a href="#SET和SSL的不同之处" class="headerlink" title="SET和SSL的不同之处"></a>SET和SSL的不同之处</h4><ul>
+<li>首先，SET 远远<strong>不止是一个技术方面的协议</strong>，它还说明了每一方所持有的数字证书的含义，希望得到数字证书以及响应信息的各方应有的动作，与一笔交易紧密相关的责任分担。 SET 实现非常复杂，商家和银行都需要改造系统以实现互操作，并且还需要认证中心的支持。</li>
+<li>SET 是一个<strong>多方的报文协议</strong>，它定义了银行、商家、持卡人之间的必须的报文规范。与此同时， SSL 只是简单地在两方之间建立一条安全连接。 SSL 是面向连接的，而 SET <strong>允许各方之间的报文交换不是实时的</strong>。</li>
+<li>另外，SET 报文能够在银行内部网或者其他网络上传输，而 SSL 之上的卡支付系统只能与 Web 浏览器捆绑在一起。</li>
+<li>最后，SSL 相对不安全，实际上当初它并不是为支持电子商务而设计的。很多银行和电子商务解决方案提供商仍然在使用 SSL 来构建更多的安全支付系统，但是如果没有经裁剪的客户方软件的话，基于 SSL 的系统式不能达到像 SET 这种银行卡专用支付协议所能达到的安全性的。</li>
+</ul>
+<h2 id="CH6：PGP"><a href="#CH6：PGP" class="headerlink" title="CH6：PGP"></a>CH6：PGP</h2><h3 id="电子邮件系统"><a href="#电子邮件系统" class="headerlink" title="电子邮件系统"></a>电子邮件系统</h3><p>E-mail是Internet上最大的应用，是唯一的广泛跨平台、跨体系结构的分布式应用</p>
+<p>不是端到端服务，是一种<strong>存储转发式</strong>的服务</p>
+<h4 id="电子邮件系统的主要成分"><a href="#电子邮件系统的主要成分" class="headerlink" title="电子邮件系统的主要成分"></a>电子邮件系统的主要成分</h4><p>一个完整的电子邮件系统具有三个主要成分：</p>
+<ul>
+<li>客户端用户代理 MUA(mail user agent)</li>
+<li>邮件传输代理 MTA(mail transfer agent)</li>
+<li>邮件投递代理 MDA(mail delivery agent)</li>
+</ul>
+<h4 id="电子邮件相关协议"><a href="#电子邮件相关协议" class="headerlink" title="电子邮件相关协议"></a>电子邮件相关协议</h4><ul>
+<li><p>SMTP</p>
+<p>简单邮件传输协议（ simple mail transfer protocol ），它是一组用于从源地址到目的地址传输邮件的规范，通过它来控制邮件的中转方式</p>
+</li>
+<li><p>POP3</p>
+<p>POP 邮局协议负责从邮件服务器中检索邮件</p>
+</li>
+<li><p>IMAP</p>
+<p>互联网信息访问协议（ IMAP ）是一种优于 POP 的新协议，它可以请求邮件服务器只下载所选中的邮件而不是全部邮件，客户可以先阅读邮件信息标题和发送者名字再决定是否下载邮件</p>
+</li>
+<li><p>MIME</p>
+<p>多功能 Internet 邮件扩充服务，可使邮件包含一般文本之外，还可以加上彩色图片、视频、声音或二进制格式的文件</p>
+</li>
+</ul>
+<h4 id="安全问题"><a href="#安全问题" class="headerlink" title="安全问题"></a>安全问题</h4><ul>
+<li>匿名转发<ul>
+<li>发件人刻意隐瞒自己的信息，或通过某些方法提供错误的发件人信息</li>
+<li>发送者首先将邮件发送给匿名转发系统，匿名转发邮件系统再转发给真正的收件者，并将自己的地址作为发信人地址显示在邮件的信息表头中。对安全要求高的用户必须使用<strong>邮件加密和数字签名技术</strong></li>
+</ul>
+</li>
+<li>电子邮件欺骗<ul>
+<li>假冒某用户的身份给其他用户发送邮件（SMTP本身不提供任何验证）。通过<strong>身份认证</strong>避免邮件欺骗。</li>
+</ul>
+</li>
+<li>邮件炸弹和垃圾邮件<ul>
+<li><strong>安装过滤器，预先检查发件人资料</strong></li>
+</ul>
+</li>
+<li>邮件病毒<ul>
+<li>通过<strong>预杀毒</strong>防止</li>
+</ul>
+</li>
+</ul>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><ul>
+<li>端到端的安全电子邮件技术<ul>
+<li>S/MIME和PGP，<strong>一般只对信体进行加密和签名，而信头必须保证原封不动</strong>。</li>
+</ul>
+</li>
+<li>要求信头在传输过程中也保密，使用传输层技术作为后盾<ul>
+<li>使用SSL SMTP和SSL POP</li>
+<li>使用VPN或其他IP通道技术</li>
+</ul>
+</li>
+<li>邮件服务器本身安全可靠</li>
+</ul>
+<h3 id="PGP"><a href="#PGP" class="headerlink" title="PGP"></a>PGP</h3><p>PGP 提供可用于电子邮件和文件存储应用的保密与鉴别服务</p>
+<h4 id="PGP功能"><a href="#PGP功能" class="headerlink" title="PGP功能"></a>PGP功能</h4><p><a href="https://imgchr.com/i/BACdAO" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BACdAO.png" alt="BACdAO.png"></a></p>
+<h4 id="PGP数字签名和认证"><a href="#PGP数字签名和认证" class="headerlink" title="PGP数字签名和认证"></a>PGP数字签名和认证</h4><p><a href="https://imgchr.com/i/BAPPDx" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BAPPDx.png" alt="BAPPDx.png"></a></p>
+<ul>
+<li>RSA的强度保证发送方身份</li>
+<li>SHA-1强度保证签名的有效性</li>
+<li>DSS/SHA-1可选替代方案</li>
+</ul>
+<h4 id="PGP保密性操作"><a href="#PGP保密性操作" class="headerlink" title="PGP保密性操作"></a>PGP保密性操作</h4><p><a href="https://imgchr.com/i/BAPMrt" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BAPMrt.png" alt="BAPMrt.png"></a></p>
+<ul>
+<li>对称和非对称加密的结合缩短了加密时间</li>
+<li>用公钥算法解决 $K_s$ 的单向分发问题</li>
+<li>每个消息都有自己的一次性密钥</li>
+</ul>
+<h4 id="PGP保密和认证的结合"><a href="#PGP保密和认证的结合" class="headerlink" title="PGP保密和认证的结合"></a>PGP保密和认证的结合</h4><p><a href="https://imgchr.com/i/BAPTiD" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BAPTiD.png" alt="BAPTiD.png"></a></p>
+<h4 id="PGP压缩"><a href="#PGP压缩" class="headerlink" title="PGP压缩"></a>PGP压缩</h4><p>PGP用ZIP算法进行压缩</p>
+<ul>
+<li>节省空间</li>
+<li>签名之后压缩</li>
+<li>加密压缩之后的报文，冗余减少，加密强度增强</li>
+</ul>
+<h4 id="PGP密钥环"><a href="#PGP密钥环" class="headerlink" title="PGP密钥环"></a>PGP密钥环</h4><ul>
+<li>PGP 在每个结点提供一对数据结构<ul>
+<li>一个是存储该结点拥有的公开 私有密钥对——私有密钥环</li>
+<li>另一个是存储该结点知道的其他所有用户的公开密钥——公开密钥环。</li>
+</ul>
+</li>
+</ul>
+<p><a href="https://imgchr.com/i/BAismt" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BAismt.png" alt="BAismt.png"></a></p>
+<h4 id="PGP公钥的分发"><a href="#PGP公钥的分发" class="headerlink" title="PGP公钥的分发"></a>PGP公钥的分发</h4><p>无政府状态，由用户决定信任与否。</p>
+<ul>
+<li>获取某人的公钥并信任它</li>
+<li>将其加入自己的PGP系统</li>
+<li>公钥服务器</li>
+</ul>
+<h4 id="PGP信任网"><a href="#PGP信任网" class="headerlink" title="PGP信任网"></a>PGP信任网</h4><p>证书是可选的，彼此之间可以颁发证书（信任网）。</p>
+<ul>
+<li>通过自己的数字签名确认</li>
+<li>通过自己完全信任的人的数字签名确认</li>
+<li>通过自己有限信任的多个人的数字签名确认</li>
+</ul>
+<h2 id="CH7：Kerberos"><a href="#CH7：Kerberos" class="headerlink" title="CH7：Kerberos"></a>CH7：Kerberos</h2><h3 id="密钥管理问题"><a href="#密钥管理问题" class="headerlink" title="密钥管理问题"></a>密钥管理问题</h3><p>所有的密码系统都存在：如何安全 可靠地分配密钥</p>
+<p>安全问题经常是密钥分配系统被破而不是密码算法被破</p>
+<p>理想的情况是：密钥分配协议应得到形式化验证</p>
+<h3 id="Kerberos认证服务协议"><a href="#Kerberos认证服务协议" class="headerlink" title="Kerberos认证服务协议"></a>Kerberos认证服务协议</h3><ul>
+<li>提供一个在客户端跟服务器端之间或者服务器与服务器之间的身份验证机制 （并且是相互的身份验证机制）</li>
+<li>解决的问题：<ul>
+<li>在一个公开的分布式环境中，工作站上的用户希望访问分布在网络中的服务器上的服务</li>
+<li>服务器希望能够限制授权用户的访问，并能对服务请求进行鉴别。</li>
+</ul>
+</li>
+</ul>
+<h4 id="Kerberos加密体制"><a href="#Kerberos加密体制" class="headerlink" title="Kerberos加密体制"></a>Kerberos加密体制</h4><ul>
+<li>Kerberos 不是为每一个服务器构造一个身份认证协议，而是提供一个<strong>中心认证服务器</strong>，提供用户到服务器和服务器到用户的认证服务。</li>
+<li>Kerberos 采用传统加密算法（无公钥体制）</li>
+</ul>
+<h4 id="Kerberos主要功能"><a href="#Kerberos主要功能" class="headerlink" title="Kerberos主要功能"></a>Kerberos主要功能</h4><p>在一个<strong>分布式</strong>的 client/server 体系机构中采用一个或多个 Kerberos 服务器提供一个认证服务。</p>
+<p>总体方案是提供一个可信第三方的认证服务。</p>
+<ul>
+<li>用 tickets 验证</li>
+<li>避免本地保存密码和在互联网上传输密码</li>
+<li>包含一个可信的第三方</li>
+<li>使用对称加密</li>
+<li>客户端与服务器（非 KDC ）之间能够互相验证。</li>
+</ul>
+<p>满足的要求：</p>
+<ul>
+<li>安全</li>
+<li>可靠</li>
+<li>透明</li>
+<li>可伸缩</li>
+</ul>
+<h4 id="Kerberos-Version-4"><a href="#Kerberos-Version-4" class="headerlink" title="Kerberos Version 4"></a>Kerberos Version 4</h4><ul>
+<li>引入一个信任的<strong>第三方认证服务</strong>，采用一个基于Needham &amp; Schroeder 协议。</li>
+<li>采用 DES ，精心设计协议，提供认证服务。</li>
+</ul>
+<h5 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h5><ul>
+<li>Principal 安全个体<br>被认证的个体，有一个名字(name)和口令(password)</li>
+<li>KDC(Key distribution center)<br>是一个网络服务，提供 ticket 和临时的会话密钥</li>
+<li>Ticket<br>一个记录，客户可以用它来向服务器证明自己的身份，其中包括客户的标识、会话密钥、时间戳，以及其他一些信息。 Ticket中的大多数信息都被加密，密钥为服务器的密钥</li>
+<li>Authenticator<br>一个记录，其中包含一些最近产生的信息，产生这些信息需要用到客户和服务器之间共享的会话密钥</li>
+<li>Credentials<br>一个 ticket 加上一个秘密的会话密钥</li>
+<li>Authentication Server (AS)<ul>
+<li>通过 long term key 认证客户</li>
+<li>AS 给予客户 ticket granting ticket 和 short term key</li>
+<li><strong>认证服务</strong></li>
+</ul>
+</li>
+<li>Ticket Granting Server (TGS)<ul>
+<li>通过 short term key 和 ticket granting ticket 认证客户 .</li>
+<li>TGS 发放 tickets 给客户以访问其他的服务器</li>
+<li><strong>授权和访问控制服务</strong></li>
+</ul>
+</li>
+</ul>
+<p>动机：</p>
+<ul>
+<li>认证和授权的逻辑分离</li>
+<li>TGT（10 hours）和ST（5 minutes）的生命周期不同<ul>
+<li>方便客户，降低密钥暴露时间</li>
+</ul>
+</li>
+</ul>
+<h5 id="认证服务交换：获得票据许可票据"><a href="#认证服务交换：获得票据许可票据" class="headerlink" title="认证服务交换：获得票据许可票据"></a>认证服务交换：获得票据许可票据</h5><p><a href="https://imgchr.com/i/BAGyB6" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BAGyB6.png" alt="BAGyB6.png"></a></p>
+<h5 id="票据许可服务交换：获得服务许可票据"><a href="#票据许可服务交换：获得服务许可票据" class="headerlink" title="票据许可服务交换：获得服务许可票据"></a>票据许可服务交换：获得服务许可票据</h5><p><a href="https://imgchr.com/i/BAJnDx" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BAJnDx.png" alt="BAJnDx.png"></a></p>
+<p><a href="https://imgchr.com/i/BAJ5iF" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BAJ5iF.png" alt="BAJ5iF.png"></a></p>
+<h5 id="客户-服务器认证交换：获得服务"><a href="#客户-服务器认证交换：获得服务" class="headerlink" title="客户/服务器认证交换：获得服务"></a>客户/服务器认证交换：获得服务</h5><p><a href="https://imgchr.com/i/BAYEo8" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BAYEo8.png" alt="BAYEo8.png"></a></p>
+<h5 id="Kerberos领域和多个域服务"><a href="#Kerberos领域和多个域服务" class="headerlink" title="Kerberos领域和多个域服务"></a>Kerberos领域和多个域服务</h5><p>一个完整的Kerberos环境（域）包括一个Kerberos服务器，一组工作站和一组应用服务器</p>
+<ul>
+<li>Kerberos服务器必须在其数据库中有所有用户的UID和口令散列表，<strong>所有用户均在Kerberos服务器上注册</strong></li>
+<li>Kerberos服务器必须与灭一个服务器之间共享一个保密密钥。<strong>所有服务器均在Kerberos服务器上注册</strong></li>
+</ul>
+<p>不同域的鉴别机制：每个辖区的Kerberos服务器与其他辖区内的Kerberos服务器之间共享一个保密密钥，且<strong>相互注册</strong></p>
+<p>跨域认证：</p>
+<ul>
+<li>获得本地TGS的访问权</li>
+<li>请求远程TGS的TGT</li>
+<li>向远程TGS申领SGT</li>
+</ul>
+<p><a href="https://imgchr.com/i/BAYXXn" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BAYXXn.png" alt="BAYXXn.png"></a></p>
+<h4 id="Kerberos-Version-5"><a href="#Kerberos-Version-5" class="headerlink" title="Kerberos Version 5"></a>Kerberos Version 5</h4><h5 id="基于v4的改进"><a href="#基于v4的改进" class="headerlink" title="基于v4的改进"></a>基于v4的改进</h5><ul>
+<li>通用性：<ul>
+<li>加密算法 v4 仅仅 DES, v5 扩展</li>
+<li>网络协议地址 : v4 IP, v5 OSI</li>
+<li>票据生命周期 : v4 最大值 1280 minutes, v5 不限制</li>
+<li>认证转发 : v5 允许服务器在事务中代表一个客户端访问另一台服务器</li>
+</ul>
+</li>
+<li>双重加密<ul>
+<li>v4中的票据被重复加密</li>
+</ul>
+</li>
+<li>消息重放<ul>
+<li>AS-&gt;C 和 TGS-&gt;C消息在票据生命周期中可被重放，v5采用新鲜数避免</li>
+<li>采用同一票据的多个CS连接使用相同的会话密钥，可被重放。v5采用subkey机制</li>
+</ul>
+</li>
+</ul>
+<h4 id="Kerberos优点"><a href="#Kerberos优点" class="headerlink" title="Kerberos优点"></a>Kerberos优点</h4><ul>
+<li>密码不易被窃听</li>
+<li>密码不在网上传输</li>
+<li>密码猜测更困难</li>
+<li>Single Sign on<ul>
+<li>更便捷 一次使用口令登录</li>
+<li>不用记忆多个口令</li>
+</ul>
+</li>
+<li>票据被盗之后难以使用，因为需要配合认证头来使用</li>
+</ul>
+<h2 id="CH8：ban"><a href="#CH8：ban" class="headerlink" title="CH8：ban"></a>CH8：ban</h2><h3 id="安全协议的形式化分析"><a href="#安全协议的形式化分析" class="headerlink" title="安全协议的形式化分析"></a>安全协议的形式化分析</h3><ul>
+<li>目前的技术主要用于对密钥正确的认证 </li>
+<li>安全协议的形式化分析有助于减轻协议设计者的部分工作量： <ul>
+<li>界定安全协议的边界,即协议系统与其运行环境的界面。 </li>
+<li>更准确地描述安全协议的行为。 </li>
+<li>更准确地定义安全协议的特性。 </li>
+<li>证明安全协议满足其说明，以及证明安全协议在什么条件下不能满足其说明。</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>基于推理结构性方法</li>
+<li>基于攻击结构性方法</li>
+<li>基于证明结构性方法</li>
+</ul>
+<h3 id="逻辑类分析方法"><a href="#逻辑类分析方法" class="headerlink" title="逻辑类分析方法"></a>逻辑类分析方法</h3><ul>
+<li>逻辑：运用形式化方法研究和判定推理形式有效性</li>
+<li><p>形式化方法 ：将一套特制的人工符号应用于演绎体系以使其严格化 、精确化的研究方法 。包含符号化和系统化 。</p>
+<ul>
+<li>符号化：将命题 (p,q,r) 和常项（如命题连接词）用符号标识</li>
+<li>系统化：在符号化的基础上将一定范围内所有有效的推理形式形成一个形式系统</li>
+</ul>
+</li>
+<li><p>狭义形式系统：形式语言和演绎装置。 </p>
+</li>
+<li>形式语言：系统的初始符号(字母表)，形成规 则(如何使用符号组成公式)。 </li>
+<li>演绎装置：包括定义、公理和规则。 </li>
+<li>广义形式系统：增加<strong>语义</strong>部分。即对初始符号 、公式和规则的解释。解释可把形式系统与一 定模型(代表客观实际)连接起来，从而赋予初始符号和公式一定的实际意义。</li>
+</ul>
+<h3 id="逻辑-推理结构性方法"><a href="#逻辑-推理结构性方法" class="headerlink" title="逻辑-推理结构性方法"></a>逻辑-推理结构性方法</h3><p>运用逻辑系统从用户接收和发送的消息出发，通过一系列的推理公理退证协议是否满足其安全说明。</p>
+<ul>
+<li>典型：BAN逻辑，Kailer逻辑，RV逻辑</li>
+</ul>
+<p>特点：</p>
+<ul>
+<li>简洁直观，易于使用</li>
+<li>理想化方法，分析协议之前必须对协议进行形式化处理（用逻辑语言描述）</li>
+<li>使用假设和推理规则<ul>
+<li>假设不正确——不能得到正确的信念</li>
+<li>公里和推理规则是否合理和完备也影响性能</li>
+</ul>
+</li>
+</ul>
+<h3 id="BAN逻辑系统"><a href="#BAN逻辑系统" class="headerlink" title="BAN逻辑系统"></a>BAN逻辑系统</h3><ul>
+<li>定义：基于主体知识和信念推理的模态逻辑</li>
+<li>过程：通过推导<strong>主体是否能够从接收到消息中获得信念</strong>来判断协议是否能够达到认证目标</li>
+</ul>
+<p><a href="https://imgchr.com/i/BESLTS" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BESLTS.png" alt="BESLTS.png"></a></p>
+<p><a href="https://imgchr.com/i/BESXFg" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BESXFg.png" alt="BESXFg.png"></a></p>
+<h4 id="推理规则——消息意义规则"><a href="#推理规则——消息意义规则" class="headerlink" title="推理规则——消息意义规则"></a>推理规则——消息意义规则</h4><p>从加密消息所使用密钥以及消息中包含的密码来推断消息发送者的身份</p>
+<p><a href="https://imgchr.com/i/BE9a8J" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BE9a8J.png" alt="BE9a8J.png"></a></p>
+<h4 id="推理规则——随机数验证规则"><a href="#推理规则——随机数验证规则" class="headerlink" title="推理规则——随机数验证规则"></a>推理规则——随机数验证规则</h4><p><a href="https://imgchr.com/i/BE9wvR" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BE9wvR.png" alt="BE9wvR.png"></a></p>
+<h4 id="推理规则——仲裁规则"><a href="#推理规则——仲裁规则" class="headerlink" title="推理规则——仲裁规则"></a>推理规则——仲裁规则</h4><p>拓展主体的推知能力，使主体可以在基于其他主体已有的信仰之上推知新的信仰</p>
+<p><a href="https://imgchr.com/i/BEPbcj" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEPbcj.png" alt="BEPbcj.png"></a></p>
+<h4 id="推理规则——信仰规则"><a href="#推理规则——信仰规则" class="headerlink" title="推理规则——信仰规则"></a>推理规则——信仰规则</h4><p>反映信念在消息的级联和分割的不同操作中一致性以及信仰在此类操作中的传递性</p>
+<p><a href="https://imgchr.com/i/BEikuR" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEikuR.png" alt="BEikuR.png"></a></p>
+<h4 id="推理规则——接收规则"><a href="#推理规则——接收规则" class="headerlink" title="推理规则——接收规则"></a>推理规则——接收规则</h4><p>定义了主体在协议运行中获取消息</p>
+<p><a href="https://imgchr.com/i/BEim4O" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEim4O.png" alt="BEim4O.png"></a></p>
+<h4 id="推理规则——新鲜规则"><a href="#推理规则——新鲜规则" class="headerlink" title="推理规则——新鲜规则"></a>推理规则——新鲜规则</h4><p><a href="https://imgchr.com/i/BEFRTP" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEFRTP.png" alt="BEFRTP.png"></a></p>
+<h4 id="推理规则——传递规则"><a href="#推理规则——传递规则" class="headerlink" title="推理规则——传递规则"></a>推理规则——传递规则</h4><p><a href="https://imgchr.com/i/BEFfFf" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEFfFf.png" alt="BEFfFf.png"></a></p>
+<h4 id="BAN逻辑的假设"><a href="#BAN逻辑的假设" class="headerlink" title="BAN逻辑的假设"></a>BAN逻辑的假设</h4><h5 id="时间假设"><a href="#时间假设" class="headerlink" title="时间假设"></a>时间假设</h5><ul>
+<li>协议分析中区分current-time和past-time。<ul>
+<li>current-time：起始于本次协议运行的开始阶段</li>
+<li>past-time：current-time之前的时间</li>
+</ul>
+</li>
+</ul>
+<p>如果某一观点在协议开始时是成立的，那么在整个current-time中也是成立的</p>
+<p>但在past-time中成立的观点在current-time中却并不一定成立</p>
+<h5 id="密钥-主体-假设"><a href="#密钥-主体-假设" class="headerlink" title="密钥-主体-假设"></a>密钥-主体-假设</h5><ul>
+<li>密钥不能从密文中推导</li>
+<li>不拥有正确密钥不能解密</li>
+<li>主体能够知道是否正确使用了解密密钥（错误解密无意义）</li>
+</ul>
+<h5 id="主体-假设"><a href="#主体-假设" class="headerlink" title="主体-假设"></a>主体-假设</h5><p>假设参与协议运行的主体都是诚实的</p>
+<h5 id="自身消息可识别-假设"><a href="#自身消息可识别-假设" class="headerlink" title="自身消息可识别-假设"></a>自身消息可识别-假设</h5><p>假设接收方能分辨接收到的消息是否为自己发送过的消息</p>
+<h5 id="应用BAN逻辑"><a href="#应用BAN逻辑" class="headerlink" title="应用BAN逻辑"></a>应用BAN逻辑</h5><ul>
+<li>对协议进行理想化预处理（<strong>初始化</strong>）。</li>
+<li>给出协议<strong>初始状态</strong>及其所基于的假设。 </li>
+<li><strong>形式化</strong>说明协议将达成的<strong>安全目标</strong>。</li>
+<li>运用公理和推理规则以及协议会话事实和 假设，从协议的开始进行<strong>推证</strong>直至验证协议 是否满足其最终运行目标。</li>
+</ul>
+<h5 id="BAN逻辑应用实例——NS协议漏洞"><a href="#BAN逻辑应用实例——NS协议漏洞" class="headerlink" title="BAN逻辑应用实例——NS协议漏洞"></a>BAN逻辑应用实例——NS协议漏洞</h5><p><a href="https://imgchr.com/i/BEVY9K" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVY9K.png" alt="BEVY9K.png"></a></p>
+<p><a href="https://imgchr.com/i/BEV8tx" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEV8tx.png" alt="BEV8tx.png"></a></p>
+<p><a href="https://imgchr.com/i/BEV3A1" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEV3A1.png" alt="BEV3A1.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVGh6" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVGh6.png" alt="BEVGh6.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVl7R" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVl7R.png" alt="BEVl7R.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVt1O" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVt1O.png" alt="BEVt1O.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVUje" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVUje.png" alt="BEVUje.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVNcD" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVNcD.png" alt="BEVNcD.png"></a></p>
+<p><a href="https://imgchr.com/i/BEVdnH" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/23/BEVdnH.png" alt="BEVdnH.png"></a></p>
+<h5 id="BAN逻辑的局限性"><a href="#BAN逻辑的局限性" class="headerlink" title="BAN逻辑的局限性"></a>BAN逻辑的局限性</h5><ul>
+<li>省略掉对于推知主体信仰无用部分，如明文。 </li>
+<li>协议的理想化过于依赖于分享者的直觉，使得原始协议与理想化协议间存在语义鸿沟。</li>
+<li>协议的理想化是将协议过程语言中对协议主体行为的描述解释为用逻辑语言描述的主体的知识和信仰 ，并以此来表示协议说明的语义。现有的逻辑形式 化分析系统很难解决此问题。 </li>
+<li>BAN证明没有问题，并不能保证该协议没有问题。</li>
+</ul>
+<p>BAN逻辑缺陷：</p>
+<ul>
+<li>不合理的假设<ul>
+<li>BAN逻辑钟，初始状态的假设难以确定，从而无法确 认和自动验证假设的正确性和有效性</li>
+<li>BAN逻辑系统认为参与协议运行的主体都是诚实的</li>
+</ul>
+</li>
+<li>不能检查协议并发运行带来的攻击<ul>
+<li>BAN缺少一个良好定义的语义</li>
+</ul>
+</li>
+</ul>
+<h2 id="CH9：csp"><a href="#CH9：csp" class="headerlink" title="CH9：csp"></a>CH9：csp</h2><h3 id="攻击结构型方法"><a href="#攻击结构型方法" class="headerlink" title="攻击结构型方法"></a>攻击结构型方法</h3><p>模型检测方法:给定模型M和性质P，检查M中P是否成立</p>
+<ul>
+<li>主体数目的有限性：通常分析有限主体实例，只说明在某个数目下未发现错误</li>
+<li>无法解决状态空间爆炸问题：当协议只有三五条、主体数目只有四五个时，效率较高，超过时会出现内存和时间问题。</li>
+<li>无法解释安全协议的内部机理</li>
+</ul>
+<h4 id="通用的形式化验证方法——通信顺序进程CSP"><a href="#通用的形式化验证方法——通信顺序进程CSP" class="headerlink" title="通用的形式化验证方法——通信顺序进程CSP"></a>通用的形式化验证方法——通信顺序进程CSP</h4><ul>
+<li>专为描述并发系统消息交互而设计的抽象语言</li>
+<li>将协议的安全问题描述为CSP进行是否满足其CSP规约的问题，并使用FDR对协议的性质进行分析和验证</li>
+</ul>
+<h5 id="CSP基本术语"><a href="#CSP基本术语" class="headerlink" title="CSP基本术语"></a>CSP基本术语</h5><ul>
+<li>事件：协议系统通过其执行的一系列事件加以描述。c.i.j.m包括一个信道c、一个消息源i、一个目的地j和一个消息m</li>
+<li>信道：不同事件类型看成不同信道，并规定它所传递的数据类型</li>
+<li>进程：CSP通过用某一进程可能涉及的事件来描写该进程，从而提供了一种描述进程可达状态的方法<ul>
+<li>执行状态中的一个动作（事件）+动作结束后的状态</li>
+</ul>
+</li>
+</ul>
+<p>常见的CSP进程：</p>
+<p><a href="https://imgchr.com/i/B1wljJ" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/28/B1wljJ.png" alt="B1wljJ.png"></a></p>
+<p><a href="https://imgchr.com/i/B1spQO" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/28/B1spQO.md.png" alt="B1spQO.md.png"></a></p>
+<p><a href="https://imgchr.com/i/B1sieH" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/28/B1sieH.png" alt="B1sieH.png"></a></p>
+<p><a href="https://imgchr.com/i/B1s9yD" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/28/B1s9yD.png" alt="B1s9yD.png"></a></p>
+<p><a href="https://imgchr.com/i/B1sSSK" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/28/B1sSSK.png" alt="B1sSSK.png"></a></p>
+<p><a href="https://imgchr.com/i/B1sCOe" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/28/B1sCOe.png" alt="B1sCOe.png"></a></p>
+<h5 id="协议目标的CSP描述"><a href="#协议目标的CSP描述" class="headerlink" title="协议目标的CSP描述"></a>协议目标的CSP描述</h5><ul>
+<li>保密性</li>
+</ul>
+<p><a href="https://imgchr.com/i/B1s1Ts" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/28/B1s1Ts.png" alt="B1s1Ts.png"></a></p>
+<ul>
+<li>认证性</li>
+</ul>
+<p><a href="https://imgchr.com/i/B1s8kn" target="_blank" rel="noopener"><img src="https://s1.ax1x.com/2020/10/28/B1s8kn.png" alt="B1s8kn.png"></a></p>
+<ul>
+<li>完成安全协议的 CSP 建模及安全目标描述 以后，可以采用 基于模型检测的分析方法 对 安全协议进行分析。</li>
+<li>基本原理：主要采用自动化分析工具 FDR（Failures Divergences Refinement, 故障发散提炼器） 工具 完成。</li>
+<li>FDR 接受协议规范和协议实现的两个 CSP 作为输入：<ul>
+<li>规范：一个抽象 的 系统 具有 一 定的 性 质 。</li>
+<li>实现：较具体的系统，常希望其具备某种性 质 。</li>
+</ul>
+</li>
+<li>FDR 检查协议的实现是否精炼了规范，即实现的每一个迹是否为协议规范的一个迹</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>你可以打赏我哦！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Internet%E5%AE%89%E5%85%A8%E5%8D%8F%E8%AE%AE%E4%B8%8E%E5%88%86%E6%9E%90/" rel="tag"># Internet安全协议与分析</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/23/CV%E5%85%A5%E9%97%A8%E2%80%94%E2%80%94%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E5%92%8Cdetectron2%E5%AE%89%E8%A3%85%E3%80%81%E5%9F%BA%E7%A1%80%E5%9B%BE%E8%B1%A1%E6%93%8D%E4%BD%9C%E9%A2%84%E5%A4%84%E7%90%86/" rel="prev" title="CV入门——环境配置和detectron2安装、基础图象操作预处理">
+      <i class="fa fa-chevron-left"></i> CV入门——环境配置和detectron2安装、基础图象操作预处理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/28/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB-Reasoning%20on%20Knowledge%20Graphs%20with%20Debate%20Dynamics/" rel="next" title="论文阅读: Reasoning on Knowledge Graphs with Debate Dynamics">
+      论文阅读: Reasoning on Knowledge Graphs with Debate Dynamics <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CH1：无线通信系统安全"><span class="nav-number">1.</span> <span class="nav-text">CH1：无线通信系统安全</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络与因特网"><span class="nav-number">1.1.</span> <span class="nav-text">网络与因特网</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#发展阶段"><span class="nav-number">1.1.1.</span> <span class="nav-text">发展阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组成"><span class="nav-number">1.1.2.</span> <span class="nav-text">组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#协议体系结构"><span class="nav-number">1.1.3.</span> <span class="nav-text">协议体系结构</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无线通信安全历史"><span class="nav-number">1.2.</span> <span class="nav-text">无线通信安全历史</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#移动通信"><span class="nav-number">1.2.1.</span> <span class="nav-text">移动通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无线局域网标准"><span class="nav-number">1.2.2.</span> <span class="nav-text">无线局域网标准</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无线通信网的主要安全威胁"><span class="nav-number">1.2.3.</span> <span class="nav-text">无线通信网的主要安全威胁</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#四个概念"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">四个概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#三个威胁"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">三个威胁</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动通信系统的安全需求"><span class="nav-number">1.3.</span> <span class="nav-text">移动通信系统的安全需求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动通信系统的安全体系"><span class="nav-number">1.4.</span> <span class="nav-text">移动通信系统的安全体系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安全服务"><span class="nav-number">1.4.1.</span> <span class="nav-text">安全服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全需求"><span class="nav-number">1.4.2.</span> <span class="nav-text">安全需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全域"><span class="nav-number">1.4.3.</span> <span class="nav-text">安全域</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动通信系统安全"><span class="nav-number">1.5.</span> <span class="nav-text">移动通信系统安全</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GSM系统"><span class="nav-number">1.5.1.</span> <span class="nav-text">GSM系统</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#GSM系统的安全目标"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">GSM系统的安全目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GSM系统的安全实体"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">GSM系统的安全实体</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GSM系统的鉴权过程"><span class="nav-number">1.5.1.3.</span> <span class="nav-text">GSM系统的鉴权过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GSM系统的加密机制"><span class="nav-number">1.5.1.4.</span> <span class="nav-text">GSM系统的加密机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GSM系统的匿名机制"><span class="nav-number">1.5.1.5.</span> <span class="nav-text">GSM系统的匿名机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GSM系统的安全性分析"><span class="nav-number">1.5.1.6.</span> <span class="nav-text">GSM系统的安全性分析</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3G系统"><span class="nav-number">1.5.2.</span> <span class="nav-text">3G系统</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3G系统实体"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">3G系统实体</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3G安全架构"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">3G安全架构</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#LTE网络"><span class="nav-number">1.5.3.</span> <span class="nav-text">LTE网络</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无线局域网安全（WLAN）"><span class="nav-number">1.6.</span> <span class="nav-text">无线局域网安全（WLAN）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#无线局域网关联过程"><span class="nav-number">1.6.1.</span> <span class="nav-text">无线局域网关联过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE802-11-认证"><span class="nav-number">1.6.2.</span> <span class="nav-text">IEEE802.11 认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE802-11-加密"><span class="nav-number">1.6.3.</span> <span class="nav-text">IEEE802.11 加密</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#加密过程"><span class="nav-number">1.6.3.1.</span> <span class="nav-text">加密过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解密过程"><span class="nav-number">1.6.3.2.</span> <span class="nav-text">解密过程</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WEP的分析"><span class="nav-number">1.6.4.</span> <span class="nav-text">WEP的分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE802-11安全问题"><span class="nav-number">1.6.5.</span> <span class="nav-text">IEEE802.11安全问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移动自组网络安全（Ad-Hoc）"><span class="nav-number">1.7.</span> <span class="nav-text">移动自组网络安全（Ad Hoc）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#移动Ad-Hoc网络的特点"><span class="nav-number">1.7.1.</span> <span class="nav-text">移动Ad Hoc网络的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移动Ad-Hoc网络的安全弱点"><span class="nav-number">1.7.2.</span> <span class="nav-text">移动Ad Hoc网络的安全弱点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移动Ad-Hoc网络的密钥管理"><span class="nav-number">1.7.3.</span> <span class="nav-text">移动Ad Hoc网络的密钥管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移动Ad-Hoc网络的安全路由"><span class="nav-number">1.7.4.</span> <span class="nav-text">移动Ad Hoc网络的安全路由</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#针对Ad-Hoc网络路由协议的攻击"><span class="nav-number">1.7.4.1.</span> <span class="nav-text">针对Ad Hoc网络路由协议的攻击</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Ad-Hoc网络路由协议的特点"><span class="nav-number">1.7.4.2.</span> <span class="nav-text">Ad Hoc网络路由协议的特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Ad-Hoc网络的入侵检测"><span class="nav-number">1.7.4.3.</span> <span class="nav-text">Ad Hoc网络的入侵检测</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无线传感器网络（WSN）"><span class="nav-number">1.8.</span> <span class="nav-text">无线传感器网络（WSN）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#WSN的特点"><span class="nav-number">1.8.1.</span> <span class="nav-text">WSN的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WSN面临的安全威胁和措施"><span class="nav-number">1.8.2.</span> <span class="nav-text">WSN面临的安全威胁和措施</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CH2：安全协议概述"><span class="nav-number">2.</span> <span class="nav-text">CH2：安全协议概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全协议"><span class="nav-number">2.1.</span> <span class="nav-text">安全协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议常见类型"><span class="nav-number">2.1.1.</span> <span class="nav-text">安全协议常见类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议系统模型"><span class="nav-number">2.1.2.</span> <span class="nav-text">安全协议系统模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议的性质及实现"><span class="nav-number">2.1.3.</span> <span class="nav-text">安全协议的性质及实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#协议设计准则"><span class="nav-number">2.1.4.</span> <span class="nav-text">协议设计准则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全协议缺陷分类"><span class="nav-number">2.1.5.</span> <span class="nav-text">安全协议缺陷分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#消息重放攻击及对策"><span class="nav-number">2.1.6.</span> <span class="nav-text">消息重放攻击及对策</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CH3：IPSec协议"><span class="nav-number">3.</span> <span class="nav-text">CH3：IPSec协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IP安全问题"><span class="nav-number">3.1.</span> <span class="nav-text">IP安全问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPSec"><span class="nav-number">3.2.</span> <span class="nav-text">IPSec</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IPSec体系结构"><span class="nav-number">3.3.</span> <span class="nav-text">IPSec体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安全联盟SA"><span class="nav-number">3.3.1.</span> <span class="nav-text">安全联盟SA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全策略库SPD"><span class="nav-number">3.3.2.</span> <span class="nav-text">安全策略库SPD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全关联数据库SAD"><span class="nav-number">3.3.3.</span> <span class="nav-text">安全关联数据库SAD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#认证头AH"><span class="nav-number">3.3.4.</span> <span class="nav-text">认证头AH</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#AH传输模式"><span class="nav-number">3.3.4.1.</span> <span class="nav-text">AH传输模式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#AH隧道模式"><span class="nav-number">3.3.4.2.</span> <span class="nav-text">AH隧道模式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#封装安全载荷ESP"><span class="nav-number">3.3.5.</span> <span class="nav-text">封装安全载荷ESP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#ESP传输模式与隧道模式"><span class="nav-number">3.3.5.1.</span> <span class="nav-text">ESP传输模式与隧道模式</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#因特网密钥交换协议IKE"><span class="nav-number">3.3.6.</span> <span class="nav-text">因特网密钥交换协议IKE</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#IKE的安全机制"><span class="nav-number">3.3.6.1.</span> <span class="nav-text">IKE的安全机制</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IKE协商过程阶段一"><span class="nav-number">3.3.6.2.</span> <span class="nav-text">IKE协商过程阶段一</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#主模式协商"><span class="nav-number">3.3.6.2.1.</span> <span class="nav-text">主模式协商</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#野蛮模式协商"><span class="nav-number">3.3.6.2.2.</span> <span class="nav-text">野蛮模式协商</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#两种模式对比"><span class="nav-number">3.3.6.2.3.</span> <span class="nav-text">两种模式对比</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IKE协商过程二"><span class="nav-number">3.3.6.3.</span> <span class="nav-text">IKE协商过程二</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CH4：SSL"><span class="nav-number">4.</span> <span class="nav-text">CH4：SSL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL安全机制"><span class="nav-number">4.1.</span> <span class="nav-text">SSL安全机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL分层结构"><span class="nav-number">4.2.</span> <span class="nav-text">SSL分层结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#上层协议"><span class="nav-number">4.2.1.</span> <span class="nav-text">上层协议</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#SSL握手协议"><span class="nav-number">4.2.1.1.</span> <span class="nav-text">SSL握手协议</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#阶段1：建立安全能力"><span class="nav-number">4.2.1.1.1.</span> <span class="nav-text">阶段1：建立安全能力</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#阶段2：服务器鉴别与密钥交换"><span class="nav-number">4.2.1.1.2.</span> <span class="nav-text">阶段2：服务器鉴别与密钥交换</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#阶段3：客户机鉴别与密钥交换"><span class="nav-number">4.2.1.1.3.</span> <span class="nav-text">阶段3：客户机鉴别与密钥交换</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#阶段4：完成"><span class="nav-number">4.2.1.1.4.</span> <span class="nav-text">阶段4：完成</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SSLpassword变化协议"><span class="nav-number">4.2.1.2.</span> <span class="nav-text">SSLpassword变化协议</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SSL警告协议"><span class="nav-number">4.2.1.3.</span> <span class="nav-text">SSL警告协议</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下层协议"><span class="nav-number">4.2.2.</span> <span class="nav-text">下层协议</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#SSL记录协议"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">SSL记录协议</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSL基本过程"><span class="nav-number">4.3.</span> <span class="nav-text">SSL基本过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL连接"><span class="nav-number">4.3.1.</span> <span class="nav-text">SSL连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL会话"><span class="nav-number">4.3.2.</span> <span class="nav-text">SSL会话</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL协议的加密和认证算法"><span class="nav-number">4.3.3.</span> <span class="nav-text">SSL协议的加密和认证算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL安全性分析"><span class="nav-number">4.3.4.</span> <span class="nav-text">SSL安全性分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSL脆弱性分析"><span class="nav-number">4.3.5.</span> <span class="nav-text">SSL脆弱性分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WTLS"><span class="nav-number">4.3.6.</span> <span class="nav-text">WTLS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CH5：SET"><span class="nav-number">5.</span> <span class="nav-text">CH5：SET</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#电子交易主要模式"><span class="nav-number">5.1.</span> <span class="nav-text">电子交易主要模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#支付系统无安全措施模式"><span class="nav-number">5.1.1.</span> <span class="nav-text">支付系统无安全措施模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#通过第三方经纪人支付的模型"><span class="nav-number">5.1.2.</span> <span class="nav-text">通过第三方经纪人支付的模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数字现金支付模型"><span class="nav-number">5.1.3.</span> <span class="nav-text">数字现金支付模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#简单加密支付模型"><span class="nav-number">5.1.4.</span> <span class="nav-text">简单加密支付模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全电子交易SET支付模式"><span class="nav-number">5.1.5.</span> <span class="nav-text">安全电子交易SET支付模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SET（Secure-Electronic-Transaction-）"><span class="nav-number">5.2.</span> <span class="nav-text">SET（Secure Electronic Transaction ）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SET的动机和范围"><span class="nav-number">5.2.1.</span> <span class="nav-text">SET的动机和范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#交易中的主体"><span class="nav-number">5.2.2.</span> <span class="nav-text">交易中的主体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主体证书"><span class="nav-number">5.2.3.</span> <span class="nav-text">主体证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SET安全架构需求"><span class="nav-number">5.2.4.</span> <span class="nav-text">SET安全架构需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SET电子支付流程"><span class="nav-number">5.2.5.</span> <span class="nav-text">SET电子支付流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SET双重数字签名"><span class="nav-number">5.2.6.</span> <span class="nav-text">SET双重数字签名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SET消息流"><span class="nav-number">5.2.7.</span> <span class="nav-text">SET消息流</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#支付过程初始化InitReq-InitRes"><span class="nav-number">5.2.7.1.</span> <span class="nav-text">支付过程初始化InitReq&#x2F;InitRes</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#购物请求"><span class="nav-number">5.2.7.2.</span> <span class="nav-text">购物请求</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#PReq消息结构"><span class="nav-number">5.2.7.2.1.</span> <span class="nav-text">PReq消息结构</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#PReq消息校验"><span class="nav-number">5.2.7.2.2.</span> <span class="nav-text">PReq消息校验</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#商家验证卡用户的身份和授权"><span class="nav-number">5.2.7.3.</span> <span class="nav-text">商家验证卡用户的身份和授权</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#支付网关认证过程"><span class="nav-number">5.2.7.4.</span> <span class="nav-text">支付网关认证过程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#收单银行处理"><span class="nav-number">5.2.7.5.</span> <span class="nav-text">收单银行处理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#支付完成"><span class="nav-number">5.2.7.6.</span> <span class="nav-text">支付完成</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#下单的回复"><span class="nav-number">5.2.7.7.</span> <span class="nav-text">下单的回复</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SET中的核心技术"><span class="nav-number">5.2.7.8.</span> <span class="nav-text">SET中的核心技术</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SET和SSL的不同之处"><span class="nav-number">5.2.8.</span> <span class="nav-text">SET和SSL的不同之处</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CH6：PGP"><span class="nav-number">6.</span> <span class="nav-text">CH6：PGP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#电子邮件系统"><span class="nav-number">6.1.</span> <span class="nav-text">电子邮件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#电子邮件系统的主要成分"><span class="nav-number">6.1.1.</span> <span class="nav-text">电子邮件系统的主要成分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#电子邮件相关协议"><span class="nav-number">6.1.2.</span> <span class="nav-text">电子邮件相关协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全问题"><span class="nav-number">6.1.3.</span> <span class="nav-text">安全问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决方案"><span class="nav-number">6.1.4.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PGP"><span class="nav-number">6.2.</span> <span class="nav-text">PGP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#PGP功能"><span class="nav-number">6.2.1.</span> <span class="nav-text">PGP功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PGP数字签名和认证"><span class="nav-number">6.2.2.</span> <span class="nav-text">PGP数字签名和认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PGP保密性操作"><span class="nav-number">6.2.3.</span> <span class="nav-text">PGP保密性操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PGP保密和认证的结合"><span class="nav-number">6.2.4.</span> <span class="nav-text">PGP保密和认证的结合</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PGP压缩"><span class="nav-number">6.2.5.</span> <span class="nav-text">PGP压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PGP密钥环"><span class="nav-number">6.2.6.</span> <span class="nav-text">PGP密钥环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PGP公钥的分发"><span class="nav-number">6.2.7.</span> <span class="nav-text">PGP公钥的分发</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PGP信任网"><span class="nav-number">6.2.8.</span> <span class="nav-text">PGP信任网</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CH7：Kerberos"><span class="nav-number">7.</span> <span class="nav-text">CH7：Kerberos</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#密钥管理问题"><span class="nav-number">7.1.</span> <span class="nav-text">密钥管理问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kerberos认证服务协议"><span class="nav-number">7.2.</span> <span class="nav-text">Kerberos认证服务协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kerberos加密体制"><span class="nav-number">7.2.1.</span> <span class="nav-text">Kerberos加密体制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kerberos主要功能"><span class="nav-number">7.2.2.</span> <span class="nav-text">Kerberos主要功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kerberos-Version-4"><span class="nav-number">7.2.3.</span> <span class="nav-text">Kerberos Version 4</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本概念"><span class="nav-number">7.2.3.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#认证服务交换：获得票据许可票据"><span class="nav-number">7.2.3.2.</span> <span class="nav-text">认证服务交换：获得票据许可票据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#票据许可服务交换：获得服务许可票据"><span class="nav-number">7.2.3.3.</span> <span class="nav-text">票据许可服务交换：获得服务许可票据</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#客户-服务器认证交换：获得服务"><span class="nav-number">7.2.3.4.</span> <span class="nav-text">客户&#x2F;服务器认证交换：获得服务</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Kerberos领域和多个域服务"><span class="nav-number">7.2.3.5.</span> <span class="nav-text">Kerberos领域和多个域服务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kerberos-Version-5"><span class="nav-number">7.2.4.</span> <span class="nav-text">Kerberos Version 5</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基于v4的改进"><span class="nav-number">7.2.4.1.</span> <span class="nav-text">基于v4的改进</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kerberos优点"><span class="nav-number">7.2.5.</span> <span class="nav-text">Kerberos优点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CH8：ban"><span class="nav-number">8.</span> <span class="nav-text">CH8：ban</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安全协议的形式化分析"><span class="nav-number">8.1.</span> <span class="nav-text">安全协议的形式化分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑类分析方法"><span class="nav-number">8.2.</span> <span class="nav-text">逻辑类分析方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑-推理结构性方法"><span class="nav-number">8.3.</span> <span class="nav-text">逻辑-推理结构性方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BAN逻辑系统"><span class="nav-number">8.4.</span> <span class="nav-text">BAN逻辑系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#推理规则——消息意义规则"><span class="nav-number">8.4.1.</span> <span class="nav-text">推理规则——消息意义规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#推理规则——随机数验证规则"><span class="nav-number">8.4.2.</span> <span class="nav-text">推理规则——随机数验证规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#推理规则——仲裁规则"><span class="nav-number">8.4.3.</span> <span class="nav-text">推理规则——仲裁规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#推理规则——信仰规则"><span class="nav-number">8.4.4.</span> <span class="nav-text">推理规则——信仰规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#推理规则——接收规则"><span class="nav-number">8.4.5.</span> <span class="nav-text">推理规则——接收规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#推理规则——新鲜规则"><span class="nav-number">8.4.6.</span> <span class="nav-text">推理规则——新鲜规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#推理规则——传递规则"><span class="nav-number">8.4.7.</span> <span class="nav-text">推理规则——传递规则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BAN逻辑的假设"><span class="nav-number">8.4.8.</span> <span class="nav-text">BAN逻辑的假设</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#时间假设"><span class="nav-number">8.4.8.1.</span> <span class="nav-text">时间假设</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#密钥-主体-假设"><span class="nav-number">8.4.8.2.</span> <span class="nav-text">密钥-主体-假设</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#主体-假设"><span class="nav-number">8.4.8.3.</span> <span class="nav-text">主体-假设</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自身消息可识别-假设"><span class="nav-number">8.4.8.4.</span> <span class="nav-text">自身消息可识别-假设</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#应用BAN逻辑"><span class="nav-number">8.4.8.5.</span> <span class="nav-text">应用BAN逻辑</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#BAN逻辑应用实例——NS协议漏洞"><span class="nav-number">8.4.8.6.</span> <span class="nav-text">BAN逻辑应用实例——NS协议漏洞</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#BAN逻辑的局限性"><span class="nav-number">8.4.8.7.</span> <span class="nav-text">BAN逻辑的局限性</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CH9：csp"><span class="nav-number">9.</span> <span class="nav-text">CH9：csp</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#攻击结构型方法"><span class="nav-number">9.1.</span> <span class="nav-text">攻击结构型方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通用的形式化验证方法——通信顺序进程CSP"><span class="nav-number">9.1.1.</span> <span class="nav-text">通用的形式化验证方法——通信顺序进程CSP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#CSP基本术语"><span class="nav-number">9.1.1.1.</span> <span class="nav-text">CSP基本术语</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#协议目标的CSP描述"><span class="nav-number">9.1.1.2.</span> <span class="nav-text">协议目标的CSP描述</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rooki3Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rooki3Ray</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rooki3ray" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2922859032@qq.com" title="E-Mail → mailto:2922859032@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5355766445" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5355766445" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2922859032" title="QQ → 2922859032"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/rooki3ray" title="https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank">GitHub</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rooki3Ray</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">117k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:46</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
