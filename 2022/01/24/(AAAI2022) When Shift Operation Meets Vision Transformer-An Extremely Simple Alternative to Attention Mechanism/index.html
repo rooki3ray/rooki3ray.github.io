@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"rooki3ray.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"./public/search.xml"};
+  </script>
+
+  <meta name="description" content="MicroSoft 在AAAI2022的一篇文章，将ViT中的attention机制替换为无参数的shift操作，在几个主流任务中也取得了相当好的结果——attention机制或许并非ViT成功的关键因素。论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2201.10801.pdf开源代码：https:&#x2F;&#x2F;github.com&#x2F;microsoft&#x2F;SPACH">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(AAAI2022) When Shift Operation Meets Vision Transformer:An Extremely Simple Alternative to Attention Mechanism">
+<meta property="og:url" content="http://rooki3ray.github.io/2022/01/24/(AAAI2022)%20When%20Shift%20Operation%20Meets%20Vision%20Transformer-An%20Extremely%20Simple%20Alternative%20to%20Attention%20Mechanism/index.html">
+<meta property="og:site_name" content="Rooki3Ray | Cyber Security">
+<meta property="og:description" content="MicroSoft 在AAAI2022的一篇文章，将ViT中的attention机制替换为无参数的shift操作，在几个主流任务中也取得了相当好的结果——attention机制或许并非ViT成功的关键因素。论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2201.10801.pdf开源代码：https:&#x2F;&#x2F;github.com&#x2F;microsoft&#x2F;SPACH">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2022/01/27/nokAbStcCpfaPRM.png">
+<meta property="og:image" content="https://s2.loli.net/2022/01/27/WbsgYmJzIX6FxBn.png">
+<meta property="og:image" content="https://s2.loli.net/2022/01/27/cpTajzC1mli2w6G.png">
+<meta property="og:image" content="https://s2.loli.net/2022/01/27/2TfxEzVd9Qmp4YS.png">
+<meta property="article:published_time" content="2022-01-24T06:58:16.000Z">
+<meta property="article:modified_time" content="2022-02-14T15:35:51.313Z">
+<meta property="article:author" content="Rooki3Ray">
+<meta property="article:tag" content="CV">
+<meta property="article:tag" content="Transformer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/01/27/nokAbStcCpfaPRM.png">
+
+<link rel="canonical" href="http://rooki3ray.github.io/2022/01/24/(AAAI2022)%20When%20Shift%20Operation%20Meets%20Vision%20Transformer-An%20Extremely%20Simple%20Alternative%20to%20Attention%20Mechanism/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>(AAAI2022) When Shift Operation Meets Vision Transformer:An Extremely Simple Alternative to Attention Mechanism | Rooki3Ray | Cyber Security</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c5dcd17d515f19e2d355facf9d8e773a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Rooki3Ray | Cyber Security</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://rooki3ray.github.io/2022/01/24/(AAAI2022)%20When%20Shift%20Operation%20Meets%20Vision%20Transformer-An%20Extremely%20Simple%20Alternative%20to%20Attention%20Mechanism/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Rooki3Ray">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Rooki3Ray | Cyber Security">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          (AAAI2022) When Shift Operation Meets Vision Transformer:An Extremely Simple Alternative to Attention Mechanism
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-01-24 14:58:16" itemprop="dateCreated datePublished" datetime="2022-01-24T14:58:16+08:00">2022-01-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-02-14 23:35:51" itemprop="dateModified" datetime="2022-02-14T23:35:51+08:00">2022-02-14</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CV/" itemprop="url" rel="index"><span itemprop="name">CV</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>MicroSoft 在AAAI2022的一篇文章，将ViT中的attention机制替换为无参数的shift操作，在几个主流任务中也取得了相当好的结果——attention机制或许并非ViT成功的关键因素。<br>论文地址：<a href="https://arxiv.org/pdf/2201.10801.pdf" target="_blank" rel="noopener">https://arxiv.org/pdf/2201.10801.pdf</a><br>开源代码：<a href="https://github.com/microsoft/SPACH" target="_blank" rel="noopener">https://github.com/microsoft/SPACH</a></p>
+<a id="more"></a>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>自AlexNet起，CNN统治了CV领域近十年。2020年，ViT的出现撼动了CNN的统治力，其在众多CV任务上都有超越CNN的表现。但ViT中真正有效的机制仍不清楚。</p>
+<p>一些传统观点认为attention机制是ViT成功的关键，因为self-attention机制可以帮助模型聚合任意位置的特征。与CNN相比，attention机制有以下优点：</p>
+<ul>
+<li>可以同时捕获近距离和远距离依赖</li>
+<li>交互是动态地取决于两位置各自特征的，而不受限于卷积核</li>
+</ul>
+<p>实际上，一些ViT变体证明了即使没有以上优势，模型仍然效果很好。首先，全局的、完全的依赖可能并非无法避免的，许多ViT提出使用局部attention机制来限制感受野——Swin Transformer、Local ViT，证明局部attention并不会限制模型的性能。此外，MLP-Mixer证明了动态聚合的机制也收效甚微，用MLP代替了attention layer，在ImageNet上仍然领先。</p>
+<p>本文尝试构建0参数、0计算、无全局视野、无动态的模型，从概念上说，必须通过一些人工规则建模空间关系。本文采用最简单<strong>Shift</strong>操作。将标准ViT的attention+FFN架构中的attention替换为shift，构建了ShiftViT，取得了高于Swin Transformer的效果。</p>
+<p><img src="https://s2.loli.net/2022/01/27/nokAbStcCpfaPRM.png" alt=""></p>
+<h2 id="Related-work"><a href="#Related-work" class="headerlink" title="Related work"></a>Related work</h2><h3 id="Shift-operation"><a href="#Shift-operation" class="headerlink" title="Shift operation"></a>Shift operation</h3><p>在2017年就被认为是空间卷积运算的替代操作——使用两个1*1卷积和一个shift操作可以近似k*k卷积。此外还有active shift、sparse shift和<strong>partial shift</strong>（本文采用的）等变体。</p>
+<p>本文旨在利用partial shift来验证attention机制的有效性，类似的思路有：ShiftMLP、AS-MLP，但设计细节不同，其他方案构建的模块更加复杂。</p>
+<h2 id="Shift-Operation-Meets-Vision-Transformer"><a href="#Shift-Operation-Meets-Vision-Transformer" class="headerlink" title="Shift Operation Meets Vision Transformer"></a>Shift Operation Meets Vision Transformer</h2><h3 id="architecture-overview"><a href="#architecture-overview" class="headerlink" title="architecture overview"></a>architecture overview</h3><p><img src="https://s2.loli.net/2022/01/27/WbsgYmJzIX6FxBn.png" alt=""></p>
+<p>使用和Swin Transformer类似的架构。</p>
+<ul>
+<li>给定$H\times W\times 3$的输入image，首先将其分为多个不重叠的patches，每个patch是$4\times 4$像素，即输出为$\frac{H}{4}\times\frac{W}{4}$个token，每个token有48个channel</li>
+<li>之后的操作分为四步，每步包括embedding generation和stacked shift blocks<ul>
+<li>embedding generation：用线性层将每个token转换为一个channel size为C的embedding，然后用kernel size为$2\times 2$的卷积整合相邻的patch，输出相当于降采样，但channel size从$C$变为$2C$</li>
+<li>stacked shift blocks：由重复的shift block构成——包含shift操作、layerNorm、MLP。实际上就是Transformer block中attention替换为shift，shift blocks的个数是可变的$N_i$。<ul>
+<li>shift operation<br><img src="https://s2.loli.net/2022/01/27/cpTajzC1mli2w6G.png" alt=""></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="architecture-varients"><a href="#architecture-varients" class="headerlink" title="architecture varients"></a>architecture varients</h3><p>本文为了与Swin Transformer比较，设计了Shift-Tiny、Shift-Small、Shift-Base：</p>
+<ul>
+<li>Shift-Tiny：$C=96,\{N_i\}=\{6,8,18,6\},\gamma=1/12$</li>
+<li>Shift-Small：$C=96,\{N_i\}=\{10,18,36,10\},\gamma=1/12$</li>
+<li>Shift-Base：$C=128,\{N_i\}=\{10,18,36,10\},\gamma=1/16$</li>
+</ul>
+<h2 id="experiment"><a href="#experiment" class="headerlink" title="experiment"></a>experiment</h2><p>在图像分类的ImageNet-1K、目标检测的COCO、语义分割的ADE20k数据集上进行实验，取得如下结果：</p>
+<p><img src="https://s2.loli.net/2022/01/27/2TfxEzVd9Qmp4YS.png" alt=""></p>
+<p>可以看到只替换attention的light模型在性能上有所下降，但由于运算的减少，light模型高效的多，与resnet相比则更强大也更高效。</p>
+<p>通过添加更多的block来保证参数量持平的情况下，Shift模型取得了更好的结果。相比ShiftMLP、AS-MLP效果略好，说明简单的shift操作已经够好了。</p>
+<h2 id="conclusion"><a href="#conclusion" class="headerlink" title="conclusion"></a>conclusion</h2><p>ViT中的attention实际上作用不大，其关键部分应该在FFN或者训练方案中。</p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>你可以打赏我哦！</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CV/" rel="tag"># CV</a>
+              <a href="/tags/Transformer/" rel="tag"># Transformer</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/01/20/attention%20is%20all%20you%20need/" rel="prev" title="Reread Attention Is All You Need">
+      <i class="fa fa-chevron-left"></i> Reread Attention Is All You Need
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/01/26/CS224n/" rel="next" title="Stanford-CS224n">
+      Stanford-CS224n <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Related-work"><span class="nav-number">2.</span> <span class="nav-text">Related work</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Shift-operation"><span class="nav-number">2.1.</span> <span class="nav-text">Shift operation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Shift-Operation-Meets-Vision-Transformer"><span class="nav-number">3.</span> <span class="nav-text">Shift Operation Meets Vision Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#architecture-overview"><span class="nav-number">3.1.</span> <span class="nav-text">architecture overview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#architecture-varients"><span class="nav-number">3.2.</span> <span class="nav-text">architecture varients</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiment"><span class="nav-number">4.</span> <span class="nav-text">experiment</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conclusion"><span class="nav-number">5.</span> <span class="nav-text">conclusion</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Rooki3Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Rooki3Ray</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">29</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/rooki3ray" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:2922859032@qq.com" title="E-Mail → mailto:2922859032@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/5355766445" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;5355766445" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2922859032" title="QQ → 2922859032"><i class="fab fa-qq fa-fw"></i>QQ</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/rooki3ray" title="https:&#x2F;&#x2F;github.com&#x2F;rooki3ray" rel="noopener" target="_blank">GitHub</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Rooki3Ray</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">154k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:20</span>
+</div>
+
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
