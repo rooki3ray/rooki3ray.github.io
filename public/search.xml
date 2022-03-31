@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>字节跳动 机器学习实习生（反作弊）面经</title>
+      <link href="2022/03/31/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E4%B9%A0%E7%94%9F%EF%BC%88%E5%8F%8D%E4%BD%9C%E5%BC%8A%EF%BC%89%E9%9D%A2%E7%BB%8F/"/>
+      <url>2022/03/31/%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E4%B9%A0%E7%94%9F%EF%BC%88%E5%8F%8D%E4%BD%9C%E5%BC%8A%EF%BC%89%E9%9D%A2%E7%BB%8F/</url>
+      
+        <content type="html"><![CDATA[<p>03.29 面试字节跳动 机器学习实习生（反作弊）面经</p><a id="more"></a><!-- TOC --><h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><ul><li><p>判别模型和生成模型</p><ul><li>从属性X预测标记Y</li><li>判别模型求P(Y|X)，即后验概率 SVM、LR</li><li>生成模型求P(X,Y)，即联合概率 NaiveBayes、HMM</li></ul></li><li><p>团伙识别算法</p><ul><li>闻所未闻，按自己的理解答了一种思路：<ul><li>记录不同流量信息的相似度，例如不同用户在同一设备（强相似）、同一地点（弱相似）等等；</li><li>利用该相似度建立不同用户间的带权图G</li><li>在G中寻找相似度较高的团伙</li></ul></li></ul></li></ul><ul><li><p>GBDT、XGBoost、Lgb对比</p><ul><li>老生常谈</li></ul></li><li><p>项目和比赛相关…</p><ul><li>伪标签方法</li><li>数据不均衡的解决方式<ul><li>提阈值、过采样、欠采样、SMOTE</li><li>工业界哪种更实用（不知道，答了SMOTE或生成式的伪标签）</li></ul></li><li>…</li></ul></li></ul><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><blockquote><p>可用的操作包括加减2、加减3、加减5<br>输入：A和B  输出：最小步数</p></blockquote><ul><li>解题思路：<ul><li>简化到计算abs(B-A)的最小步数——加减对称，只考虑加法和非负数</li><li>dp<ul><li>初始化dp[0:5]（因为1和4涉及减法，但简化后只考虑加法，直接初始化构造）</li><li>最优子结构dp[i] = min(min(dp[i-2], dp[i-3]), dp[i-5]) + 1</li></ul></li></ul></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 机器学习 </tag>
+            
+            <tag> 面经 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>(AAAI2022) Deformable Graph Convolutional Networks</title>
       <link href="2022/02/05/(AAAI2022)%20Deformable%20Graph%20Convolutional%20Networks/"/>
       <url>2022/02/05/(AAAI2022)%20Deformable%20Graph%20Convolutional%20Networks/</url>
